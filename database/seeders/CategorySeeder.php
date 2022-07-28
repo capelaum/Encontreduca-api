@@ -1,0 +1,51 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+
+class CategorySeeder extends Seeder
+{
+    private $categories = [
+        [
+            'name' => 'Escola pública',
+        ],
+        [
+            'name' => 'Escola privada',
+        ],
+        [
+            'name' => 'Univesidade pública',
+        ],
+        [
+            'name' => 'Univesidade privada',
+        ],
+        [
+            'name' => 'Biblioteca',
+        ],
+        [
+            'name' => 'Curso',
+        ],
+        [
+            'name' => 'Coworking',
+        ],
+        [
+            'name' => 'TESTE',
+        ],
+    ];
+
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        foreach ($this->categories as $category) {
+            $category['created_at'] = now();
+            $category['updated_at'] = now();
+            DB::table('categories')->insert($category);
+        }
+    }
+}
