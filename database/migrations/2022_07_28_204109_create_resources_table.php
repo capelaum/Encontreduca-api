@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('website')->nullable();
             $table->string('phone', 15)->nullable();
-            $table->string('cover');
+            $table->string('cover', 1000);
             $table->boolean('approved')->default(false);
             $table->timestamps();
         });

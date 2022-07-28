@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    /**
+     * Returns list of all categories.
+     *
+     * @return Colletion
+     */
     public function index()
     {
         $categories = Category::all();
