@@ -10,9 +10,9 @@ class Resource extends Model
     use HasFactory;
 
     protected $fillable = [
+        'category_id',
         'name',
         'latitude',
-        'category_id',
         'longitude',
         'address',
         'website',

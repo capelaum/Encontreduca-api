@@ -29,10 +29,7 @@ class CategorySeeder extends Seeder
         ],
         [
             'name' => 'Coworking',
-        ],
-        [
-            'name' => 'TESTE',
-        ],
+        ]
     ];
 
     /**

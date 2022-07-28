@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreResourceFormRequest;
 use App\Models\Resource;
-use Illuminate\Http\Request;
 
 class ResourceController extends Controller
 {
@@ -17,5 +17,17 @@ class ResourceController extends Controller
         $resources = Resource::all();
 
         return response()->json(['data' => $resources]);
+    }
+
+    /**
+     * Create new resource and store on database
+     *
+     * @return Resource
+     */
+    public function store(StoreResourceFormRequest $request)
+    {
+        $resource = Resource::create($request->validated());
+
+        return response()->json(['data' => $resource]);
     }
 }
