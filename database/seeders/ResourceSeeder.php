@@ -12,6 +12,7 @@ class ResourceSeeder extends Seeder
         [
             'name' => 'Escola Classe 405 Norte',
             'category_id' => 1,
+            'user_id' => 1,
             'latitude' => -15.7708927,
             'longitude' => -47.8769279,
             'address' => 'SHCN SQN 405 - Asa Norte, Brasília - DF, 70846-000',
@@ -23,6 +24,7 @@ class ResourceSeeder extends Seeder
         [
             'name' => 'Centro Educacional Leonardo da Vinci',
             'category_id' => 2,
+            'user_id' => 1,
             'latitude' => -15.7467763,
             'longitude' => -47.9008108,
             'address' => 'SGAN 914 Conjunto I Setor de Grandes Áreas Norte, Asa Norte, Brasília - DF, 70790-140',
@@ -34,6 +36,7 @@ class ResourceSeeder extends Seeder
         [
             'name' => 'Universidade de Brasília',
             'category_id' => 3,
+            'user_id' => 1,
             'latitude' => -15.7631573,
             'longitude' => -47.8706311,
             'address' => 'UnB - Brasília, DF, 70910-900',
@@ -45,6 +48,7 @@ class ResourceSeeder extends Seeder
         [
             'name' => 'CEUB',
             'category_id' => 4,
+            'user_id' => 1,
             'latitude' => -15.7670265,
             'longitude' => -47.8938074,
             'address' => '707/907 - Campus Universitário - Asa Norte, Brasília - DF, 70790-075',
@@ -56,6 +60,7 @@ class ResourceSeeder extends Seeder
         [
             'name' => 'Biblioteca Central',
             'category_id' => 5,
+            'user_id' => 1,
             'latitude' => -15.7609124,
             'longitude' => -47.8677803,
             'address' => 'Campus Universitário Darcy Ribeiro, Gleba A - Asa Norte, Brasília - DF, 70910-900',
@@ -67,6 +72,7 @@ class ResourceSeeder extends Seeder
         [
             'name' => 'Curso Exatas',
             'category_id' => 6,
+            'user_id' => 1,
             'latitude' => -15.7747056,
             'longitude' => -47.8887548,
             'address' => 'SCRN 704/705 Bloco A, 53 - Asa Norte, Brasília - DF, 70730-610',
@@ -78,6 +84,7 @@ class ResourceSeeder extends Seeder
         [
             'name' => 'The Brain Coworking',
             'category_id' => 7,
+            'user_id' => 1,
             'latitude' => -15.7880305,
             'longitude' => -47.9005331,
             'address' => 'Ulysses Guimarães SDC, Bloco I, Zona Cívico e Administrativa- Ala Norte Piso 01, Eixo Monumental, Brasília - DF, 70655-775',
@@ -89,6 +96,7 @@ class ResourceSeeder extends Seeder
         [
             'name' => 'Colégio Pódion',
             'category_id' => 2,
+            'user_id' => 1,
             'latitude' => -15.75035,
             'longitude' => -47.8992081,
             'address' => 'SHCGN 713 ÁREA ESPECIAL',
@@ -100,6 +108,7 @@ class ResourceSeeder extends Seeder
         [
             'name' => 'Centro Educacional Sigma',
             'category_id' => 2,
+            'user_id' => 1,
             'latitude' => -15.8174547,
             'longitude' => -47.9188311,
             'address' => 'SGAS I SGAS 912 - Asa Sul, Brasília - DF, 70390-120',
@@ -111,6 +120,7 @@ class ResourceSeeder extends Seeder
         [
             'name' => 'Pódion',
             'category_id' => 6,
+            'user_id' => 1,
             'latitude' => -15.7543684,
             'longitude' => -47.8986737,
             'address' => '2º andar SHCGN, Quadra 712, Conjunto B s/n - Asa Norte, DF, 70360-702',

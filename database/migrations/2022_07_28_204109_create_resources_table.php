@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('resources', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained();
             $table->foreignId('category_id')
                 ->constrained('categories');
             $table->string('name');

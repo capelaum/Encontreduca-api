@@ -21,7 +21,7 @@ class Resource extends Model
         'approved'
     ];
 
-    protected $with = ['category'];
+    protected $with = ['category', 'user'];
 
     public function category()
     {
@@ -31,5 +31,10 @@ class Resource extends Model
     public function users()
     {
         return $this->belongsToMany(User::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
