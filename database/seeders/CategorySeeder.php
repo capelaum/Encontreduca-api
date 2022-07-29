@@ -16,10 +16,10 @@ class CategorySeeder extends Seeder
             'name' => 'Escola privada',
         ],
         [
-            'name' => 'Univesidade pública',
+            'name' => 'Universidade pública',
         ],
         [
-            'name' => 'Univesidade privada',
+            'name' => 'Universidade privada',
         ],
         [
             'name' => 'Biblioteca',

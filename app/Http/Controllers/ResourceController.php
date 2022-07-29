@@ -16,7 +16,14 @@ class ResourceController extends Controller
     {
         $resources = Resource::all();
 
-        return response()->json(['data' => $resources]);
+        foreach ($resources as $resource) {
+            $resource->position = [
+                'lat' => $resource->latitude,
+                'lng' => $resource->longitude
+            ];
+        }
+
+        return response()->json($resources);
     }
 
     /**
@@ -28,6 +35,6 @@ class ResourceController extends Controller
     {
         $resource = Resource::create($request->validated());
 
-        return response()->json(['data' => $resource]);
+        return response()->json($resource);
     }
 }

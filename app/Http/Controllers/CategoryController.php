@@ -16,6 +16,6 @@ class CategoryController extends Controller
     {
         $categories = Category::all();
 
-        return response()->json(['data' => $categories]);
+        return response()->json($categories);
     }
 }
