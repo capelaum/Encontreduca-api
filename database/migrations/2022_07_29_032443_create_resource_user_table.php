@@ -14,8 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('resource_user', function (Blueprint $table) {
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('resource_id')->constrained();
+            $table->foreignId('user_id')
+                ->constrained()
+                ->onDelete('CASCADE')
+                ->onUpdate('CASCADE');
+            $table->foreignId('resource_id')
+                ->constrained()
+                ->onDelete('CASCADE')
+                ->onUpdate('CASCADE');
         });
     }
 
