@@ -17,10 +17,4 @@ class ResourceUser extends Model
         'user_id',
         'resource_id',
     ];
-
-
-    public function users()
-    {
-        return $this->belongsToMany(User::class);
-    }
 }

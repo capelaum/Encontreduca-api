@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             ResourceSeeder::class,
             ResourceUserSeeder::class,
+            ReviewSeeder::class,
         ]);
     }
 }

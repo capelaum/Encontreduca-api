@@ -3,7 +3,8 @@
 use App\Http\Controllers\{
     UserController,
     ResourceController,
-    CategoryController
+    CategoryController,
+    ReviewController
 };
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,4 +25,8 @@ Route::prefix('resources')->group(function () {
 
 Route::prefix('categories')->group(function () {
     Route::get('/', [CategoryController::class, 'index'])->name('categories.index');
+});
+
+Route::prefix('reviews')->group(function () {
+    Route::get('/', [ReviewController::class, 'index'])->name('reviews.index');
 });
