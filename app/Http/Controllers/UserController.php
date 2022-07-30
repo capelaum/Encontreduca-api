@@ -11,6 +11,11 @@ class UserController extends Controller
     {
         $users = User::all();
 
+        foreach ($users as $user) {
+            $user->resource_count = $user->resources()->count();
+            $user->review_count = $user->reviews()->count();
+        }
+
         return response()->json($users);
     }
 }

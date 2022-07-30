@@ -16,7 +16,7 @@ class Review extends Model
         'comment',
     ];
 
-    protected $with = ['user', 'resource'];
+    protected $with = ['user'];
 
     public function user()
     {
