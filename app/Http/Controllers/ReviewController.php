@@ -27,4 +27,18 @@ class ReviewController extends Controller
 
         return response()->json($review, 201);
     }
+
+    public function update(StoreReviewFormRequest $request, Review $review)
+    {
+        $review->update($request->validated());
+
+        return response()->json($review, 200);
+    }
+
+    public function destroy(Review $review)
+    {
+        $review->delete();
+
+        return response()->json(null, 204);
+    }
 }

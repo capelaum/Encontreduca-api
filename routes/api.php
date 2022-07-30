@@ -34,4 +34,7 @@ Route::prefix('categories')->group(function () {
 Route::prefix('reviews')->group(function () {
     Route::get('/', [ReviewController::class, 'index'])->name('reviews.index');
     Route::post('/', [ReviewController::class, 'store'])->name('reviews.store');
+
+    Route::put('/{review}', [ReviewController::class, 'update'])->name('reviews.update');
+    Route::delete('/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 });
