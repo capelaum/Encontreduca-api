@@ -17,6 +17,7 @@ class ResourceController extends Controller
         $resources = Resource::all();
 
         foreach ($resources as $resource) {
+            $resource->load('reviews');
             $resource->position = [
                 'lat' => $resource->latitude,
                 'lng' => $resource->longitude
@@ -24,6 +25,12 @@ class ResourceController extends Controller
         }
 
         return response()->json($resources);
+    }
+
+    public function show(Resource $resource)
+    {
+        $resource->load('reviews');
+        return response()->json($resource);
     }
 
     /**

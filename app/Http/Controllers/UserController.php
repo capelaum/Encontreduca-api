@@ -21,6 +21,7 @@ class UserController extends Controller
 
     public function show(User $user)
     {
+        $user->load('resources');
         $user->resource_count = $user->resources()->count();
         $user->review_count = $user->reviews()->count();
 

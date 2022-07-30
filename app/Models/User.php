@@ -43,7 +43,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected $with = ['resources'];
+    // protected $with = ['resources'];
 
     public function resources()
     {

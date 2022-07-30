@@ -21,6 +21,9 @@ Route::prefix('users')->group(function () {
 
 Route::prefix('resources')->group(function () {
     Route::get('/', [ResourceController::class, 'index'])->name('resources.index');
+
+    Route::get('/{resource}', [ResourceController::class, 'show'])->name('resources.show');
+
     Route::post('/', [ResourceController::class, 'store'])->name('resources.store');
 });
 
