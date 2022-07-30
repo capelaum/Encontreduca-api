@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             ResourceSeeder::class,
             ResourceUserSeeder::class,
             ReviewSeeder::class,
+            MotiveSeeder::class,
         ]);
     }
 }
