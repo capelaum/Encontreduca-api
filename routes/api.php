@@ -15,6 +15,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('users')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('users.index');
+
+    Route::get('/{user}', [UserController::class, 'show'])->name('users.show');
 });
 
 Route::prefix('resources')->group(function () {

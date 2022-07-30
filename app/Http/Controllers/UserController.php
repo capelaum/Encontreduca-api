@@ -18,4 +18,12 @@ class UserController extends Controller
 
         return response()->json($users);
     }
+
+    public function show(User $user)
+    {
+        $user->resource_count = $user->resources()->count();
+        $user->review_count = $user->reviews()->count();
+
+        return response()->json($user);
+    }
 }
