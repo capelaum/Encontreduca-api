@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreReviewFormRequest;
 use App\Models\Review;
 use Illuminate\Http\Request;
 
@@ -18,5 +19,12 @@ class ReviewController extends Controller
         }
 
         return response()->json($reviews);
+    }
+
+    public function store(StoreReviewFormRequest $request)
+    {
+        $review = Review::create($request->validated());
+
+        return response()->json($review, 201);
     }
 }

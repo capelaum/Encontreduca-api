@@ -21,7 +21,6 @@ Route::prefix('users')->group(function () {
 
 Route::prefix('resources')->group(function () {
     Route::get('/', [ResourceController::class, 'index'])->name('resources.index');
-
     Route::post('/', [ResourceController::class, 'store'])->name('resources.store');
 });
 
@@ -31,4 +30,5 @@ Route::prefix('categories')->group(function () {
 
 Route::prefix('reviews')->group(function () {
     Route::get('/', [ReviewController::class, 'index'])->name('reviews.index');
+    Route::post('/', [ReviewController::class, 'store'])->name('reviews.store');
 });
