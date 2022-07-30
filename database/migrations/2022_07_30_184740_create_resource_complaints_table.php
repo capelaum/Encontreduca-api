@@ -14,15 +14,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('review_complaints', function (Blueprint $table) {
+        Schema::create('resource_complaints', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')
                 ->nullable()
                 ->constrained('users')
                 ->onDelete('SET NULL')
                 ->onUpdate('SET NULL');
-            $table->foreignId('review_id')
-                ->constrained('reviews')
+            $table->foreignId('resource_id')
+                ->constrained('resources')
                 ->onDelete('CASCADE')
                 ->onUpdate('CASCADE');
             $table->foreignId('motive_id')
@@ -41,6 +41,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('review_complaints');
+        Schema::dropIfExists('resource_complaints');
     }
 };

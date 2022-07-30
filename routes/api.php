@@ -6,6 +6,7 @@ use App\Http\Controllers\{
     CategoryController,
     ReviewController,
     MotiveController,
+    ResourceComplaintController,
     ReviewComplaintController
 };
 use Illuminate\Http\Request;
@@ -21,9 +22,15 @@ Route::prefix('users')->group(function () {
 });
 
 Route::prefix('resources')->group(function () {
+    Route::prefix('complaints')->group(function () {
+        Route::get('/', [ResourceComplaintController::class, 'index'])->name('resources.complaints.index');
+        Route::get('/{resourceComplaint}', [ResourceComplaintController::class, 'show'])->name('resources.complaints.show');
+        Route::post('/', [ResourceComplaintController::class, 'store'])->name('resources.complaints.store');
+    });
+
     Route::get('/', [ResourceController::class, 'index'])->name('resources.index');
-    Route::get('/{resource}', [ResourceController::class, 'show'])->name('resources.show');
     Route::post('/', [ResourceController::class, 'store'])->name('resources.store');
+    Route::get('/{resource}', [ResourceController::class, 'show'])->name('resources.show');
 });
 
 Route::prefix('categories')->group(function () {
@@ -35,14 +42,14 @@ Route::prefix('motives')->group(function () {
 });
 
 Route::prefix('reviews')->group(function () {
-    Route::get('/', [ReviewController::class, 'index'])->name('reviews.index');
-    Route::post('/', [ReviewController::class, 'store'])->name('reviews.store');
-    Route::put('/{review}', [ReviewController::class, 'update'])->name('reviews.update');
-    Route::delete('/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
-
     Route::prefix('complaints')->group(function () {
         Route::get('/', [ReviewComplaintController::class, 'index'])->name('reviews.complaints.index');
         Route::get('/{reviewComplaint}', [ReviewComplaintController::class, 'show'])->name('reviews.complaints.show');
         Route::post('/', [ReviewComplaintController::class, 'store'])->name('reviews.complaints.store');
     });
+
+    Route::get('/', [ReviewController::class, 'index'])->name('reviews.index');
+    Route::post('/', [ReviewController::class, 'store'])->name('reviews.store');
+    Route::put('/{review}', [ReviewController::class, 'update'])->name('reviews.update');
+    Route::delete('/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 });
