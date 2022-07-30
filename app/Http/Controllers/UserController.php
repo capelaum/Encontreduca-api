@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    /**
+     * Returns list of all users.
+     *
+     * @return Colletion
+     */
     public function index()
     {
         $users = User::all();
@@ -19,6 +24,12 @@ class UserController extends Controller
         return response()->json($users);
     }
 
+    /**
+     * Show single User data.
+     *
+     * @param User $user
+     * @return User
+     */
     public function show(User $user)
     {
         $user->load('resources');

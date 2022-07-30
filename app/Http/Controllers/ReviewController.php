@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
+    /**
+     * Returns list of all reviews.
+     *
+     * @return Colletion
+     */
     public function index()
     {
         $reviews = Review::all();
@@ -21,6 +26,12 @@ class ReviewController extends Controller
         return response()->json($reviews);
     }
 
+    /**
+     * Create new review and store on database
+     *
+     * @param StoreReviewFormRequest $request
+     * @return Review
+     */
     public function store(StoreReviewFormRequest $request)
     {
         $review = Review::create($request->validated());
@@ -28,17 +39,30 @@ class ReviewController extends Controller
         return response()->json($review, 201);
     }
 
+    /**
+     * Update review and store on database
+     *
+     * @param StoreReviewFormRequest $request
+     * @param Review $review
+     * @return Review
+     */
     public function update(StoreReviewFormRequest $request, Review $review)
     {
         $review->update($request->validated());
 
-        return response()->json($review, 200);
+        return response()->json($review);
     }
 
+    /**
+     * Delete review from database
+     *
+     * @param Review $review
+     * @return void
+     */
     public function destroy(Review $review)
     {
         $review->delete();
 
-        return response()->json(null, 204);
+        return response()->json(null);
     }
 }

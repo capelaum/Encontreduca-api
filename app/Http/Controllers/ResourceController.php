@@ -27,6 +27,12 @@ class ResourceController extends Controller
         return response()->json($resources);
     }
 
+    /**
+     * Show single Resource data.
+     *
+     * @param Complaint $resource
+     * @return Resource
+     */
     public function show(Resource $resource)
     {
         $resource->load('reviews');
@@ -36,6 +42,7 @@ class ResourceController extends Controller
     /**
      * Create new resource and store on database
      *
+     * @param StoreResourceFormRequest $request
      * @return Resource
      */
     public function store(StoreResourceFormRequest $request)
