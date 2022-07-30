@@ -15,6 +15,14 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(20)->create();
+        User::factory()->create([
+            'name' => 'Luís V. Capelletto',
+            'email' => 'luis@emil.com',
+            'password' => bcrypt('secret'),
+            'email_verified_at' => now(),
+            'avatar_url' => 'https://i.pravatar.cc/300?u=luis',
+        ]);
+
+        User::factory(19)->create();
     }
 }

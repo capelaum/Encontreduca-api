@@ -24,7 +24,7 @@ class ResourceSeeder extends Seeder
         [
             'name' => 'Centro Educacional Leonardo da Vinci',
             'category_id' => 2,
-            'user_id' => 1,
+            'user_id' => 2,
             'latitude' => -15.7467763,
             'longitude' => -47.9008108,
             'address' => 'SGAN 914 Conjunto I Setor de Grandes Áreas Norte, Asa Norte, Brasília - DF, 70790-140',
@@ -48,7 +48,7 @@ class ResourceSeeder extends Seeder
         [
             'name' => 'CEUB',
             'category_id' => 4,
-            'user_id' => 1,
+            'user_id' => 3,
             'latitude' => -15.7670265,
             'longitude' => -47.8938074,
             'address' => '707/907 - Campus Universitário - Asa Norte, Brasília - DF, 70790-075',
@@ -72,7 +72,7 @@ class ResourceSeeder extends Seeder
         [
             'name' => 'Curso Exatas',
             'category_id' => 6,
-            'user_id' => 1,
+            'user_id' => 4,
             'latitude' => -15.7747056,
             'longitude' => -47.8887548,
             'address' => 'SCRN 704/705 Bloco A, 53 - Asa Norte, Brasília - DF, 70730-610',
@@ -84,7 +84,7 @@ class ResourceSeeder extends Seeder
         [
             'name' => 'The Brain Coworking',
             'category_id' => 7,
-            'user_id' => 1,
+            'user_id' => 7,
             'latitude' => -15.7880305,
             'longitude' => -47.9005331,
             'address' => 'Ulysses Guimarães SDC, Bloco I, Zona Cívico e Administrativa- Ala Norte Piso 01, Eixo Monumental, Brasília - DF, 70655-775',
@@ -108,7 +108,7 @@ class ResourceSeeder extends Seeder
         [
             'name' => 'Centro Educacional Sigma',
             'category_id' => 2,
-            'user_id' => 1,
+            'user_id' => 10,
             'latitude' => -15.8174547,
             'longitude' => -47.9188311,
             'address' => 'SGAS I SGAS 912 - Asa Sul, Brasília - DF, 70390-120',

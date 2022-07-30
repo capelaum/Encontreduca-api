@@ -24,6 +24,7 @@ class StoreResourceFormRequest extends FormRequest
     public function rules()
     {
         $rules = [
+            "user_id" => "required|exists:users,id",
             "category_id" => "required|exists:categories,id",
             "name" => "required|string|max:255",
             "latitude" => "required|numeric|between:-90,90",

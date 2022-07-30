@@ -35,6 +35,6 @@ class ResourceController extends Controller
     {
         $resource = Resource::create($request->validated());
 
-        return response()->json($resource);
+        return response()->json($resource, 201);
     }
 }

@@ -19,8 +19,8 @@ class ResourceUserFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => User::all()->random()->id,
-            'resource_id' => Resource::all()->random()->id,
+            'user_id' => $this->faker->numberBetween(1, User::count()),
+            'resource_id' => $this->faker->numberBetween(1, Resource::count()),
         ];
     }
 }
