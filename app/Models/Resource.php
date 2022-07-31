@@ -43,4 +43,20 @@ class Resource extends Model
     {
         return $this->hasMany(Review::class);
     }
+
+    /**
+     * Set reviews array and user resource_count and review_count
+     * on each review of the resource reviews array
+     *
+     * @param Resource $resource
+     * @return void
+     */
+    static public function setReviews(Resource $resource)
+    {
+        $resource->load('reviews');
+
+        foreach ($resource->reviews as $review) {
+            $review->user->review_count = $review->user->reviews()->count();
+        }
+    }
 }

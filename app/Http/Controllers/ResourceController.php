@@ -17,7 +17,8 @@ class ResourceController extends Controller
         $resources = Resource::all();
 
         foreach ($resources as $resource) {
-            $resource->load('reviews');
+            Resource::setReviews($resource);
+
             $resource->position = [
                 'lat' => $resource->latitude,
                 'lng' => $resource->longitude
@@ -30,12 +31,13 @@ class ResourceController extends Controller
     /**
      * Show single Resource data.
      *
-     * @param Complaint $resource
+     * @param Resource $resource
      * @return Resource
      */
     public function show(Resource $resource)
     {
-        $resource->load('reviews');
+        Resource::setReviews($resource);
+
         return response()->json($resource);
     }
 
