@@ -44,6 +44,12 @@ class UserController extends Controller
         return response()->json($user);
     }
 
+    /**
+     * Create new user resource and store on database
+     *
+     * @param StoreResourceUserFormRequest $request
+     * @return ResourceUser
+     */
     public function storeResource(StoreResourceUserFormRequest $request)
     {
         $resourceUser = ResourceUser::create($request->validated());
@@ -51,6 +57,13 @@ class UserController extends Controller
         return response()->json($resourceUser, 201);
     }
 
+    /**
+     * Delete user resource from database
+     *
+     * @param User $user
+     * @param Resource $resource
+     * @return void
+     */
     public function deleteResource(User $user, Resource $resource)
     {
         $user->resources()->detach($resource);
