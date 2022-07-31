@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\ResourceUser;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ResourceUserSeeder extends Seeder
 {
@@ -15,6 +16,11 @@ class ResourceUserSeeder extends Seeder
      */
     public function run()
     {
-        ResourceUser::factory(20)->create();
+        for ($i = 1; $i <= 10; $i++) {
+            DB::table('resource_user')->insert([
+                'user_id' =>  $i,
+                'resource_id' =>  $i,
+            ]);
+        }
     }
 }

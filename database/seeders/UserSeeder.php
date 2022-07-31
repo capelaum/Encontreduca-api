@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
     {
         User::factory()->create([
             'name' => 'Luís V. Capelletto',
-            'email' => 'luis@emil.com',
+            'email' => 'luis@email.com',
             'password' => bcrypt('secret'),
             'email_verified_at' => now(),
             'avatar_url' => 'https://res.cloudinary.com/capelaum/image/upload/v1648581498/admin-uploads/xgeusezbgvtxuit2fn5e.jpg',
