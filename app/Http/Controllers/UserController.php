@@ -32,7 +32,9 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $user->load('resources');
+        $resourcesIds = $user->resources()->pluck('id')->toArray();
+        $user->resourcesIds = $resourcesIds;
+
         $user->resource_count = $user->resources()->count();
         $user->review_count = $user->reviews()->count();
 
