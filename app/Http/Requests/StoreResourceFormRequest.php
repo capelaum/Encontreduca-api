@@ -33,7 +33,7 @@ class StoreResourceFormRequest extends FormRequest
             "website" => "nullable|string|max:255",
             "phone" => "nullable|string|max:255",
             "cover" => "nullable|string|max:1000",
-            "approved" => "required|boolean"
+            "approved" => "nullable|boolean"
         ];
 
         return $rules;

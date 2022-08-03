@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreResourceUserFormRequest;
+use App\Http\Requests\StoreUserFormRequest;
 use App\Models\Resource;
 use App\Models\ResourceUser;
 use App\Models\User;
@@ -40,6 +41,20 @@ class UserController extends Controller
 
         $user->resource_count = $user->resources()->count();
         $user->review_count = $user->reviews()->count();
+
+        return response()->json($user);
+    }
+
+    /**
+     * Update user and store on database
+     *
+     * @param StoreUserFormRequest $request
+     * @param Review $review
+     * @return Review
+     */
+    public function update(StoreUserFormRequest $request, User $user)
+    {
+        $user->update($request->validated());
 
         return response()->json($user);
     }
