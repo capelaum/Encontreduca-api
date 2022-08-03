@@ -25,14 +25,9 @@ return new class extends Migration
                 ->constrained('resources')
                 ->onDelete('CASCADE')
                 ->onUpdate('CASCADE');
-            $table->foreignId('category_id')
-                ->nullable()
-                ->constrained('categories')
-                ->onDelete('SET NULL')
-                ->onUpdate('SET NULL');
             $table->string('field');
-            $table->string('old_value');
-            $table->string('new_value');
+            $table->string('old_value')->nullable();
+            $table->string('new_value')->nullable();
             $table->timestamp('created_at')
                 ->default(DB::raw('CURRENT_TIMESTAMP'));
         });

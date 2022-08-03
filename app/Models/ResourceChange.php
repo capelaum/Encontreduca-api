@@ -18,4 +18,16 @@ class ResourceChange extends Model
         'old_value',
         'new_value',
     ];
+
+    protected $with = ['user', 'resource'];
+
+    public function resource()
+    {
+        return $this->belongsTo(Resource::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
