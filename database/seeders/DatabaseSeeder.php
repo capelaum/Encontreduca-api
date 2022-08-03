@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             MotiveSeeder::class,
             ReviewComplaintSeeder::class,
             ResourceComplaintSeeder::class,
+            ResourceChangeSeeder::class,
         ]);
     }
 }
