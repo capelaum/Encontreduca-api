@@ -6,6 +6,7 @@ use App\Http\Controllers\{
     CategoryController,
     ReviewController,
     MotiveController,
+    ResourceChangeController,
     ResourceComplaintController,
     ReviewComplaintController
 };
@@ -30,6 +31,11 @@ Route::prefix('resources')->group(function () {
         Route::get('/', [ResourceComplaintController::class, 'index'])->name('resources.complaints.index');
         Route::get('/{resourceComplaint}', [ResourceComplaintController::class, 'show'])->name('resources.complaints.show');
         Route::post('/', [ResourceComplaintController::class, 'store'])->name('resources.complaints.store');
+    });
+
+    Route::prefix('changes')->group(function () {
+        Route::get('/', [ResourceChangeController::class, 'index'])->name('resources.changes.index');
+        Route::get('/{resourceChange}', [ResourceChangeController::class, 'show'])->name('resources.changes.show');
     });
 
     Route::get('/', [ResourceController::class, 'index'])->name('resources.index');
