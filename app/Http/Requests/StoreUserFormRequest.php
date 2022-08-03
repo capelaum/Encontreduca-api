@@ -34,8 +34,10 @@ class StoreUserFormRequest extends FormRequest
         if ($this->method('PUT')) {
             $rules['email'] = [
                 'required',
+                'string',
                 'email',
-                Rule::unique('users')->ignore($this->id)
+                'max:255',
+                Rule::unique('users')->ignore($this->user->id),
             ];
 
             $rules['password'] = [

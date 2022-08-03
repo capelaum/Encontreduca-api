@@ -54,7 +54,17 @@ class UserController extends Controller
      */
     public function update(StoreUserFormRequest $request, User $user)
     {
-        $user->update($request->validated());
+        $data = $request->validated();
+
+        if ($request->password) {
+            $data['password'] = bcrypt($request->password);
+        }
+
+        if (!$request->password) {
+            unset($data['password']);
+        }
+
+        $user->update($data);
 
         return response()->json($user);
     }
