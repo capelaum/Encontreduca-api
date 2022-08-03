@@ -11,6 +11,17 @@ class ResourceChange extends Model
 
     public $timestamps = false;
 
+    static public $fields = [
+        'name',
+        'address',
+        'category_id',
+        'website',
+        'phone',
+        'cover',
+        'latitude',
+        'longitude'
+    ];
+
     protected $fillable = [
         'resource_id',
         'user_id',

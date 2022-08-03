@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreResourceChangeFormRequest;
 use App\Models\ResourceChange;
 use Illuminate\Http\Request;
 
@@ -28,5 +29,18 @@ class ResourceChangeController extends Controller
     public function show(ResourceChange $resourceChange)
     {
         return response()->json($resourceChange);
+    }
+
+    /**
+     * Create new review and store on database
+     *
+     * @param StoreResourceChangeFormRequest $request
+     * @return ResourceChange
+     */
+    public function store(StoreResourceChangeFormRequest $request)
+    {
+        $resourceChange = ResourceChange::create($request->validated());
+
+        return response()->json($resourceChange, 201);
     }
 }

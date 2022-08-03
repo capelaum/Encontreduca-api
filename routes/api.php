@@ -35,6 +35,7 @@ Route::prefix('resources')->group(function () {
 
     Route::prefix('changes')->group(function () {
         Route::get('/', [ResourceChangeController::class, 'index'])->name('resources.changes.index');
+        Route::post('/', [ResourceChangeController::class, 'store'])->name('resources.changes.store');
         Route::get('/{resourceChange}', [ResourceChangeController::class, 'show'])->name('resources.changes.show');
     });
 
