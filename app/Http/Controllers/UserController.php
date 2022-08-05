@@ -74,6 +74,31 @@ class UserController extends Controller
     }
 
     /**
+     * @param User $user
+     * @return JsonResponse
+     */
+    public function destroy(User $user)
+    {
+        $user->delete();
+
+        return response()->json(['message' => 'User deleted']);
+    }
+
+    /**
+     * Delete user avatar from database
+     *
+     * @param User $user
+     * @return JsonResponse
+     */
+    public function deleteAvatar(User $user): JsonResponse
+    {
+        $user->avatar_url = null;
+        $user->save();
+
+        return response()->json(['message' => 'Avatar deleted']);
+    }
+
+    /**
      * Create new user resource and store on database
      *
      * @param StoreResourceUserFormRequest $request
@@ -97,20 +122,6 @@ class UserController extends Controller
     {
         $user->resources()->detach($resource);
 
-        return response()->json(null);
-    }
-
-    /**
-     * Delete user avatar from database
-     *
-     * @param User $user
-     * @return JsonResponse
-     */
-    public function deleteAvatar(User $user): JsonResponse
-    {
-        $user->avatar_url = null;
-        $user->save();
-
-        return response()->json(null);
+        return response()->json(['message' => 'Resource deleted']);
     }
 }
