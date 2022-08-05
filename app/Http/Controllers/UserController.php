@@ -97,10 +97,9 @@ class UserController extends Controller
     }
 
     /**
-     * Delete user resource from database
+     * Delete user avatar from database
      *
      * @param User $user
-     * @param Resource $resource
      * @return void
      */
     public function deleteAvatar(User $user)
