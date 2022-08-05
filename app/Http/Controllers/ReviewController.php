@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreReviewFormRequest;
 use App\Models\Review;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
@@ -11,9 +12,9 @@ class ReviewController extends Controller
     /**
      * Returns list of all reviews.
      *
-     * @return Colletion
+     * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $reviews = Review::all();
 
@@ -30,9 +31,9 @@ class ReviewController extends Controller
      * Create new review and store on database
      *
      * @param StoreReviewFormRequest $request
-     * @return Review
+     * @return JsonResponse
      */
-    public function store(StoreReviewFormRequest $request)
+    public function store(StoreReviewFormRequest $request): JsonResponse
     {
         $review = Review::create($request->validated());
 
@@ -44,9 +45,9 @@ class ReviewController extends Controller
      *
      * @param StoreReviewFormRequest $request
      * @param Review $review
-     * @return Review
+     * @return JsonResponse
      */
-    public function update(StoreReviewFormRequest $request, Review $review)
+    public function update(StoreReviewFormRequest $request, Review $review): JsonResponse
     {
         $review->update($request->validated());
 
@@ -57,9 +58,9 @@ class ReviewController extends Controller
      * Delete review from database
      *
      * @param Review $review
-     * @return void
+     * @return JsonResponse
      */
-    public function destroy(Review $review)
+    public function destroy(Review $review): JsonResponse
     {
         $review->delete();
 

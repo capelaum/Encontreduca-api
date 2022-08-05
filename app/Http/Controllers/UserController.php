@@ -2,21 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreResourceUserFormRequest;
-use App\Http\Requests\StoreUserFormRequest;
-use App\Models\Resource;
-use App\Models\ResourceUser;
-use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Http\Requests\{
+    StoreResourceUserFormRequest,
+    StoreUserFormRequest
+};
+use App\Models\{
+    User,
+    Resource,
+    ResourceUser
+};
 
 class UserController extends Controller
 {
     /**
      * Returns list of all users.
      *
-     * @return Colletion
+     * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $users = User::all();
 
@@ -32,9 +36,9 @@ class UserController extends Controller
      * Show single User data.
      *
      * @param User $user
-     * @return User
+     * @return JsonResponse
      */
-    public function show(User $user)
+    public function show(User $user): JsonResponse
     {
         $resourcesIds = $user->resources()->pluck('id')->toArray();
         $user->resourcesIds = $resourcesIds;
@@ -49,10 +53,10 @@ class UserController extends Controller
      * Update user and store on database
      *
      * @param StoreUserFormRequest $request
-     * @param Review $review
-     * @return Review
+     * @param User $user
+     * @return JsonResponse
      */
-    public function update(StoreUserFormRequest $request, User $user)
+    public function update(StoreUserFormRequest $request, User $user): JsonResponse
     {
         $data = $request->validated();
 
@@ -73,9 +77,9 @@ class UserController extends Controller
      * Create new user resource and store on database
      *
      * @param StoreResourceUserFormRequest $request
-     * @return ResourceUser
+     * @return JsonResponse
      */
-    public function storeResource(StoreResourceUserFormRequest $request)
+    public function storeResource(StoreResourceUserFormRequest $request): JsonResponse
     {
         $resourceUser = ResourceUser::create($request->validated());
 
@@ -87,9 +91,9 @@ class UserController extends Controller
      *
      * @param User $user
      * @param Resource $resource
-     * @return void
+     * @return JsonResponse
      */
-    public function deleteResource(User $user, Resource $resource)
+    public function deleteResource(User $user, Resource $resource): JsonResponse
     {
         $user->resources()->detach($resource);
 
@@ -100,9 +104,9 @@ class UserController extends Controller
      * Delete user avatar from database
      *
      * @param User $user
-     * @return void
+     * @return JsonResponse
      */
-    public function deleteAvatar(User $user)
+    public function deleteAvatar(User $user): JsonResponse
     {
         $user->avatar_url = null;
         $user->save();

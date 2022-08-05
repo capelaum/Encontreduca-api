@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Motive;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class MotiveController extends Controller
@@ -10,9 +11,9 @@ class MotiveController extends Controller
     /**
      * Returns list of all motives.
      *
-     * @return Colletion
+     * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $motives = Motive::all();
 

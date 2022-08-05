@@ -4,15 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreResourceFormRequest;
 use App\Models\Resource;
+use Illuminate\Http\JsonResponse;
 
 class ResourceController extends Controller
 {
     /**
      * Returns list of all resources.
      *
-     * @return Colletion
+     * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $resources = Resource::all();
 
@@ -32,9 +33,9 @@ class ResourceController extends Controller
      * Show single Resource data.
      *
      * @param Resource $resource
-     * @return Resource
+     * @return JsonResponse
      */
-    public function show(Resource $resource)
+    public function show(Resource $resource): JsonResponse
     {
         Resource::setReviews($resource);
 
@@ -45,9 +46,9 @@ class ResourceController extends Controller
      * Create new resource and store on database
      *
      * @param StoreResourceFormRequest $request
-     * @return Resource
+     * @return JsonResponse
      */
-    public function store(StoreResourceFormRequest $request)
+    public function store(StoreResourceFormRequest $request): JsonResponse
     {
         $resource = Resource::create($request->validated());
 
