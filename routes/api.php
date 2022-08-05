@@ -21,6 +21,7 @@ Route::prefix('users')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('users.index');
     Route::get('/{user}', [UserController::class, 'show'])->name('users.show');
     Route::put('/{user}', [UserController::class, 'update'])->name('users.update');
+    Route::delete('{user}/avatar', [UserController::class, 'deleteAvatar'])->name('users.deleteAvatar');
 
     Route::post('/resources', [UserController::class, 'storeResource'])->name('users.storeResource');
     Route::delete('{user}/resources/{resource}', [UserController::class, 'deleteResource'])->name('users.deleteResource');

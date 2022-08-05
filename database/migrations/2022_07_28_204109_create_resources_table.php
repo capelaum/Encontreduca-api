@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')
                 ->nullable()
                 ->constrained('users')
-                ->onDelete('set null');
+                ->onDelete('SET NULL');
             $table->foreignId('category_id')
                 ->constrained('categories');
             $table->string('name');

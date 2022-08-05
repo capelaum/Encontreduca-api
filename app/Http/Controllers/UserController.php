@@ -95,4 +95,19 @@ class UserController extends Controller
 
         return response()->json(null);
     }
+
+    /**
+     * Delete user resource from database
+     *
+     * @param User $user
+     * @param Resource $resource
+     * @return void
+     */
+    public function deleteAvatar(User $user)
+    {
+        $user->avatar_url = null;
+        $user->save();
+
+        return response()->json(null);
+    }
 }
