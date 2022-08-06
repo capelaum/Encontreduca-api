@@ -43,4 +43,20 @@ class ResourceVoteController extends Controller
 
         return response()->json($resourceVote, 201);
     }
+
+    /**
+     * Update Resource Vote data.
+     *
+     * @param StoreResourceVoteFormRequest $request
+     * @param ResourceVote $resourceVote
+     * @return JsonResponse
+     */
+    public function update(
+        StoreResourceVoteFormRequest $request,
+        ResourceVote $resourceVote
+    ): JsonResponse {
+        $resourceVote->update($request->validated());
+
+        return response()->json($resourceVote);
+    }
 }

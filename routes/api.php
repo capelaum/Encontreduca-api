@@ -44,6 +44,7 @@ Route::prefix('resources')->group(function () {
         Route::get('/', [ResourceVoteController::class, 'index'])->name('resources.votes.index');
         Route::get('/{resourceVote}', [ResourceVoteController::class, 'show'])->name('resources.votes.show');
         Route::post('/', [ResourceVoteController::class, 'store'])->name('resources.votes.store');
+        Route::put('/{resourceVote}', [ResourceVoteController::class, 'update'])->name('resources.votes.update');
     });
 
     Route::get('/', [ResourceController::class, 'index'])->name('resources.index');
