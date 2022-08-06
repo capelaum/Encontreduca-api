@@ -13,7 +13,8 @@ class ResourceVote extends Model
     protected $fillable = [
         'resource_id',
         'user_id',
-        'vote'
+        'vote',
+        'justification'
     ];
 
     public function resource(): BelongsTo

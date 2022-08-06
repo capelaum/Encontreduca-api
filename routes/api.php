@@ -36,13 +36,14 @@ Route::prefix('resources')->group(function () {
 
     Route::prefix('changes')->group(function () {
         Route::get('/', [ResourceChangeController::class, 'index'])->name('resources.changes.index');
-        Route::post('/', [ResourceChangeController::class, 'store'])->name('resources.changes.store');
         Route::get('/{resourceChange}', [ResourceChangeController::class, 'show'])->name('resources.changes.show');
+        Route::post('/', [ResourceChangeController::class, 'store'])->name('resources.changes.store');
     });
 
     Route::prefix('votes')->group(function () {
-        Route::get('/', [ResourceVoteController::class, 'index'])->name('resources.changes.index');
-        Route::get('/{resourceVote}', [ResourceVoteController::class, 'show'])->name('resources.changes.show');
+        Route::get('/', [ResourceVoteController::class, 'index'])->name('resources.votes.index');
+        Route::get('/{resourceVote}', [ResourceVoteController::class, 'show'])->name('resources.votes.show');
+        Route::post('/', [ResourceVoteController::class, 'store'])->name('resources.votes.store');
     });
 
     Route::get('/', [ResourceController::class, 'index'])->name('resources.index');
