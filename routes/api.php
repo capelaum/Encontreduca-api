@@ -1,15 +1,14 @@
 <?php
 
-use App\Http\Controllers\{
-    UserController,
-    ResourceController,
-    CategoryController,
-    ReviewController,
+use App\Http\Controllers\{CategoryController,
     MotiveController,
     ResourceChangeController,
     ResourceComplaintController,
-    ReviewComplaintController
-};
+    ResourceController,
+    ResourceVoteController,
+    ReviewComplaintController,
+    ReviewController,
+    UserController};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +38,11 @@ Route::prefix('resources')->group(function () {
         Route::get('/', [ResourceChangeController::class, 'index'])->name('resources.changes.index');
         Route::post('/', [ResourceChangeController::class, 'store'])->name('resources.changes.store');
         Route::get('/{resourceChange}', [ResourceChangeController::class, 'show'])->name('resources.changes.show');
+    });
+
+    Route::prefix('votes')->group(function () {
+        Route::get('/', [ResourceVoteController::class, 'index'])->name('resources.changes.index');
+        Route::get('/{resourceVote}', [ResourceVoteController::class, 'show'])->name('resources.changes.show');
     });
 
     Route::get('/', [ResourceController::class, 'index'])->name('resources.index');

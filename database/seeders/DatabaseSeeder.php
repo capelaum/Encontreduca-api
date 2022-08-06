@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             ReviewComplaintSeeder::class,
             ResourceComplaintSeeder::class,
             ResourceChangeSeeder::class,
+            ResourceVoteSeeder::class,
         ]);
     }
 }
