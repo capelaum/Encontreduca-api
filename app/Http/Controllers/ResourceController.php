@@ -18,12 +18,7 @@ class ResourceController extends Controller
         $resources = Resource::all();
 
         foreach ($resources as $resource) {
-            Resource::setReviews($resource);
-
-            $resource->position = [
-                'lat' => $resource->latitude,
-                'lng' => $resource->longitude
-            ];
+            Resource::format($resource);
         }
 
         return response()->json($resources);
@@ -37,7 +32,7 @@ class ResourceController extends Controller
      */
     public function show(Resource $resource): JsonResponse
     {
-        Resource::setReviews($resource);
+        Resource::format($resource);
 
         return response()->json($resource);
     }

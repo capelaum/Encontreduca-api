@@ -9,7 +9,7 @@ use Illuminate\Http\JsonResponse;
 class ResourceVoteController extends Controller
 {
     /**
-     * Returns list of all resources.
+     * Returns list of all Resources Votes.
      *
      * @return JsonResponse
      */
@@ -21,7 +21,7 @@ class ResourceVoteController extends Controller
     }
 
     /**
-     * Show single Resource data.
+     * Show single Resource Vote data.
      *
      * @param ResourceVote $resourceVote
      * @return JsonResponse
@@ -32,7 +32,7 @@ class ResourceVoteController extends Controller
     }
 
     /**
-     * Create new Resource Vote and store on database
+     * Create new Resource Vote and store on database.
      *
      * @param StoreResourceVoteFormRequest $request
      * @return JsonResponse
