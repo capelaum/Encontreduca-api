@@ -20,7 +20,7 @@ return new class extends Migration
                 ->nullable()
                 ->constrained('users')
                 ->onDelete('SET NULL')
-                ->onUpdate('SET NULL');
+                ->onUpdate('CASCADE');
             $table->foreignId('resource_id')
                 ->constrained('resources')
                 ->onDelete('CASCADE')

@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             ResourceComplaintSeeder::class,
             ResourceChangeSeeder::class,
             ResourceVoteSeeder::class,
+            SupportRequestSeeder::class,
         ]);
     }
 }

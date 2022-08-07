@@ -2,9 +2,11 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -12,19 +14,16 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('resource_votes', function (Blueprint $table) {
+        Schema::create('support_requests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')
+                ->nullable()
                 ->constrained('users')
                 ->onUpdate('CASCADE')
-                ->onDelete('CASCADE');
-            $table->foreignId('resource_id')
-                ->constrained('resources')
-                ->onUpdate('CASCADE')
-                ->onDelete('CASCADE');
-            $table->boolean('vote');
-            $table->text('justification');
-            $table->timestamps();
+                ->onDelete('SET NULL');
+            $table->text('message');
+            $table->timestamp('created_at')
+                ->default(DB::raw('CURRENT_TIMESTAMP'));
         });
     }
 
@@ -35,6 +34,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('resource_votes');
+        Schema::dropIfExists('support_requests');
     }
 };
