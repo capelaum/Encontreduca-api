@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests\StoreReviewComplaintFormRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\StoreReviewComplaintRequest;
 use App\Models\ReviewComplaint;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class ReviewComplaintController extends Controller
 {
@@ -35,10 +35,10 @@ class ReviewComplaintController extends Controller
     /**
      * Create new Review Complaint and store on database
      *
-     * @param StoreReviewComplaintFormRequest $request
+     * @param StoreReviewComplaintRequest $request
      * @return JsonResponse
      */
-    public function store(StoreReviewComplaintFormRequest $request): JsonResponse
+    public function store(StoreReviewComplaintRequest $request): JsonResponse
     {
         $reviewComplaint = ReviewComplaint::create($request->validated());
 

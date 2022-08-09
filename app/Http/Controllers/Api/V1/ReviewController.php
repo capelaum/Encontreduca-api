@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests\StoreReviewFormRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\StoreReviewRequest;
 use App\Models\Review;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
@@ -30,10 +30,10 @@ class ReviewController extends Controller
     /**
      * Create new review and store on database
      *
-     * @param StoreReviewFormRequest $request
+     * @param StoreReviewRequest $request
      * @return JsonResponse
      */
-    public function store(StoreReviewFormRequest $request): JsonResponse
+    public function store(StoreReviewRequest $request): JsonResponse
     {
         $review = Review::create($request->validated());
 
@@ -43,11 +43,11 @@ class ReviewController extends Controller
     /**
      * Update review and store on database
      *
-     * @param StoreReviewFormRequest $request
+     * @param StoreReviewRequest $request
      * @param Review $review
      * @return JsonResponse
      */
-    public function update(StoreReviewFormRequest $request, Review $review): JsonResponse
+    public function update(StoreReviewRequest $request, Review $review): JsonResponse
     {
         $review->update($request->validated());
 

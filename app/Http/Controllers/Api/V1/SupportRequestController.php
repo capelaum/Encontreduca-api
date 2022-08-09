@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests\StoreSupportRequestFormRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\StoreSupportRequestRequest;
 use App\Models\SupportRequest;
 use Illuminate\Http\JsonResponse;
 
@@ -34,10 +35,10 @@ class SupportRequestController extends Controller
     /**
      * Store a support request.
      *
-     * @param StoreSupportRequestFormRequest $request
+     * @param StoreSupportRequestRequest $request
      * @return JsonResponse
      */
-    public function store(StoreSupportRequestFormRequest $request): JsonResponse
+    public function store(StoreSupportRequestRequest $request): JsonResponse
     {
         $supportRequest = SupportRequest::create($request->validated());
 

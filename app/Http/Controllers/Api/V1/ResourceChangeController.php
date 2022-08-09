@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests\StoreResourceChangeFormRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\StoreResourceChangeRequest;
 use App\Models\ResourceChange;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class ResourceChangeController extends Controller
 {
@@ -35,10 +35,10 @@ class ResourceChangeController extends Controller
     /**
      * Create new review and store on database
      *
-     * @param StoreResourceChangeFormRequest $request
+     * @param StoreResourceChangeRequest $request
      * @return JsonResponse
      */
-    public function store(StoreResourceChangeFormRequest $request): JsonResponse
+    public function store(StoreResourceChangeRequest $request): JsonResponse
     {
         $resourceChange = ResourceChange::create($request->validated());
 

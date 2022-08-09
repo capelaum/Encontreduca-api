@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
-use App\Http\Requests\{
-    StoreResourceUserFormRequest,
-    StoreUserFormRequest
+use App\Http\Requests\V1\{
+    StoreResourceUserRequest,
+    StoreUserRequest
 };
 use App\Models\{
     User,
@@ -52,11 +53,11 @@ class UserController extends Controller
     /**
      * Update user and store on database
      *
-     * @param StoreUserFormRequest $request
+     * @param StoreUserRequest $request
      * @param User $user
      * @return JsonResponse
      */
-    public function update(StoreUserFormRequest $request, User $user): JsonResponse
+    public function update(StoreUserRequest $request, User $user): JsonResponse
     {
         $data = $request->validated();
 
@@ -101,10 +102,10 @@ class UserController extends Controller
     /**
      * Create new user resource and store on database
      *
-     * @param StoreResourceUserFormRequest $request
+     * @param StoreResourceUserRequest $request
      * @return JsonResponse
      */
-    public function storeResource(StoreResourceUserFormRequest $request): JsonResponse
+    public function storeResource(StoreResourceUserRequest $request): JsonResponse
     {
         $resourceUser = ResourceUser::create($request->validated());
 

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests\StoreResourceVoteFormRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\StoreResourceVoteRequest;
 use App\Models\ResourceVote;
 use Illuminate\Http\JsonResponse;
 
@@ -34,10 +35,10 @@ class ResourceVoteController extends Controller
     /**
      * Create new Resource Vote and store on database.
      *
-     * @param StoreResourceVoteFormRequest $request
+     * @param StoreResourceVoteRequest $request
      * @return JsonResponse
      */
-    public function store(StoreResourceVoteFormRequest $request): JsonResponse
+    public function store(StoreResourceVoteRequest $request): JsonResponse
     {
         $resourceVote = ResourceVote::create($request->validated());
 
@@ -47,12 +48,12 @@ class ResourceVoteController extends Controller
     /**
      * Update Resource Vote data.
      *
-     * @param StoreResourceVoteFormRequest $request
+     * @param StoreResourceVoteRequest $request
      * @param ResourceVote $resourceVote
      * @return JsonResponse
      */
     public function update(
-        StoreResourceVoteFormRequest $request,
+        StoreResourceVoteRequest $request,
         ResourceVote $resourceVote
     ): JsonResponse {
         $resourceVote->update($request->validated());

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests\StoreResourceFormRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\StoreResourceRequest;
 use App\Models\Resource;
 use Illuminate\Http\JsonResponse;
 
@@ -40,10 +41,10 @@ class ResourceController extends Controller
     /**
      * Create new resource and store on database
      *
-     * @param StoreResourceFormRequest $request
+     * @param StoreResourceRequest $request
      * @return JsonResponse
      */
-    public function store(StoreResourceFormRequest $request): JsonResponse
+    public function store(StoreResourceRequest $request): JsonResponse
     {
         $resource = Resource::create($request->validated());
 

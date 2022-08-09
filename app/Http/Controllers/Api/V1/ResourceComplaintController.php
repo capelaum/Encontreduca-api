@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests\StoreResourceComplaintFormRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\StoreResourceComplaintRequest;
 use App\Models\ResourceComplaint;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class ResourceComplaintController extends Controller
 {
@@ -35,10 +35,10 @@ class ResourceComplaintController extends Controller
     /**
      * Create new Resource Complaint and store on database
      *
-     * @param StoreResourceComplaintFormRequest $request
+     * @param StoreResourceComplaintRequest $request
      * @return JsonResponse
      */
-    public function store(StoreResourceComplaintFormRequest $request): JsonResponse
+    public function store(StoreResourceComplaintRequest $request): JsonResponse
     {
         $resourceComplaint = ResourceComplaint::create($request->validated());
 

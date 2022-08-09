@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreResourceUserFormRequest extends FormRequest
+class StoreSupportRequestRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,11 @@ class StoreResourceUserFormRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'user_id' => 'required|integer|exists:users,id',
-            'resource_id' => 'required|integer|exists:resources,id',
+            'message' => 'required|string|min:3'
         ];
+
+        return $rules;
     }
 }

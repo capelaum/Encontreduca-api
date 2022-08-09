@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\V1;
 
+use App\Models\ResourceChange;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreResourceComplaintFormRequest extends FormRequest
+class StoreResourceChangeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,12 +24,14 @@ class StoreResourceComplaintFormRequest extends FormRequest
      */
     public function rules()
     {
-        $rules =  [
+        $fieldList = implode(',', ResourceChange::$fields);
+
+        return [
             "user_id" => "required|exists:users,id",
             "resource_id" => "required|exists:resources,id",
-            "motive_id" => "required|exists:motives,id"
+            "field" => "required|string|max:255|in:{$fieldList}",
+            "old_value" => "required|string|max:255",
+            "new_value" => "required|string|max:255",
         ];
-
-        return $rules;
     }
 }

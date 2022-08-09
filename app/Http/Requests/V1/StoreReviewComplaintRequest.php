@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreSupportRequestFormRequest extends FormRequest
+class StoreReviewComplaintRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,8 @@ class StoreSupportRequestFormRequest extends FormRequest
     {
         $rules = [
             'user_id' => 'required|integer|exists:users,id',
-            'message' => 'required|string|min:3'
+            'review_id' => 'required|integer|exists:reviews,id',
+            'motive_id' => 'required|integer|exists:motives,id',
         ];
 
         return $rules;
