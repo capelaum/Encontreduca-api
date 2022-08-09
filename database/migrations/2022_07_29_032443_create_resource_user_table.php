@@ -22,6 +22,7 @@ return new class extends Migration
                 ->constrained()
                 ->onDelete('CASCADE')
                 ->onUpdate('CASCADE');
+            $table->primary(['user_id', 'resource_id']);
         });
     }
 

@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\V1\{
     StoreResourceUserRequest,
-    StoreUserRequest
+    StoreUserRequest,
+    UpdateUserRequest
 };
 use App\Models\{
     User,
@@ -53,11 +54,11 @@ class UserController extends Controller
     /**
      * Update user and store on database
      *
-     * @param StoreUserRequest $request
+     * @param UpdateUserRequest $request
      * @param User $user
      * @return JsonResponse
      */
-    public function update(StoreUserRequest $request, User $user): JsonResponse
+    public function update(UpdateUserRequest $request, User $user): JsonResponse
     {
         $data = $request->validated();
 

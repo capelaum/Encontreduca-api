@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\StoreReviewRequest;
+use App\Http\Requests\V1\UpdateReviewRequest;
 use App\Models\Review;
 use Illuminate\Http\JsonResponse;
 
@@ -43,11 +44,11 @@ class ReviewController extends Controller
     /**
      * Update review and store on database
      *
-     * @param StoreReviewRequest $request
+     * @param UpdateReviewRequest $request
      * @param Review $review
      * @return JsonResponse
      */
-    public function update(StoreReviewRequest $request, Review $review): JsonResponse
+    public function update(UpdateReviewRequest $request, Review $review): JsonResponse
     {
         $review->update($request->validated());
 

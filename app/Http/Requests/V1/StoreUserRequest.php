@@ -31,23 +31,6 @@ class StoreUserRequest extends FormRequest
             "avatar_url" => "nullable|string|max:1000",
         ];
 
-        if ($this->method('PUT')) {
-            $rules['email'] = [
-                'required',
-                'string',
-                'email',
-                'max:255',
-                Rule::unique('users')->ignore($this->user->id),
-            ];
-
-            $rules['password'] = [
-                'nullable',
-                'string',
-                'min:6',
-                'max:30'
-            ];
-        }
-
         return $rules;
     }
 }
