@@ -27,7 +27,7 @@ class StoreReviewFormRequest extends FormRequest
             "user_id" => "required|exists:users,id",
             "resource_id" => "required|exists:resources,id",
             "rating" => "required|numeric|between:1,5",
-            "comment" => "required|string|max:1000"
+            "comment" => "required|string|min:3|max:1000"
         ];
 
         return $rules;

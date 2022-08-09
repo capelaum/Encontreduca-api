@@ -26,13 +26,13 @@ class StoreResourceFormRequest extends FormRequest
         $rules = [
             "user_id" => "required|exists:users,id",
             "category_id" => "required|exists:categories,id",
-            "name" => "required|string|max:255",
+            "name" => "required|string|min:3|max:255",
             "latitude" => "required|numeric|between:-90,90",
             "longitude" => "required|numeric|between:-180,180",
-            "address" => "required|string|max:255",
-            "website" => "nullable|string|max:255",
-            "phone" => "nullable|string|max:255",
-            "cover" => "nullable|string|max:1000",
+            "address" => "required|string|min:3|max:255",
+            "website" => "nullable|string|min:7|max:255",
+            "phone" => "nullable|string|min:14|max:15",
+            "cover" => "required|string|max:1000",
             "approved" => "nullable|boolean"
         ];
 
