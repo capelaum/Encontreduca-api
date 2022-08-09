@@ -35,7 +35,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], f
     Route::apiResource('resources/votes', ResourceVoteController::class);
 
     Route::apiResource('categories', CategoryController::class);
-    Route::apiResource('motives', CategoryController::class);
+    Route::apiResource('motives', MotiveController::class);
 
 
     Route::apiResource('reviews', ReviewController::class);
