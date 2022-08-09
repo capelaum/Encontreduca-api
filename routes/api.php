@@ -29,17 +29,17 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], f
         Route::delete('{user}/resources/{resource}', ['uses' => 'UserController@deleteResource']);
     });
 
-    Route::apiResource('resources', ResourceController::class);
     Route::apiResource('resources/complaints', ResourceComplaintController::class);
     Route::apiResource('resources/changes', ResourceChangeController::class);
     Route::apiResource('resources/votes', ResourceVoteController::class);
+    Route::apiResource('resources', ResourceController::class);
 
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('motives', MotiveController::class);
 
 
-    Route::apiResource('reviews', ReviewController::class);
     Route::apiResource('reviews/complaints', ReviewComplaintController::class);
+    Route::apiResource('reviews', ReviewController::class);
 
     Route::apiResource('supports', SupportController::class);
 });

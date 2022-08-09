@@ -16,9 +16,9 @@ class ResourceChangeController extends Controller
      */
     public function index(): JsonResponse
     {
-        $reviews = ResourceChange::all();
+        $resourceChanges = ResourceChange::all();
 
-        return response()->json($reviews);
+        return response()->json($resourceChanges);
     }
 
     /**
