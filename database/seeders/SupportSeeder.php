@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\SupportRequest;
+use App\Models\Support;
 use Illuminate\Database\Seeder;
 
-class SupportRequestSeeder extends Seeder
+class SupportSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class SupportRequestSeeder extends Seeder
      */
     public function run()
     {
-        SupportRequest::factory(30)->create();
+        Support::factory(30)->create();
     }
 }

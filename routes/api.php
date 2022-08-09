@@ -41,5 +41,5 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], f
     Route::apiResource('reviews', ReviewController::class);
     Route::apiResource('reviews/complaints', ReviewComplaintController::class);
 
-    Route::apiResource('support/requests', SupportRequestController::class);
+    Route::apiResource('supports', SupportController::class);
 });
