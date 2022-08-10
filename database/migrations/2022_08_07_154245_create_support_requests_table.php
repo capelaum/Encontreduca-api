@@ -14,7 +14,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('support_requests', function (Blueprint $table) {
+        Schema::create('supports', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')
                 ->nullable()
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('support_requests');
+        Schema::dropIfExists('supports');
     }
 };

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Http\Resources\V1\ResourceResource;
 use App\Models\Category;
 use App\Models\Resource;
 use App\Models\User;
@@ -19,7 +20,7 @@ class ResourceChangeFactory extends Factory
      */
     public function definition()
     {
-        $randomResource = Resource::find($this->faker->numberBetween(1, Resource::count()));
+        $randomResource = new ResourceResource(Resource::inRandomOrder()->first());
 
         $resourceChanges = [
             [
@@ -53,14 +54,9 @@ class ResourceChangeFactory extends Factory
                 'new_value' => $this->faker->imageUrl(),
             ],
             [
-                'field' => 'latitude',
-                'old_value' => $randomResource->latitude,
-                'new_value' => $this->faker->latitude,
-            ],
-            [
-                'field' => 'longitude',
-                'old_value' => $randomResource->longitude,
-                'new_value' => $this->faker->longitude,
+                'field' => 'position',
+                'old_value' => $randomResource->latitude . ',' . $randomResource->longitude,
+                'new_value' => $this->faker->latitude() . ',' . $this->faker->longitude(),
             ],
         ];
 
