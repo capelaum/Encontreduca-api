@@ -24,12 +24,20 @@ class StoreResourceVoteRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            "resource_id" => "required|integer|exists:resources,id",
-            "user_id" => "required|integer|exists:users,id",
+            "userId" => "required|integer|exists:users,id",
+            "resourceId" => "required|integer|exists:resources,id",
             "vote" => "required|boolean",
             "justification" => "required|string|min:3"
         ];
 
         return $rules;
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'user_id' => $this->userId,
+            'resource_id' => $this->resourceId,
+        ]);
     }
 }
