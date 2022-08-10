@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\StoreSupportRequest;
+use App\Http\Resources\V1\SupportCollection;
+use App\Http\Resources\V1\SupportResource;
 use App\Models\Support;
 use Illuminate\Http\JsonResponse;
 
@@ -12,24 +14,24 @@ class SupportController extends Controller
     /**
      * List all support requests.
      *
-     * @return JsonResponse
+     * @return SupportCollection
      */
-    public function index(): JsonResponse
+    public function index(): SupportCollection
     {
         $supports = Support::all();
 
-        return response()->json($supports);
+        return new SupportCollection($supports);
     }
 
     /**
      * Show a support request.
      *
      * @param SupportRequest $support
-     * @return JsonResponse
+     * @return SupportResource
      */
-    public function show(Support $support): JsonResponse
+    public function show(Support $support): SupportResource
     {
-        return response()->json($support);
+        return new SupportResource($support);
     }
 
     /**
@@ -40,7 +42,7 @@ class SupportController extends Controller
      */
     public function store(StoreSupportRequest $request): JsonResponse
     {
-        $support = Support::create($request->validated());
+        $support = Support::create($request->all());
 
         return response()->json($support);
     }
