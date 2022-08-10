@@ -28,9 +28,16 @@ class StoreUserRequest extends FormRequest
             "name" => "required|string|min:3|max:255",
             "email" => "required|string|email|max:255|unique:users",
             "password" => "required|string|min:6|max:255|confirmed",
-            "avatar_url" => "nullable|string|max:1000",
+            "avatarUrl" => "nullable|string|max:1000",
         ];
 
         return $rules;
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'avatar_url' => $this->avatarUrl,
+        ]);
     }
 }

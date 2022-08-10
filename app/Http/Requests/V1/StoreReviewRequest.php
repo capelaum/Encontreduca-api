@@ -32,4 +32,12 @@ class StoreReviewRequest extends FormRequest
 
         return $rules;
     }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'user_id' => $this->userId,
+            'resource_id' => $this->resourceId,
+        ]);
+    }
 }

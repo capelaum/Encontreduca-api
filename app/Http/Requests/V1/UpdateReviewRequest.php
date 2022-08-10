@@ -27,18 +27,26 @@ class UpdateReviewRequest extends FormRequest
 
         if ($method == 'PUT') {
             return [
-                "user_id" => "required|exists:users,id",
-                "resource_id" => "required|exists:resources,id",
+                "userId" => "required|exists:users,id",
+                "resourceId" => "required|exists:resources,id",
                 "rating" => "required|numeric|between:1,5",
                 "comment" => "required|string|min:3|max:1000"
             ];
         }
 
         return [
-            "user_id" => "required|exists:users,id",
-            "resource_id" => "required|exists:resources,id",
+            "userId" => "required|exists:users,id",
+            "resourceId" => "required|exists:resources,id",
             "rating" => "sometimes|required|numeric|between:1,5",
             "comment" => "sometimes|required|string|min:3|max:1000"
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'user_id' => $this->userId,
+            'resource_id' => $this->resourceId,
+        ]);
     }
 }

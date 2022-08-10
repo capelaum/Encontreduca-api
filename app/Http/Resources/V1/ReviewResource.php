@@ -20,7 +20,7 @@ class ReviewResource extends JsonResource
             'resourceId' => $this->resource_id,
             'rating' => $this->rating,
             'comment' => $this->comment,
-            'updatedAt' => $this->updated_at,
+            'updatedAt' => date('d/m/Y', strtotime($this->updated_at)),
             'user' => new UserResource($this->user),
         ];
     }
