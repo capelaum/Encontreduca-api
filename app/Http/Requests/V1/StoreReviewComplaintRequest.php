@@ -24,11 +24,20 @@ class StoreReviewComplaintRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'user_id' => 'required|integer|exists:users,id',
-            'review_id' => 'required|integer|exists:reviews,id',
-            'motive_id' => 'required|integer|exists:motives,id',
+            'userId' => 'required|integer|exists:users,id',
+            'reviewId' => 'required|integer|exists:reviews,id',
+            'motiveId' => 'required|integer|exists:motives,id',
         ];
 
         return $rules;
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'user_id' => $this->userId,
+            'review_id' => $this->reviewId,
+            'motive_id' => $this->motiveId,
+        ]);
     }
 }
