@@ -32,7 +32,7 @@ class ResourceResource extends JsonResource
             'user' => new UserResource($this->user),
             'categoryId' => $this->category_id,
             'category' => new CategoryResource($this->category),
-            'votes' => new VoteCollection($this->votes),
+            'votes' => new ResourceVoteCollection($this->votes),
             'reviews' => new ReviewCollection($this->reviews),
         ];
     }
