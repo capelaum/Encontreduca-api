@@ -24,11 +24,11 @@ class StoreResourceRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            "user_id" => "required|exists:users,id",
-            "category_id" => "required|exists:categories,id",
+            "userId" => "required|exists:users,id",
+            "categoryId" => "required|exists:categories,id",
             "name" => "required|string|min:3|max:255",
-            "latitude" => "required|numeric|between:-90,90",
-            "longitude" => "required|numeric|between:-180,180",
+            "position.lat" => "required|numeric|between:-90,90",
+            "position.lng" => "required|numeric|between:-180,180",
             "address" => "required|string|min:3|max:255",
             "website" => "nullable|string|min:7|max:255",
             "phone" => "nullable|string|min:14|max:15",
@@ -37,5 +37,15 @@ class StoreResourceRequest extends FormRequest
         ];
 
         return $rules;
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'user_id' => $this->userId,
+            'category_id' => $this->categoryId,
+            'latitude' => $this->position['lat'],
+            'longitude' => $this->position['lng'],
+        ]);
     }
 }

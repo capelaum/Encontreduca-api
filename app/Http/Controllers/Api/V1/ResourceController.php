@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\StoreResourceRequest;
+use App\Http\Resources\V1\ResourceCollection;
+use App\Http\Resources\V1\ResourceResource;
 use App\Models\Resource;
 use Illuminate\Http\JsonResponse;
 
@@ -12,30 +14,24 @@ class ResourceController extends Controller
     /**
      * Returns list of all resources.
      *
-     * @return JsonResponse
+     * @return ResourceCollection
      */
-    public function index(): JsonResponse
+    public function index(): ResourceCollection
     {
         $resources = Resource::all();
 
-        foreach ($resources as $resource) {
-            Resource::format($resource);
-        }
-
-        return response()->json($resources);
+        return new ResourceCollection($resources);
     }
 
     /**
      * Show single Resource data.
      *
      * @param Resource $resource
-     * @return JsonResponse
+     * @return ResourceResource
      */
-    public function show(Resource $resource): JsonResponse
+    public function show(Resource $resource): ResourceResource
     {
-        Resource::format($resource);
-
-        return response()->json($resource);
+        return new ResourceResource($resource);
     }
 
     /**
@@ -46,7 +42,7 @@ class ResourceController extends Controller
      */
     public function store(StoreResourceRequest $request): JsonResponse
     {
-        $resource = Resource::create($request->validated());
+        $resource = Resource::create($request->all());
 
         return response()->json($resource, 201);
     }
