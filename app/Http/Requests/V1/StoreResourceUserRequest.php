@@ -28,4 +28,12 @@ class StoreResourceUserRequest extends FormRequest
             'resource_id' => 'required|integer|exists:resources,id',
         ];
     }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'user_id' => $this->userId,
+            'resource_id' => $this->resourceId
+        ]);
+    }
 }

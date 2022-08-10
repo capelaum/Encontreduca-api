@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
             'email' => 'luis@email.com',
             'password' => bcrypt('123123'),
             'email_verified_at' => now(),
-            'avatar_url' => 'https://res.cloudinary.com/capelaum/image/upload/v1648581498/admin-uploads/xgeusezbgvtxuit2fn5e.jpg',
+            'avatar_url' => null,
         ]);
 
         User::factory(19)->create();
