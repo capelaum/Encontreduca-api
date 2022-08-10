@@ -9,6 +9,8 @@ use App\Http\Requests\V1\{
     StoreUserRequest,
     UpdateUserRequest
 };
+use App\Http\Resources\V1\UserCollection;
+use App\Http\Resources\V1\UserResource;
 use App\Models\{
     User,
     Resource,
@@ -20,35 +22,24 @@ class UserController extends Controller
     /**
      * Returns list of all users.
      *
-     * @return JsonResponse
+     * @return UserCollection
      */
-    public function index(): JsonResponse
+    public function index(): UserCollection
     {
         $users = User::all();
 
-        foreach ($users as $user) {
-            $user->resource_count = $user->resources()->count();
-            $user->review_count = $user->reviews()->count();
-        }
-
-        return response()->json($users);
+        return new UserCollection($users);
     }
 
     /**
      * Show single User data.
      *
      * @param User $user
-     * @return JsonResponse
+     * @return UserResource
      */
-    public function show(User $user): JsonResponse
+    public function show(User $user): UserResource
     {
-        $resourcesIds = $user->resources()->pluck('id')->toArray();
-        $user->resourcesIds = $resourcesIds;
-
-        $user->resource_count = $user->resources()->count();
-        $user->review_count = $user->reviews()->count();
-
-        return response()->json($user);
+        return new UserResource($user);
     }
 
     /**
