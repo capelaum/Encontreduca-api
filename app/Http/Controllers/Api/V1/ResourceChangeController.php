@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\StoreResourceChangeRequest;
+use App\Http\Resources\V1\ResourceChangeCollection;
+use App\Http\Resources\V1\ResourceChangeResource;
 use App\Models\ResourceChange;
 use Illuminate\Http\JsonResponse;
 
@@ -12,24 +14,26 @@ class ResourceChangeController extends Controller
     /**
      * Returns list of all Resource Changes.
      *
-     * @return JsonResponse
+     * @return ResourceChangeCollection
      */
-    public function index(): JsonResponse
+    public function index(): ResourceChangeCollection
     {
         $resourceChanges = ResourceChange::all();
 
-        return response()->json($resourceChanges);
+        return new ResourceChangeCollection($resourceChanges);
     }
 
     /**
      * Show single Resource Change data.
      *
-     * @param ResourceChange $resourceChange
-     * @return JsonResponse
+     * @param int $id
+     * @return ResourceChangeResource
      */
-    public function show(ResourceChange $resourceChange): JsonResponse
+    public function show(int $id): ResourceChangeResource
     {
-        return response()->json($resourceChange);
+        $resourceChange = ResourceChange::findOrFail($id);
+
+        return new ResourceChangeResource($resourceChange);
     }
 
     /**
@@ -40,7 +44,7 @@ class ResourceChangeController extends Controller
      */
     public function store(StoreResourceChangeRequest $request): JsonResponse
     {
-        $resourceChange = ResourceChange::create($request->validated());
+        $resourceChange = ResourceChange::create($request->all());
 
         return response()->json($resourceChange, 201);
     }

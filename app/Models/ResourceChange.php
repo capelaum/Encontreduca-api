@@ -18,8 +18,7 @@ class ResourceChange extends Model
         'website',
         'phone',
         'cover',
-        'latitude',
-        'longitude'
+        'position'
     ];
 
     protected $fillable = [
