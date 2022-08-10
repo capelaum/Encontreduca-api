@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\StoreResourceComplaintRequest;
+use App\Http\Resources\V1\ResourceComplaintCollection;
+use App\Http\Resources\V1\ResourceComplaintResource;
 use App\Models\ResourceComplaint;
 use Illuminate\Http\JsonResponse;
 
@@ -12,24 +14,26 @@ class ResourceComplaintController extends Controller
     /**
      * Returns list of all Resource Complaints.
      *
-     * @return JsonResponse
+     * @return ResourceComplaintCollection
      */
-    public function index(): JsonResponse
+    public function index(): ResourceComplaintCollection
     {
         $resourceComplaints = ResourceComplaint::all();
 
-        return response()->json($resourceComplaints);
+        return new ResourceComplaintCollection($resourceComplaints);
     }
 
     /**
      * Show single Resource Complaint data.
      *
-     * @param ResourceComplaint $resourceComplaint
-     * @return JsonResponse
+     * @param int $id
+     * @return ResourceComplaintResource
      */
-    public function show(ResourceComplaint $resourceComplaint): JsonResponse
+    public function show(int $id): ResourceComplaintResource
     {
-        return response()->json($resourceComplaint);
+        $resourceComplaint = ResourceComplaint::findOrFail($id);
+
+        return new ResourceComplaintResource($resourceComplaint);
     }
 
     /**
@@ -40,7 +44,7 @@ class ResourceComplaintController extends Controller
      */
     public function store(StoreResourceComplaintRequest $request): JsonResponse
     {
-        $resourceComplaint = ResourceComplaint::create($request->validated());
+        $resourceComplaint = ResourceComplaint::create($request->all());
 
         return response()->json($resourceComplaint);
     }

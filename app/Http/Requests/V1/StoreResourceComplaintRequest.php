@@ -24,11 +24,20 @@ class StoreResourceComplaintRequest extends FormRequest
     public function rules()
     {
         $rules =  [
-            "user_id" => "required|exists:users,id",
-            "resource_id" => "required|exists:resources,id",
-            "motive_id" => "required|exists:motives,id"
+            "userId" => "required|exists:users,id",
+            "resourceId" => "required|exists:resources,id",
+            "motiveId" => "required|exists:motives,id"
         ];
 
         return $rules;
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'user_id' => $this->userId,
+            'resource_id' => $this->resourceId,
+            'motive_id' => $this->motiveId
+        ]);
     }
 }
