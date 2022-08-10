@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\StoreReviewRequest;
 use App\Http\Requests\V1\UpdateReviewRequest;
+use App\Http\Resources\V1\ReviewCollection;
+use App\Http\Resources\V1\ReviewResource;
 use App\Models\Review;
 use Illuminate\Http\JsonResponse;
 
@@ -13,19 +15,24 @@ class ReviewController extends Controller
     /**
      * Returns list of all reviews.
      *
-     * @return JsonResponse
+     * @return ReviewCollection
      */
-    public function index(): JsonResponse
+    public function index(): ReviewCollection
     {
         $reviews = Review::all();
 
-        foreach ($reviews as $review) {
-            $review->user->resource_count = $review->user->resources()->count();
-            $review->user->review_count = $review->user->reviews()->count();
-            $review->user->resources = [];
-        }
+        return new ReviewCollection($reviews);
+    }
 
-        return response()->json($reviews);
+    /**
+     * Show single Review data.
+     *
+     * @param Review $review
+     * @return ReviewResource
+     */
+    public function show(Review $review): ReviewResource
+    {
+        return new ReviewResource($review);
     }
 
     /**
