@@ -43,7 +43,7 @@ class ReviewController extends Controller
      */
     public function store(StoreReviewRequest $request): JsonResponse
     {
-        $review = Review::create($request->validated());
+        $review = Review::create($request->all());
 
         return response()->json($review, 201);
     }
