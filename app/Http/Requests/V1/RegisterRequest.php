@@ -5,7 +5,7 @@ namespace App\Http\Requests\V1;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreUserRequest extends FormRequest
+class RegisterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +28,7 @@ class StoreUserRequest extends FormRequest
             "name" => "required|string|min:3|max:255",
             "email" => "required|string|email|max:255|unique:users",
             "password" => "required|string|min:6|max:255|confirmed",
-            "avatarUrl" => "nullable|string|max:1000",
+            "confirmPassword" => "required|string|min:6|max:255",
         ];
 
         return $rules;
@@ -37,7 +37,7 @@ class StoreUserRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'avatar_url' => $this->avatarUrl,
+            'password_confirmation' => $this->confirmPassword
         ]);
     }
 }

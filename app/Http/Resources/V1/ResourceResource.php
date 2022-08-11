@@ -29,7 +29,7 @@ class ResourceResource extends JsonResource
             'createdAt' => date('d/m/Y', strtotime($this->created_at)),
             'updatedAt' => date('d/m/Y', strtotime($this->updated_at)),
             'userId' => $this->user_id,
-            'user' => new UserResource($this->user),
+            'author' => $this->user->name,
             'categoryId' => $this->category_id,
             'category' => new CategoryResource($this->category),
             'votes' => new ResourceVoteCollection($this->votes),

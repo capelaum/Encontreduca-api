@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\V1\{
     StoreResourceUserRequest,
-    StoreUserRequest,
     UpdateUserRequest
 };
 use App\Http\Resources\V1\UserCollection;
@@ -70,7 +69,7 @@ class UserController extends Controller
      * @param User $user
      * @return JsonResponse
      */
-    public function destroy(User $user)
+    public function destroy(User $user): JsonResponse
     {
         $user->delete();
 
