@@ -1,22 +1,15 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
-Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], function () {
+Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::apiResources([
         'users' => UserController::class,
-        'categories' => CategoryController::class,
-        'motives' => MotiveController::class,
         'supports' => SupportController::class,
         'resources/complaints' => ResourceComplaintController::class,
         'resources/changes' => ResourceChangeController::class,
         'resources/votes' => ResourceVoteController::class,
-        'resources' => ResourceController::class,
         'reviews/complaints' => ReviewComplaintController::class,
         'reviews' => ReviewController::class
     ]);
@@ -28,3 +21,9 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], f
         Route::delete('{user}/resources/{resource}', ['uses' => 'UserController@deleteResource']);
     });
 });
+
+Route::apiResources([
+    'categories' => CategoryController::class,
+    'resources' => ResourceController::class,
+    'motives' => MotiveController::class
+]);
