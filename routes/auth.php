@@ -3,14 +3,15 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Api\V1\VerifyEmailController;
+use \App\Http\Controllers\Api\V1\AuthController;
+use \App\Http\Resources\V1\UserResource;
 
 
-Route::post('register', 'AuthController@register');
-Route::post('login', 'AuthController@login');
+//Route::post('register', [AuthController::class, 'register']);
+//Route::post('login', [AuthController::class, 'login']);
 
-Route::get('user', function (Request $request) {
-    return $request->user();
-})->middleware(['auth:sanctum', 'verified']);
+Route::get('user', [AuthController::class, 'getAuthUser'])
+    ->middleware(['auth:sanctum', 'verified']);
 
 Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
     ->middleware(['signed', 'throttle:6,1'])
