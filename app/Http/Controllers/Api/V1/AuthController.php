@@ -45,11 +45,11 @@ class AuthController extends Controller
 
         $user = User::create($data);
 
-        Auth::login($user);
-
         event(new Registered($user));
 
-        return response(null, 201);
+        return response([
+            'user' => new UserResource($user),
+        ], 201);
     }
 
     /**
@@ -57,20 +57,34 @@ class AuthController extends Controller
      *
      * @param LoginRequest $request
      * @return Response
-     * @throws ValidationException
      */
     public function login(LoginRequest $request)
     {
-        $request->authenticate();
+        if (Auth::attempt($request->validated())) {
+            $user = Auth::user();
 
-        if (Auth::guard()->attempt($request->validated())) {
-            $request->session()->regenerate();
+            if ($user->tokens()->count() > 0) {
+                $user->tokens()->delete();
+            }
 
-            Auth::login($request->user());
+            $userToken = $user->createToken('auth', [
+                'create:resource',
+                'create:resource-change',
+                'create:resource-complaint',
+                'create:resource-vote',
+                'create:review',
+                'create:review-complaint',
+                'create:support',
+                'edit:review',
+                'edit:resource-vote',
+                'edit:user',
+                'delete:user',
+                'delete:review',
+            ]);
 
             return response([
-                'message' => "Usuário {$request->user()->name} logado com sucesso",
-                'session' => $request->session()->all()
+                'message' => "Usuário {$request->user()->name} logado com sucesso!",
+                'token' => $userToken->plainTextToken,
             ], 200);
         }
 
@@ -85,14 +99,14 @@ class AuthController extends Controller
      * @param LoginRequest $request
      * @return Response
      */
-    public function destroy(LoginRequest $request)
+    public function logout()
     {
-        Auth::guard('web')->logout();
+        $user = Auth::user();
 
-        $request->session()->invalidate();
+        $user->tokens()->delete();
 
-        $request->session()->regenerateToken();
-
-        return response()->noContent();
+        return response([
+            'message' => 'Logout realizado com sucesso!'
+        ], 200);
     }
 }
