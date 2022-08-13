@@ -57,7 +57,7 @@ class ReviewController extends Controller
      */
     public function update(UpdateReviewRequest $request, Review $review): JsonResponse
     {
-        $review->update($request->validated());
+        $review->update($request->all());
 
         return response()->json($review);
     }

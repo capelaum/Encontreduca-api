@@ -50,10 +50,10 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user): JsonResponse
     {
-        $data = $request->validated();
+        $data = $request->all();
 
         if ($request->password) {
-            $data['password'] = bcrypt($request->password);
+            $data['password'] = Hash::make($request->password);
         }
 
         if (!$request->password) {
@@ -62,7 +62,7 @@ class UserController extends Controller
 
         $user->update($data);
 
-        return response()->json($user);
+        return response()->json(new UserResource($user));
     }
 
     /**
