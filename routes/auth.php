@@ -2,9 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\Api\V1\VerifyEmailController;
 use \App\Http\Controllers\Api\V1\AuthController;
-use \App\Http\Resources\V1\UserResource;
+use \App\Http\Controllers\Api\V1\VerifyEmailController;
+use \App\Http\Controllers\Api\V1\ResetPasswordController;
 
 
 Route::post('register', [AuthController::class, 'register']);
@@ -24,3 +24,11 @@ Route::post('/email/verify/resend', function (Request $request) {
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth:sanctum', 'throttle:6,1'])->name('verification.send');
 
+Route::post('/forgot-password', [ResetPasswordController::class, 'sendForgotPasswordResetLink'])
+    ->name('password.email');
+
+Route::get('/reset-password/{token}', [ResetPasswordController::class, 'resetPasswordRoute'])
+    ->name('password.reset');
+
+Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])
+    ->name('password.update');
