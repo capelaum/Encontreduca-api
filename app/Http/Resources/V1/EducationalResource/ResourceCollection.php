@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\V1;
+namespace App\Http\Resources\V1\EducationalResource;
 
-use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Http\Resources\Json\ResourceCollection as LaravelResourceCollection;
 
-class ResourceVoteCollection extends ResourceCollection
+class ResourceCollection extends LaravelResourceCollection
 {
     /**
      * Transform the resource collection into an array.

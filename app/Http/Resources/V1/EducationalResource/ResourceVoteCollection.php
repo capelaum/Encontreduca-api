@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\V1;
+namespace App\Http\Resources\V1\EducationalResource;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class ResourceComplaintCollection extends ResourceCollection
+class ResourceVoteCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.

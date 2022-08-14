@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\Api\V1\EducationalResource\ResourceController;
 
 
 Route::apiResources([
@@ -9,8 +10,8 @@ Route::apiResources([
 ]);
 
 Route::prefix('resources')->group(function () {
-    Route::get('/', ['uses' => 'ResourceController@index']);
-    Route::get('/{resource}', ['uses' => 'ResourceController@show']);
+    Route::get('/', [ResourceController::class, 'index']);
+    Route::get('/{resource}', [ResourceController::class, 'show']);
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
@@ -24,7 +25,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
         'reviews' => ReviewController::class
     ]);
 
-    Route::post('/', ['uses' => 'ResourceController@store']);
+    Route::post('/', [ResourceController::class, 'store']);
 
     Route::prefix('users')->group(function () {
         Route::delete('{user}/avatar', ['uses' => 'UserController@deleteAvatar']);

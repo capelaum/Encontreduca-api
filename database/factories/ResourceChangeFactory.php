@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Http\Resources\V1\ResourceResource;
+use App\Http\Resources\V1\EducationalResource\ResourceResource;
 use App\Models\Category;
 use App\Models\Resource;
 use App\Models\User;

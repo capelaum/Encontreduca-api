@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\V1;
+namespace App\Http\Resources\V1\EducationalResource;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ResourceVoteResource extends JsonResource
+class ResourceChangeResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,11 +16,12 @@ class ResourceVoteResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'resourceId' => $this->resource_id,
+            'field' => $this->field,
+            'oldValue' => $this->old_value,
+            'newValue' => $this->new_value,
+            'createdAt' => date('d/m/Y', strtotime($this->created_at)),
             'userId' => $this->user_id,
-            'vote' => $this->vote,
-            'justification' => $this->justification,
-            'updatedAt' => date('d/m/Y', strtotime($this->updated_at)),
+            'resourceId' => $this->resource_id,
         ];
     }
 }

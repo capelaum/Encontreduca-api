@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\EducationalResource;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\V1\StoreResourceVoteRequest;
-use App\Http\Requests\V1\UpdateResourceVoteRequest;
-use App\Http\Resources\V1\ResourceVoteCollection;
-use App\Http\Resources\V1\ResourceVoteResource;
+use App\Http\Requests\V1\EducationalResource\StoreResourceVoteRequest;
+use App\Http\Requests\V1\EducationalResource\UpdateResourceVoteRequest;
+use App\Http\Resources\V1\EducationalResource\ResourceVoteCollection;
+use App\Http\Resources\V1\EducationalResource\ResourceVoteResource;
 use App\Models\ResourceVote;
 use Illuminate\Http\JsonResponse;
+use function response;
 
 class ResourceVoteController extends Controller
 {

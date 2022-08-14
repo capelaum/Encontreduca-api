@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\V1;
+namespace App\Http\Resources\V1\EducationalResource;
 
-use Illuminate\Http\Resources\Json\ResourceCollection as LaravelResourceCollection;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class ResourceCollection extends LaravelResourceCollection
+class ResourceChangeCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.

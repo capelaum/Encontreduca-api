@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\EducationalResource;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\V1\StoreResourceRequest;
-use App\Http\Resources\V1\ResourceCollection;
-use App\Http\Resources\V1\ResourceResource;
+use App\Http\Requests\V1\EducationalResource\StoreResourceRequest;
+use App\Http\Resources\V1\EducationalResource\ResourceCollection;
+use App\Http\Resources\V1\EducationalResource\ResourceResource;
 use App\Models\Resource;
 use Illuminate\Http\JsonResponse;
+use function response;
 
 class ResourceController extends Controller
 {
