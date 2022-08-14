@@ -15,13 +15,14 @@ class UserPolicy
 
     /**
      * @param User $user
+     * @param string $action
      * @return Response
      */
-    public function list(User $user): Response
+    public function isAdmin(User $user, string $action)
     {
         return $this->denyWithStatus(
             401,
-            'Você não tem permissão para listar os usuários.'
+            "Você não tem permissão para {$action}"
         );
     }
 

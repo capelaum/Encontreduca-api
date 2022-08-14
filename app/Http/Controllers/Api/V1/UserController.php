@@ -28,7 +28,10 @@ class UserController extends Controller
      */
     public function index(): UserCollection
     {
-        $this->authorize('list', auth()->user());
+        $this->authorize('isAdmin', [
+            User::class,
+            'listar os usuários.'
+        ]);
 
         $users = User::all();
 
