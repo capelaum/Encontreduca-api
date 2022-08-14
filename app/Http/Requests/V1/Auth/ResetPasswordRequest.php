@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Requests\V1;
+namespace App\Http\Requests\V1\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class ResetPasswordRequest extends FormRequest
 {

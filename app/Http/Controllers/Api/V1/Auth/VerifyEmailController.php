@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
+use App\Models\User;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use App\Models\User;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use function event;
+use function redirect;
+use function response;
 
 class VerifyEmailController extends Controller
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\V1\ResetPasswordRequest;
+use App\Http\Requests\V1\Auth\ResetPasswordRequest;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -12,8 +12,11 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Hash;
-use \Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
+use function event;
+use function redirect;
+use function response;
 
 class ResetPasswordController extends Controller
 {

@@ -1,22 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\V1\RegisterRequest;
-use App\Http\Requests\V1\LoginRequest;
+use App\Http\Requests\V1\Auth\LoginRequest;
+use App\Http\Requests\V1\Auth\RegisterRequest;
 use App\Http\Resources\V1\UserResource;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
+use function event;
+use function response;
 
 class AuthController extends Controller
 {
@@ -58,7 +55,7 @@ class AuthController extends Controller
      * @param LoginRequest $request
      * @return Response
      */
-    public function login(LoginRequest $request)
+    public function login(LoginRequest $request): Response
     {
         if (Auth::attempt($request->validated())) {
             $user = Auth::user();
@@ -69,17 +66,19 @@ class AuthController extends Controller
 
             $userToken = $user->createToken('auth', [
                 'create:resource',
+                'create:resource-user',
                 'create:resource-change',
                 'create:resource-complaint',
                 'create:resource-vote',
                 'create:review',
                 'create:review-complaint',
                 'create:support',
+                'edit:user',
                 'edit:review',
                 'edit:resource-vote',
-                'edit:user',
                 'delete:user',
                 'delete:review',
+                'delete:resource-user',
             ]);
 
             return response([
@@ -96,10 +95,9 @@ class AuthController extends Controller
     /**
      * Destroy an authenticated session.
      *
-     * @param LoginRequest $request
      * @return Response
      */
-    public function logout()
+    public function logout(): Response
     {
         $user = Auth::user();
 
