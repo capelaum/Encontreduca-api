@@ -52,3 +52,7 @@ Route::prefix('resources')->group(function () {
     Route::get('/{resource}', [ResourceController::class, 'show']);
 });
 
+Route::prefix('reviews')->group(function () {
+    Route::get('/', [ReviewController::class, 'index']);
+    Route::get('/{review}', [ReviewController::class, 'show']);
+});

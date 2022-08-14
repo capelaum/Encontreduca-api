@@ -8,6 +8,7 @@ use App\Http\Requests\V1\Review\UpdateReviewRequest;
 use App\Http\Resources\V1\Review\ReviewCollection;
 use App\Http\Resources\V1\Review\ReviewResource;
 use App\Models\Review;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use function response;
 
@@ -41,9 +42,18 @@ class ReviewController extends Controller
      *
      * @param StoreReviewRequest $request
      * @return JsonResponse
+     * @throws AuthorizationException
      */
     public function store(StoreReviewRequest $request): JsonResponse
     {
+        $this->authorize('isRequestUser',
+            [
+                Review::class,
+                $request->userId,
+                'criar essa avaliação.'
+            ]
+        );
+
         $review = Review::create($request->all());
 
         return response()->json($review, 201);
@@ -55,9 +65,18 @@ class ReviewController extends Controller
      * @param UpdateReviewRequest $request
      * @param Review $review
      * @return JsonResponse
+     * @throws AuthorizationException
      */
     public function update(UpdateReviewRequest $request, Review $review): JsonResponse
     {
+        $this->authorize('isRequestUser',
+            [
+                Review::class,
+                $review->user_id,
+                'atualizar essa avaliação.'
+            ]
+        );
+
         $review->update($request->all());
 
         return response()->json($review);
@@ -68,9 +87,18 @@ class ReviewController extends Controller
      *
      * @param Review $review
      * @return JsonResponse
+     * @throws AuthorizationException
      */
     public function destroy(Review $review): JsonResponse
     {
+        $this->authorize('isRequestUser',
+            [
+                Review::class,
+                $review->user_id,
+                'excluir essa avaliação.'
+            ]
+        );
+
         $review->delete();
 
         return response()->json(null);
