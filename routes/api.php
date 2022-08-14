@@ -1,7 +1,23 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\Api\V1\EducationalResource\ResourceController;
+use \App\Http\Controllers\Api\V1\EducationalResource\{
+    ResourceController,
+    ResourceComplaintController,
+    ResourceChangeController,
+    ResourceVoteController
+};
+use \App\Http\Controllers\Api\V1\Review\{
+    ReviewController,
+    ReviewComplaintController
+};
+
+use \App\Http\Controllers\Api\V1\{
+    UserController,
+    CategoryController,
+    MotiveController,
+    SupportController
+};
 
 
 Route::apiResources([
