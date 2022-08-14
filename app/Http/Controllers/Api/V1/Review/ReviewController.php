@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\Review;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\V1\StoreReviewRequest;
-use App\Http\Requests\V1\UpdateReviewRequest;
-use App\Http\Resources\V1\ReviewCollection;
-use App\Http\Resources\V1\ReviewResource;
+use App\Http\Requests\V1\Review\StoreReviewRequest;
+use App\Http\Requests\V1\Review\UpdateReviewRequest;
+use App\Http\Resources\V1\Review\ReviewCollection;
+use App\Http\Resources\V1\Review\ReviewResource;
 use App\Models\Review;
 use Illuminate\Http\JsonResponse;
+use function response;
 
 class ReviewController extends Controller
 {

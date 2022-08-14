@@ -3,7 +3,7 @@
 namespace App\Http\Resources\V1\EducationalResource;
 
 use App\Http\Resources\V1\CategoryResource;
-use App\Http\Resources\V1\ReviewCollection;
+use App\Http\Resources\V1\Review\ReviewCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ResourceResource extends JsonResource

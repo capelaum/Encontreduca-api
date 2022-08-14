@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\V1;
+namespace App\Http\Requests\V1\Review;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreReviewComplaintRequest extends FormRequest
+class StoreReviewRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +23,11 @@ class StoreReviewComplaintRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'userId' => 'required|integer|exists:users,id',
-            'reviewId' => 'required|integer|exists:reviews,id',
-            'motiveId' => 'required|integer|exists:motives,id',
+        $rules =  [
+            "userId" => "required|exists:users,id",
+            "resourceId" => "required|exists:resources,id",
+            "rating" => "required|numeric|between:1,5",
+            "comment" => "required|string|min:3|max:1000"
         ];
 
         return $rules;
@@ -36,8 +37,7 @@ class StoreReviewComplaintRequest extends FormRequest
     {
         $this->merge([
             'user_id' => $this->userId,
-            'review_id' => $this->reviewId,
-            'motive_id' => $this->motiveId,
+            'resource_id' => $this->resourceId,
         ]);
     }
 }

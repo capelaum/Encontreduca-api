@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\EducationalResource;
+namespace App\Http\Controllers\Api\V1\Review;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\V1\StoreReviewComplaintRequest;
-use App\Http\Resources\V1\ReviewComplaintCollection;
-use App\Http\Resources\V1\ReviewComplaintResource;
+use App\Http\Requests\V1\Review\StoreReviewComplaintRequest;
+use App\Http\Resources\V1\Review\ReviewComplaintCollection;
+use App\Http\Resources\V1\Review\ReviewComplaintResource;
 use App\Models\ReviewComplaint;
 use Illuminate\Http\JsonResponse;
 use function response;
