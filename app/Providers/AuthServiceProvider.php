@@ -12,7 +12,8 @@ use App\Models\{
     Resource,
     ResourceChange,
     ResourceVote,
-    ResourceComplaint
+    ResourceComplaint,
+    ReviewComplaint
 };
 use App\Policies\{
     UserPolicy,
@@ -34,6 +35,7 @@ class AuthServiceProvider extends ServiceProvider
         ResourceVote::class => DefaultPolicy::class,
         ResourceChange::class => DefaultPolicy::class,
         ResourceComplaint::class => DefaultPolicy::class,
+        ReviewComplaint::class => DefaultPolicy::class,
     ];
 
     /**

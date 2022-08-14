@@ -19,6 +19,11 @@ class ReviewComplaintController extends Controller
      */
     public function index(): ReviewComplaintCollection
     {
+        $this->authorize('isAdmin', [
+            ReviewComplaint::class,
+            'listar as denúncias de avaliações.'
+        ]);
+
         $reviewComplaints = ReviewComplaint::all();
 
         return new ReviewComplaintCollection($reviewComplaints);
@@ -32,6 +37,11 @@ class ReviewComplaintController extends Controller
      */
     public function show(int $id): ReviewComplaintResource
     {
+        $this->authorize('isAdmin', [
+            ReviewComplaint::class,
+            'visualizar essa denúncia de avaliação.'
+        ]);
+
         $reviewComplaint = ReviewComplaint::findOrFail($id);
 
         return new ReviewComplaintResource($reviewComplaint);
@@ -45,6 +55,14 @@ class ReviewComplaintController extends Controller
      */
     public function store(StoreReviewComplaintRequest $request): JsonResponse
     {
+        $this->authorize('isRequestUser',
+            [
+                ReviewComplaint::class,
+                $request->userId,
+                'criar essa denúncia de avaliação.'
+            ]
+        );
+
         $reviewComplaint = ReviewComplaint::create($request->all());
 
         return response()->json($reviewComplaint);
