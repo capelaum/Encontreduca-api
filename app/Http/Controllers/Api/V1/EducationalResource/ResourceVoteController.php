@@ -8,6 +8,7 @@ use App\Http\Requests\V1\EducationalResource\UpdateResourceVoteRequest;
 use App\Http\Resources\V1\EducationalResource\ResourceVoteCollection;
 use App\Http\Resources\V1\EducationalResource\ResourceVoteResource;
 use App\Models\ResourceVote;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use function response;
 
@@ -17,6 +18,7 @@ class ResourceVoteController extends Controller
      * Returns list of all Resources Votes.
      *
      * @return ResourceVoteCollection
+     * @throws AuthorizationException
      */
     public function index(): ResourceVoteCollection
     {
@@ -35,6 +37,7 @@ class ResourceVoteController extends Controller
      *
      * @param int $id
      * @return ResourceVoteResource
+     * @throws AuthorizationException
      */
     public function show(int $id): ResourceVoteResource
     {
@@ -53,16 +56,30 @@ class ResourceVoteController extends Controller
      *
      * @param StoreResourceVoteRequest $request
      * @return JsonResponse
+     * @throws AuthorizationException
      */
     public function store(StoreResourceVoteRequest $request): JsonResponse
     {
+        $userId = $request->userId;
+        $resourceId = $request->resourceId;
+
         $this->authorize('isRequestUser',
             [
                 ResourceVote::class,
-                $request->userId,
+                $userId,
                 'criar esse voto de recurso.'
             ]
         );
+
+        $resourceVote = ResourceVote::where('user_id', $userId)
+            ->where('resource_id', $resourceId)
+            ->first();
+
+        if ($resourceVote) {
+            return response()->json([
+                'message' => 'Voto já existe.'
+            ], 409);
+        }
 
         $resourceVote = ResourceVote::create($request->all());
 
@@ -75,6 +92,7 @@ class ResourceVoteController extends Controller
      * @param UpdateResourceVoteRequest $request
      * @param int $id
      * @return JsonResponse
+     * @throws AuthorizationException
      */
     public function update(
         UpdateResourceVoteRequest $request,
@@ -90,7 +108,7 @@ class ResourceVoteController extends Controller
             ]
         );
 
-        $resourceVote->update($request->all());
+        $resourceVote->update($request->only('vote', 'justification'));
 
         return response()->json($resourceVote);
     }
