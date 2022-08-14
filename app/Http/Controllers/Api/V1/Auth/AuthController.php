@@ -88,7 +88,7 @@ class AuthController extends Controller
         }
 
         return response([
-            'message' => 'Não foi possível autenticar o usuário',
+            'message' => 'Credenciais inválidas',
         ], 401);
     }
 

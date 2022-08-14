@@ -44,10 +44,10 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::post('/', [ResourceController::class, 'store']);
 
     Route::prefix('users')->group(function () {
-        Route::delete('{user}/avatar', ['uses' => 'UserController@deleteAvatar']);
+        Route::delete('{user}/avatar', [UserController::class, 'deleteAvatar']);
 
-        Route::post('/resources', ['uses' => 'UserController@storeResource']);
-        Route::delete('{user}/resources/{resource}', ['uses' => 'UserController@deleteResource']);
+        Route::post('/resources', [UserController::class, 'storeResource']);
+        Route::delete('{user}/resources/{resource}', [UserController::class, 'deleteResource']);
     });
 });
 
