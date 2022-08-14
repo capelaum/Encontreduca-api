@@ -3,6 +3,16 @@
 use Illuminate\Support\Facades\Route;
 
 
+Route::apiResources([
+    'categories' => CategoryController::class,
+    'motives' => MotiveController::class
+]);
+
+Route::prefix('resources')->group(function () {
+    Route::get('/', ['uses' => 'ResourceController@index']);
+    Route::get('/{resource}', ['uses' => 'ResourceController@show']);
+});
+
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::apiResources([
         'users' => UserController::class,
@@ -14,6 +24,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
         'reviews' => ReviewController::class
     ]);
 
+    Route::post('/', ['uses' => 'ResourceController@store']);
+
     Route::prefix('users')->group(function () {
         Route::delete('{user}/avatar', ['uses' => 'UserController@deleteAvatar']);
 
@@ -22,8 +34,4 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     });
 });
 
-Route::apiResources([
-    'categories' => CategoryController::class,
-    'resources' => ResourceController::class,
-    'motives' => MotiveController::class
-]);
+
