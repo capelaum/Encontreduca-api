@@ -35,7 +35,7 @@ class ResourceResource extends JsonResource
             'categoryId' => $this->category_id,
             'category' => new CategoryResource($this->category),
             'votes' => new ResourceVoteCollection($this->votes),
-            'reviews' => new ReviewCollection($this->reviews),
+            'reviews' => (new ReviewCollection($this->reviews))->sortByDesc('updated_at')->values(),
         ];
     }
 }
