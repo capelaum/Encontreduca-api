@@ -6,9 +6,6 @@ use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use  \Illuminate\Auth\Access\Response;
 
-/**
- *
- */
 class UserPolicy
 {
     use HandlesAuthorization;
@@ -18,7 +15,7 @@ class UserPolicy
      * @param string $action
      * @return Response
      */
-    public function isAdmin(User $user, string $action)
+    public function isAdmin(User $user, string $action): Response
     {
         return $this->denyWithStatus(
             401,
