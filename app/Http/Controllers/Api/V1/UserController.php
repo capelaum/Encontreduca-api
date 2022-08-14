@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\V1\{
     StoreResourceUserRequest,
     UpdateUserRequest
@@ -58,6 +59,11 @@ class UserController extends Controller
 
         if (!$request->password) {
             unset($data['password']);
+        }
+
+        if(auth()->user()->email !== $request->email) {
+            auth()->user()->newEmail($request->email);
+            $data['email'] = auth()->user()->email;
         }
 
         $user->update($data);
