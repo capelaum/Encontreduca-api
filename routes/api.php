@@ -37,7 +37,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
         'reviews' => ReviewController::class
     ]);
 
-    Route::post('/', [ResourceController::class, 'store']);
+    Route::post('resources', [ResourceController::class, 'store']);
 
     Route::prefix('users')->group(function () {
         Route::delete('{user}/avatar', [UserController::class, 'deleteAvatar']);

@@ -43,6 +43,14 @@ class ResourceController extends Controller
      */
     public function store(StoreResourceRequest $request): JsonResponse
     {
+        $this->authorize('isRequestUser',
+            [
+                Resource::class,
+                $request->userId,
+                'criar esse recurso.'
+            ]
+        );
+
         $resource = Resource::create($request->all());
 
         return response()->json($resource, 201);

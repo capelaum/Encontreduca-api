@@ -8,6 +8,7 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use App\Models\{
     User,
     Support,
+    Resource,
     ResourceChange,
     ResourceVote,
     ResourceComplaint
@@ -27,8 +28,9 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         User::class => UserPolicy::class,
         Support::class => DefaultPolicy::class,
-        ResourceChange::class => DefaultPolicy::class,
+        Resource::class => DefaultPolicy::class,
         ResourceVote::class => DefaultPolicy::class,
+        ResourceChange::class => DefaultPolicy::class,
         ResourceComplaint::class => DefaultPolicy::class,
     ];
 
