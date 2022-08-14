@@ -20,6 +20,11 @@ class ResourceVoteController extends Controller
      */
     public function index(): ResourceVoteCollection
     {
+        $this->authorize('isAdmin', [
+            ResourceVote::class,
+            'listar os votos de recursos.'
+        ]);
+
         $resourceVotes = ResourceVote::all();
 
         return new ResourceVoteCollection($resourceVotes);
@@ -33,7 +38,13 @@ class ResourceVoteController extends Controller
      */
     public function show(int $id): ResourceVoteResource
     {
+        $this->authorize('isAdmin', [
+            ResourceVote::class,
+            'visualizar esse voto de recursos'
+        ]);
+
         $resourceVote = ResourceVote::findOrFail($id);
+
         return new ResourceVoteResource($resourceVote);
     }
 
@@ -45,6 +56,14 @@ class ResourceVoteController extends Controller
      */
     public function store(StoreResourceVoteRequest $request): JsonResponse
     {
+        $this->authorize('isRequestUser',
+            [
+                ResourceVote::class,
+                $request->userId,
+                'criar esse voto de recurso.'
+            ]
+        );
+
         $resourceVote = ResourceVote::create($request->all());
 
         return response()->json($resourceVote, 201);
@@ -62,6 +81,15 @@ class ResourceVoteController extends Controller
         int $id
     ): JsonResponse {
         $resourceVote = ResourceVote::findOrFail($id);
+
+        $this->authorize('isRequestUser',
+            [
+                ResourceVote::class,
+                $resourceVote->user_id,
+                'atualizar esse voto de recurso.'
+            ]
+        );
+
         $resourceVote->update($request->all());
 
         return response()->json($resourceVote);

@@ -7,11 +7,14 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use App\Models\{
     User,
-    Support
+    Support,
+    ResourceChange,
+    ResourceVote,
+    ResourceComplaint
 };
 use App\Policies\{
     UserPolicy,
-    SupportPolicy
+    DefaultPolicy,
 };
 
 class AuthServiceProvider extends ServiceProvider
@@ -23,7 +26,10 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         User::class => UserPolicy::class,
-        Support::class => SupportPolicy::class,
+        Support::class => DefaultPolicy::class,
+        ResourceChange::class => DefaultPolicy::class,
+        ResourceVote::class => DefaultPolicy::class,
+        ResourceComplaint::class => DefaultPolicy::class,
     ];
 
     /**

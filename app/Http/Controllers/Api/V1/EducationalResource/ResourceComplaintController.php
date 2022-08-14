@@ -19,6 +19,11 @@ class ResourceComplaintController extends Controller
      */
     public function index(): ResourceComplaintCollection
     {
+        $this->authorize('isAdmin', [
+            ResourceComplaint::class,
+            'listar as sugestões de fechamento de recursos.'
+        ]);
+
         $resourceComplaints = ResourceComplaint::all();
 
         return new ResourceComplaintCollection($resourceComplaints);
@@ -32,6 +37,11 @@ class ResourceComplaintController extends Controller
      */
     public function show(int $id): ResourceComplaintResource
     {
+        $this->authorize('isAdmin', [
+            ResourceComplaint::class,
+            'visualizar essa sugestão de fechamento de recursos'
+        ]);
+
         $resourceComplaint = ResourceComplaint::findOrFail($id);
 
         return new ResourceComplaintResource($resourceComplaint);
@@ -45,6 +55,14 @@ class ResourceComplaintController extends Controller
      */
     public function store(StoreResourceComplaintRequest $request): JsonResponse
     {
+        $this->authorize('isRequestUser',
+            [
+                ResourceComplaint::class,
+                $request->userId,
+                'criar essa sugestão de fechamento de recurso.'
+            ]
+        );
+
         $resourceComplaint = ResourceComplaint::create($request->all());
 
         return response()->json($resourceComplaint);

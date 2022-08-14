@@ -43,13 +43,13 @@ class UserPolicy
 
     /**
      * @param User $user
-     * @param int $resourceUserId
+     * @param int $ownerId
      * @param string $action
      * @return Response|bool
      */
-    public function isRequestUser(User $user, int $resourceUserId, string $action): Response|bool
+    public function isRequestUser(User $user, int $ownerId, string $action): Response|bool
     {
-        if ($user->id !== $resourceUserId) {
+        if ($user->id !== $ownerId) {
             return $this->denyWithStatus(
                 401,
                 "Você não tem permissão para {$action}"

@@ -19,6 +19,11 @@ class ResourceChangeController extends Controller
      */
     public function index(): ResourceChangeCollection
     {
+        $this->authorize('isAdmin', [
+            ResourceChange::class,
+            'listar as sugestões de alterações de recursos.'
+        ]);
+
         $resourceChanges = ResourceChange::all();
 
         return new ResourceChangeCollection($resourceChanges);
@@ -32,6 +37,11 @@ class ResourceChangeController extends Controller
      */
     public function show(int $id): ResourceChangeResource
     {
+        $this->authorize('isAdmin', [
+            ResourceChange::class,
+            'visualizar essa sugestão de alteração de recurso.'
+        ]);
+
         $resourceChange = ResourceChange::findOrFail($id);
 
         return new ResourceChangeResource($resourceChange);
@@ -45,6 +55,14 @@ class ResourceChangeController extends Controller
      */
     public function store(StoreResourceChangeRequest $request): JsonResponse
     {
+        $this->authorize('isRequestUser',
+            [
+                ResourceChange::class,
+                $request->userId,
+                'criar essa sugestão de alteração de recurso.'
+            ]
+        );
+
         $resourceChange = ResourceChange::create($request->all());
 
         return response()->json($resourceChange, 201);

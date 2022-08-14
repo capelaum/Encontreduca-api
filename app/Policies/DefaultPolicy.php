@@ -2,12 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Support;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use  \Illuminate\Auth\Access\Response;
+use Illuminate\Auth\Access\Response;
 
-class SupportPolicy
+class DefaultPolicy
 {
     use HandlesAuthorization;
 
@@ -26,13 +25,13 @@ class SupportPolicy
 
     /**
      * @param User $user
-     * @param int $resourceUserId
+     * @param int $ownerId
      * @param string $action
      * @return bool|Response
      */
-    public function isRequestUser(User $user, int $resourceUserId, string $action): Response|bool
+    public function isRequestUser(User $user, int $ownerId, string $action): Response|bool
     {
-        if ($user->id !== $resourceUserId) {
+        if ($user->id !== $ownerId) {
             return $this->denyWithStatus(
                 401,
                 "Você não tem permissão para {$action}"
