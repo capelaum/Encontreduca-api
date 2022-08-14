@@ -5,11 +5,14 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Verified;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 
 class VerifyEmailController extends Controller
 {
@@ -19,7 +22,7 @@ class VerifyEmailController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function __invoke(Request $request): RedirectResponse
+    public function verify(Request $request): RedirectResponse
     {
         $user = User::findOrFail($request->route('id'));
 
@@ -32,6 +35,21 @@ class VerifyEmailController extends Controller
         }
 
         return redirect(env('FRONTEND_URL') . '/?emailVerified=true');
+    }
+
+    /**
+     * Send Email Verification
+     *
+     * @param Request $request
+     * @return Application|ResponseFactory|Response
+     */
+    public function send(Request $request): Response|Application|ResponseFactory
+    {
+        $request->user()->sendEmailVerificationNotification();
+
+        return response([
+            'message' => 'Email de verificação reenviado com sucesso'
+        ], 200);
     }
 }
 

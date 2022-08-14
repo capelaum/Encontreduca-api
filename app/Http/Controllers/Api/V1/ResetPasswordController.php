@@ -23,7 +23,7 @@ class ResetPasswordController extends Controller
      * @param Request $request
      * @return Application|ResponseFactory|Response
      */
-    public function sendForgotPasswordResetLink(Request $request)
+    public function email(Request $request): Response|Application|ResponseFactory
     {
         $request->validate(['email' => 'required|email']);
 
@@ -43,7 +43,7 @@ class ResetPasswordController extends Controller
      * @param string $token
      * @return Application|RedirectResponse|Redirector
      */
-    public function resetPasswordRoute(Request $request, string $token)
+    public function reset(Request $request, string $token): Redirector|RedirectResponse|Application
     {
         return redirect(env('FRONTEND_URL') . "/?token={$token}&email={$request->email}");
     }
@@ -54,7 +54,7 @@ class ResetPasswordController extends Controller
      * @param ResetPasswordRequest $request
      * @return Application|ResponseFactory|Response
      */
-    public function resetPassword(ResetPasswordRequest $request)
+    public function update(ResetPasswordRequest $request): Response|Application|ResponseFactory
     {
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
