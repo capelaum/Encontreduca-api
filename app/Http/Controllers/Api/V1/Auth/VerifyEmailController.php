@@ -27,14 +27,14 @@ class VerifyEmailController extends Controller
         $user = User::findOrFail($request->route('id'));
 
         if ($user->hasVerifiedEmail()) {
-            return redirect(env('FRONTEND_URL') . '/?emailAlreadyVerified=already');
+            return redirect(config('app.frontend_url'));
         }
 
         if ($user->markEmailAsVerified()) {
             event(new Verified($request->user()));
         }
 
-        return redirect(env('FRONTEND_URL') . '/?emailVerified=true');
+        return redirect(config('app.frontend_url') . '/?emailVerified=true');
     }
 
     /**

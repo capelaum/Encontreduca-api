@@ -15,7 +15,7 @@ class TrustHosts extends Middleware
     {
         return [
             $this->allSubdomainsOfApplicationUrl(),
-            env('FRONTEND_URL')
+            config('app.frontend_url')
         ];
     }
 }

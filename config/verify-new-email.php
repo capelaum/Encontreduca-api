@@ -9,7 +9,7 @@ return [
     /**
      * Here you can specify the path to redirect to after verification.
      */
-    'redirect_to' => env('FRONTEND_URL') . '/?newEmailVerified=true',
+    'redirect_to' => config('app.frontend_url') . '/?newEmailVerified=true',
 
     /**
      * Whether to login the user after successfully verifying its email.

@@ -48,7 +48,7 @@ class ResetPasswordController extends Controller
      */
     public function reset(Request $request, string $token): Redirector|RedirectResponse|Application
     {
-        return redirect(env('FRONTEND_URL') . "/?token={$token}&email={$request->email}");
+        return redirect(config('app.frontend_url') . "/?token={$token}&email={$request->email}");
     }
 
     /**
