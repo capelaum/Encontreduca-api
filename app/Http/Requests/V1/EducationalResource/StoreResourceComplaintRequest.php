@@ -11,7 +11,7 @@ class StoreResourceComplaintRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,15 +21,13 @@ class StoreResourceComplaintRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
-        $rules =  [
+        return [
             "userId" => "required|exists:users,id",
             "resourceId" => "required|exists:resources,id",
             "motiveId" => "required|exists:motives,id"
         ];
-
-        return $rules;
     }
 
     protected function prepareForValidation()

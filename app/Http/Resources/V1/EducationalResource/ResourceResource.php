@@ -4,7 +4,6 @@ namespace App\Http\Resources\V1\EducationalResource;
 
 use App\Http\Resources\V1\CategoryResource;
 use App\Http\Resources\V1\Review\ReviewCollection;
-use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

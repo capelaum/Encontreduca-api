@@ -11,7 +11,7 @@ class StoreReviewRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,16 +21,14 @@ class StoreReviewRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
-        $rules =  [
+        return  [
             "userId" => "required|exists:users,id",
             "resourceId" => "required|exists:resources,id",
             "rating" => "required|numeric|between:1,5",
             "comment" => "required|string|min:3|max:1000"
         ];
-
-        return $rules;
     }
 
     protected function prepareForValidation()

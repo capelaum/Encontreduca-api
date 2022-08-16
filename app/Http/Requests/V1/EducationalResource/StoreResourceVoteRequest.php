@@ -21,16 +21,14 @@ class StoreResourceVoteRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
-        $rules = [
+        return [
             "userId" => "required|integer|exists:users,id",
             "resourceId" => "required|integer|exists:resources,id",
             "vote" => "required|boolean",
             "justification" => "required|string|min:3"
         ];
-
-        return $rules;
     }
 
     protected function prepareForValidation()

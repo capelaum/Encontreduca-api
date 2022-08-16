@@ -11,7 +11,7 @@ class StoreReviewComplaintRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,15 +21,13 @@ class StoreReviewComplaintRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
-        $rules = [
+        return [
             'userId' => 'required|integer|exists:users,id',
             'reviewId' => 'required|integer|exists:reviews,id',
             'motiveId' => 'required|integer|exists:motives,id',
         ];
-
-        return $rules;
     }
 
     protected function prepareForValidation()

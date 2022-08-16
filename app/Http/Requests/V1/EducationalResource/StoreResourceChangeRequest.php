@@ -12,7 +12,7 @@ class StoreResourceChangeRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -22,14 +22,14 @@ class StoreResourceChangeRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         $fieldList = implode(',', ResourceChange::$fields);
 
         return [
             "userId" => "required|exists:users,id",
             "resourceId" => "required|exists:resources,id",
-            "field" => "required|string|max:255|in:{$fieldList}",
+            "field" => "required|string|max:255|in:$fieldList",
             "oldValue" => "required|string|max:255",
             "newValue" => "required|string|max:255",
         ];

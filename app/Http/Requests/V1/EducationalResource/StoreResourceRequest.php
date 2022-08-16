@@ -11,7 +11,7 @@ class StoreResourceRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,9 +21,9 @@ class StoreResourceRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
-        $rules = [
+        return [
             "userId" => "required|exists:users,id",
             "categoryId" => "required|exists:categories,id",
             "name" => "required|string|min:3|max:255",
@@ -35,8 +35,6 @@ class StoreResourceRequest extends FormRequest
             "cover" => "required|string|max:1000",
             "approved" => "nullable|boolean"
         ];
-
-        return $rules;
     }
 
     protected function prepareForValidation()
