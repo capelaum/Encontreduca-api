@@ -1,30 +1,58 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\Api\V1\EducationalResource\{
+    ResourceController,
+    ResourceComplaintController,
+    ResourceChangeController,
+    ResourceVoteController
+};
+use \App\Http\Controllers\Api\V1\Review\{
+    ReviewController,
+    ReviewComplaintController
+};
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+use \App\Http\Controllers\Api\V1\{
+    UserController,
+    CategoryController,
+    MotiveController,
+    SupportController
+};
 
-Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], function () {
+
+Route::apiResources([
+    'categories' => CategoryController::class,
+    'motives' => MotiveController::class
+]);
+
+
+Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::apiResources([
         'users' => UserController::class,
-        'categories' => CategoryController::class,
-        'motives' => MotiveController::class,
         'supports' => SupportController::class,
         'resources/complaints' => ResourceComplaintController::class,
         'resources/changes' => ResourceChangeController::class,
         'resources/votes' => ResourceVoteController::class,
-        'resources' => ResourceController::class,
         'reviews/complaints' => ReviewComplaintController::class,
         'reviews' => ReviewController::class
     ]);
 
-    Route::prefix('users')->group(function () {
-        Route::delete('{user}/avatar', ['uses' => 'UserController@deleteAvatar']);
+    Route::post('resources', [ResourceController::class, 'store']);
 
-        Route::post('/resources', ['uses' => 'UserController@storeResource']);
-        Route::delete('{user}/resources/{resource}', ['uses' => 'UserController@deleteResource']);
+    Route::prefix('users')->group(function () {
+        Route::delete('{user}/avatar', [UserController::class, 'deleteAvatar']);
+
+        Route::post('/resources', [UserController::class, 'storeResource']);
+        Route::delete('{user}/resources/{resource}', [UserController::class, 'deleteResource']);
     });
+});
+
+Route::prefix('resources')->group(function () {
+    Route::get('/', [ResourceController::class, 'index']);
+    Route::get('/{resource}', [ResourceController::class, 'show']);
+});
+
+Route::prefix('reviews')->group(function () {
+    Route::get('/', [ReviewController::class, 'index']);
+    Route::get('/{review}', [ReviewController::class, 'show']);
 });

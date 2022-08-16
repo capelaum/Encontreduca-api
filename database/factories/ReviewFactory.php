@@ -18,11 +18,15 @@ class ReviewFactory extends Factory
      */
     public function definition()
     {
+        $createdAt = fake()->dateTimeThisYear();
+
         return [
             'user_id' => $this->faker->numberBetween(1, User::count()),
             'resource_id' => $this->faker->numberBetween(1, Resource::count()),
             'rating' => $this->faker->numberBetween(1, 5),
             'comment' => $this->faker->text,
+            'created_at' => $createdAt,
+            'updated_at' => $createdAt->add(new \DateInterval('P10D'))
         ];
     }
 }

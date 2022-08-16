@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Resource;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -144,5 +145,7 @@ class ResourceSeeder extends Seeder
             $resource['updated_at'] = now();
             DB::table('resources')->insert($resource);
         }
+
+        Resource::factory(100)->create();
     }
 }
