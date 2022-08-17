@@ -18,6 +18,8 @@ class ResourceFactory extends Factory
      */
     public function definition()
     {
+        $createdAt = fake()->dateTimeThisYear();
+
         return [
             'name' => $this->faker->name,
             'category_id' => $this->faker->numberBetween(1, Category::count()),
@@ -28,7 +30,9 @@ class ResourceFactory extends Factory
             'website' => $this->faker->url,
             'phone' => $this->faker->phoneNumber,
             'cover' => 'https://dummyimage.com/380x200/333/fff',
-            'approved' => $this->faker->boolean(50)
+            'approved' => $this->faker->boolean(50),
+            'created_at' => $createdAt,
+            'updated_at' => $createdAt->add(new \DateInterval('P10D'))
         ];
     }
 }
