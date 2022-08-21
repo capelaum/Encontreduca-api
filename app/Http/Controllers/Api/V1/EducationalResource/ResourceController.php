@@ -8,6 +8,7 @@ use App\Http\Resources\V1\EducationalResource\ResourceCollection;
 use App\Http\Resources\V1\EducationalResource\ResourceResource;
 use App\Models\Resource;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use function response;
 
 class ResourceController extends Controller
@@ -15,9 +16,19 @@ class ResourceController extends Controller
     /**
      * Returns list of all resources.
      *
-     * @return ResourceCollection
      */
-    public function index(): ResourceCollection
+    public function index()
+    {
+        $resources = Resource::getAllResources();
+
+        return response($resources);
+    }
+
+    /**
+     * Returns list of all resources.
+     *
+     */
+    public function slow()
     {
         $resources = Resource::all();
 
@@ -54,5 +65,15 @@ class ResourceController extends Controller
         $resource = Resource::create($request->all());
 
         return response()->json($resource, 201);
+    }
+
+    public function reviews(Resource $resource)
+    {
+        return Resource::getResourceReviews($resource->id);
+    }
+
+    public function votes(Resource $resource)
+    {
+        return Resource::getResourceVotes($resource->id);
     }
 }

@@ -37,7 +37,10 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
         'reviews' => ReviewController::class
     ]);
 
-    Route::post('resources', [ResourceController::class, 'store']);
+    Route::group(['prefix' => 'resources'], function () {
+        Route::post('/', [ResourceController::class, 'store']);
+        Route::get('/{resource}/votes', [ResourceController::class, 'votes']);
+    });
 
     Route::group(['prefix' => 'users'], function () {
         Route::delete('{user}/avatar', [UserController::class, 'deleteAvatar']);
@@ -52,7 +55,9 @@ Route::group([
     'controller' => ResourceController::class
 ], function () {
     Route::get('/', 'index');
+    Route::get('/slow', 'slow');
     Route::get('/{resource}', 'show');
+    Route::get('/{resource}/reviews', 'reviews');
 });
 
 Route::group([
