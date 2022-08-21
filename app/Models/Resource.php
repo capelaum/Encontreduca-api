@@ -90,7 +90,6 @@ class Resource extends Model
             r . resource_id AS resourceId,
             r . comment,
             r . rating,
-            DATE_FORMAT(r . created_at, '%d/%m/%Y') AS createdAt,
             DATE_FORMAT(r . updated_at, '%d/%m/%Y') AS updatedAt
         FROM reviews r
         JOIN users u ON u . id = r . user_id
@@ -113,7 +112,7 @@ class Resource extends Model
 
     public static function getResourceVotes(int $resourceId)
     {
-        $votes = DB::select("
+        return DB::select("
         SELECT
             v . id,
             v . resource_id AS resourceId,
@@ -126,7 +125,50 @@ class Resource extends Model
         JOIN users u ON u . id = v . user_id
         WHERE v . resource_id = :resourceId
         ", ['resourceId' => $resourceId]);
+    }
 
-        return $votes;
+    public static function resourceResponseArray(Resource $resource): array
+    {
+        return [
+            'id' => $resource->id,
+            'userId' => $resource->user_id,
+            'author' => $resource->user->name,
+            'categoryId' => $resource->category_id,
+            'categoryName' => $resource->category->name,
+            'name' => $resource->name,
+            'address' => $resource->address,
+            'latitude' => $resource->latitude,
+            'longitude' => $resource->longitude,
+            'website' => $resource->website,
+            'phone' => $resource->phone,
+            'cover' => $resource->cover,
+            'approved' => $resource->approved,
+            'createdAt' => date('d/m/Y', strtotime($resource->created_at)),
+            'updatedAt' => date('d/m/Y', strtotime($resource->updated_at)),
+        ];
+    }
+
+    public static function resourceArray(Resource $resource): array
+    {
+        return [
+            'id' => $resource->id,
+            'user_id' => $resource->user_id,
+            'category_id' => $resource->category_id,
+            'name' => $resource->name,
+            'latitude' => $resource->latitude,
+            'longitude' => $resource->longitude,
+            'address' => $resource->address,
+            'website' => $resource->website,
+            'phone' => $resource->phone,
+            'cover' => $resource->cover,
+            'approved' => $resource->approved,
+        ];
+    }
+
+    public static function resourceReviewsResponseArray(Resource $resource): array
+    {
+        return [
+
+        ];
     }
 }

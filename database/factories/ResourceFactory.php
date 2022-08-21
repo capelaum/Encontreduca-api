@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Resource>
+ * @extends Factory
  */
 class ResourceFactory extends Factory
 {
@@ -22,8 +22,8 @@ class ResourceFactory extends Factory
 
         return [
             'name' => $this->faker->name,
-            'category_id' => $this->faker->numberBetween(1, Category::count()),
-            'user_id' => $this->faker->numberBetween(1, User::count()),
+            'category_id' => Category::all()->random()->id,
+            'user_id' => User::all()->random()->id,
             'latitude' => $this->faker->randomFloat(6, -15.70, -15.95),
             'longitude' => $this->faker->randomFloat(6, -47.75, -48.15),
             'address' => $this->faker->address,

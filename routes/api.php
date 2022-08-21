@@ -39,7 +39,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 
     Route::group(['prefix' => 'resources'], function () {
         Route::post('/', [ResourceController::class, 'store']);
-        Route::get('/{resource}/votes', [ResourceController::class, 'votes']);
+        Route::get('/{resource}/votes', [ResourceController::class, 'votes'])
+            ->name('resources.votes');
     });
 
     Route::group(['prefix' => 'users'], function () {
@@ -55,9 +56,8 @@ Route::group([
     'controller' => ResourceController::class
 ], function () {
     Route::get('/', 'index')->name('resources.index');
-    Route::get('/slow', 'slow');
-    Route::get('/{resource}', 'show');
-    Route::get('/{resource}/reviews', 'reviews');
+    Route::get('/{resource}', 'show')->name('resources.show');
+    Route::get('/{resource}/reviews', 'reviews')->name('resources.reviews');
 });
 
 Route::group([

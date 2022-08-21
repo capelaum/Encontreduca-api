@@ -7,6 +7,7 @@ use App\Http\Requests\V1\EducationalResource\StoreResourceRequest;
 use App\Http\Resources\V1\EducationalResource\ResourceCollection;
 use App\Http\Resources\V1\EducationalResource\ResourceResource;
 use App\Models\Resource;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use function response;
@@ -25,17 +26,6 @@ class ResourceController extends Controller
     }
 
     /**
-     * Returns list of all resources.
-     *
-     */
-    public function slow(): ResourceCollection
-    {
-        $resources = Resource::all();
-
-        return new ResourceCollection($resources);
-    }
-
-    /**
      * Show single Resource data.
      *
      * @param Resource $resource
@@ -51,7 +41,7 @@ class ResourceController extends Controller
      *
      * @param StoreResourceRequest $request
      * @return JsonResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws AuthorizationException
      */
     public function store(StoreResourceRequest $request): JsonResponse
     {

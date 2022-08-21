@@ -21,8 +21,8 @@ class ReviewFactory extends Factory
         $createdAt = fake()->dateTimeThisYear();
 
         return [
-            'user_id' => $this->faker->numberBetween(1, User::count()),
-            'resource_id' => $this->faker->numberBetween(1, Resource::count()),
+            'user_id' => User::all()->random()->id,
+            'resource_id' => Resource::all()->random()->id,
             'rating' => $this->faker->numberBetween(1, 5),
             'comment' => $this->faker->text,
             'created_at' => $createdAt,
