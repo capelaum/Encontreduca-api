@@ -54,7 +54,7 @@ Route::group([
     'prefix' => 'resources',
     'controller' => ResourceController::class
 ], function () {
-    Route::get('/', 'index');
+    Route::get('/', 'index')->name('resources.index');
     Route::get('/slow', 'slow');
     Route::get('/{resource}', 'show');
     Route::get('/{resource}/reviews', 'reviews');

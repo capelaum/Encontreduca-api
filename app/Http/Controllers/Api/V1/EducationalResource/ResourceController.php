@@ -17,18 +17,18 @@ class ResourceController extends Controller
      * Returns list of all resources.
      *
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $resources = Resource::getAllResources();
 
-        return response($resources);
+        return response()->json($resources);
     }
 
     /**
      * Returns list of all resources.
      *
      */
-    public function slow()
+    public function slow(): ResourceCollection
     {
         $resources = Resource::all();
 
@@ -51,6 +51,7 @@ class ResourceController extends Controller
      *
      * @param StoreResourceRequest $request
      * @return JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(StoreResourceRequest $request): JsonResponse
     {
@@ -67,12 +68,24 @@ class ResourceController extends Controller
         return response()->json($resource, 201);
     }
 
-    public function reviews(Resource $resource)
+    /**
+     * Get resource reviews
+     *
+     * @param Resource $resource
+     * @return array
+     */
+    public function reviews(Resource $resource): array
     {
         return Resource::getResourceReviews($resource->id);
     }
 
-    public function votes(Resource $resource)
+    /**
+     * Get resource votes
+     *
+     * @param Resource $resource
+     * @return array
+     */
+    public function votes(Resource $resource): array
     {
         return Resource::getResourceVotes($resource->id);
     }
