@@ -31,10 +31,9 @@ class ResourceResource extends JsonResource
             'approved' => $this->approved,
             'createdAt' => date('d/m/Y', strtotime($this->created_at)),
             'updatedAt' => date('d/m/Y', strtotime($this->updated_at)),
-            'userId' => $this->user_id,
             'author' => $this->user ? $this->user->name : 'Anônimo',
             'categoryId' => $this->category_id,
-            'category' => new CategoryResource($this->category),
+            'categoryName' => $this->category->name,
             'votes' => new ResourceVoteCollection($this->votes),
             'reviews' => (new ReviewCollection($this->reviews))->sortByDesc('updated_at')->values(),
         ];
