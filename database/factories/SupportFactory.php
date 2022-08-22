@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\SupportRequest>
+ * @extends Factory
  */
 class SupportFactory extends Factory
 {
@@ -15,10 +15,10 @@ class SupportFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition()
+    public function definition(): array
     {
         return [
-            'user_id' => $this->faker->numberBetween(1, User::count()),
+            'user_id' => User::all()->random()->id,
             'message' => $this->faker->text
         ];
     }

@@ -13,14 +13,18 @@ class DefaultPolicy
     /**
      * @param User $user
      * @param string $action
-     * @return Response
+     * @return Response|bool
      */
-    public function isAdmin(User $user, string $action): Response
+    public function isAdmin(User $user, string $action): Response|bool
     {
-        return $this->denyWithStatus(
-            401,
-            "Você não tem permissão para {$action}"
-        );
+        if (!$user->tokenCan('admin')) {
+            return $this->denyWithStatus(
+                401,
+                "Você não tem permissão para {$action}"
+            );
+        }
+
+        return true;
     }
 
     /**
