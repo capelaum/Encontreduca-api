@@ -46,6 +46,9 @@ class ReviewController extends Controller
      */
     public function store(StoreReviewRequest $request): JsonResponse
     {
+        $userId = $request->userId;
+        $resourceId = $request->resourceId;
+
         $this->authorize('isRequestUser',
             [
                 Review::class,
@@ -53,6 +56,16 @@ class ReviewController extends Controller
                 'criar essa avaliação.'
             ]
         );
+
+        $review = Review::where('user_id', $userId)
+            ->where('resource_id', $resourceId)
+            ->first();
+
+        if ($review) {
+            return response()->json([
+                'message' => 'Você já avaliou este recurso.'
+            ], 409);
+        }
 
         $review = Review::create($request->all());
 
