@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\EducationalResource\StoreResourceRequest;
 use App\Http\Resources\V1\EducationalResource\ResourceCollection;
 use App\Http\Resources\V1\EducationalResource\ResourceResource;
+use App\Http\Resources\V1\EducationalResource\ResourceVoteCollection;
+use App\Http\Resources\V1\EducationalResource\ResourceVoteResource;
+use App\Http\Resources\V1\Review\ReviewCollection;
 use App\Models\Resource;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
@@ -62,21 +65,21 @@ class ResourceController extends Controller
      * Get resource reviews
      *
      * @param Resource $resource
-     * @return array
+     * @return ReviewCollection
      */
-    public function reviews(Resource $resource): array
+    public function reviews(Resource $resource): ReviewCollection
     {
-        return Resource::getResourceReviews($resource->id);
+        return new ReviewCollection($resource->reviews);
     }
 
     /**
      * Get resource votes
      *
      * @param Resource $resource
-     * @return array
+     * @return ResourceVoteCollection
      */
-    public function votes(Resource $resource): array
+    public function votes(Resource $resource): ResourceVoteCollection
     {
-        return Resource::getResourceVotes($resource->id);
+        return new ResourceVoteCollection($resource->votes);
     }
 }

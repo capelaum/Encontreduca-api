@@ -4,6 +4,7 @@ namespace Tests\Feature\Api\V1;
 
 use App\Http\Resources\V1\EducationalResource\ResourceCollection;
 use App\Http\Resources\V1\EducationalResource\ResourceResource;
+use App\Http\Resources\V1\EducationalResource\ResourceVoteCollection;
 use App\Http\Resources\V1\Review\ReviewCollection;
 use App\Models\Resource;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -21,6 +22,8 @@ class ResourceTest extends TestCase
     {
         parent::setup();
 
+        $this->authUser();
+
         $this->resource = $this->createResource();
     }
 
@@ -32,8 +35,6 @@ class ResourceTest extends TestCase
         $resourcesResponse = (new ResourceCollection([$this->resource]))->toArray($this->resource);
 
         $response->assertJson($resourcesResponse);
-
-        $this->assertDatabaseHas('resources', Resource::resourceArray($this->resource));
     }
 
     public function test_show_resource()
@@ -53,12 +54,13 @@ class ResourceTest extends TestCase
         ]);
 
         $response = $this->getJson(route('resources.reviews', $this->resource->id))
-            ->assertOk();
+            ->assertOk()
+            ->json();
 
         $resourceReviews = (new ReviewCollection($this->resource->reviews))
             ->toArray($this->resource->reviews);
 
-        $this->assertEquals($response->json(), $resourceReviews);
+        $this->assertEquals($response, $resourceReviews);
     }
 
     public function test_get_resource_votes()
@@ -68,11 +70,12 @@ class ResourceTest extends TestCase
         ]);
 
         $response = $this->getJson(route('resources.votes', $this->resource->id))
-            ->assertOk();
+            ->assertOk()
+            ->json();
 
-        $resourceVotes = (new ReviewCollection($this->resource->reviews))
-            ->toArray($this->resource->reviews);
+        $resourceVotes = (new ResourceVoteCollection($this->resource->votes))
+            ->toArray($this->resource->votes);
 
-        $this->assertEquals($response->json(), $resourceVotes);
+        $this->assertEquals($response, $resourceVotes);
     }
 }

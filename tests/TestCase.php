@@ -12,6 +12,7 @@ use Database\Seeders\CategorySeeder;
 use Database\Seeders\ResourceSeeder;
 use Database\Seeders\ReviewSeeder;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Laravel\Sanctum\Sanctum;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -40,5 +41,18 @@ abstract class TestCase extends BaseTestCase
     public function createReviews(int $quantity = 1, array $args = [])
     {
         return Review::factory($quantity)->create($args);
+    }
+
+    public function createUser(array $args = [])
+    {
+        return User::factory()->create($args);
+    }
+
+    public function authUser()
+    {
+        $user = $this->createUser();
+        Sanctum::actingAs($user);
+
+        return $user;
     }
 }

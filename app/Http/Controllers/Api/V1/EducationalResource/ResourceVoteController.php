@@ -77,7 +77,7 @@ class ResourceVoteController extends Controller
 
         if ($resourceVote) {
             return response()->json([
-                'message' => 'Voto já existe.'
+                'message' => 'Você já votou neste recurso.'
             ], 409);
         }
 
