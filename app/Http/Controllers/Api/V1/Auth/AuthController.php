@@ -64,22 +64,7 @@ class AuthController extends Controller
                 $user->tokens()->delete();
             }
 
-            $userToken = $user->createToken('auth', [
-                'create:resource',
-                'create:resource-user',
-                'create:resource-change',
-                'create:resource-complaint',
-                'create:resource-vote',
-                'create:review',
-                'create:review-complaint',
-                'create:support',
-                'edit:user',
-                'edit:review',
-                'edit:resource-vote',
-                'delete:user',
-                'delete:review',
-                'delete:resource-user',
-            ]);
+            $userToken = $user->createToken('auth', ['user']);
 
             return response([
                 'message' => "Usuário {$request->user()->name} logado com sucesso!",
