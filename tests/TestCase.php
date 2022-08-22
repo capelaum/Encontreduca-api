@@ -7,12 +7,13 @@ use App\Models\Resource;
 use App\Models\ResourceVote;
 use App\Models\Review;
 use App\Models\User;
-use Database\Seeders\UserSeeder;
-use Database\Seeders\CategorySeeder;
-use Database\Seeders\ResourceSeeder;
-use Database\Seeders\ReviewSeeder;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Laravel\Sanctum\Sanctum;
+use Database\Seeders\{
+    UserSeeder,
+    CategorySeeder,
+    MotiveSeeder
+};
 
 abstract class TestCase extends BaseTestCase
 {
@@ -26,6 +27,7 @@ abstract class TestCase extends BaseTestCase
 
         User::factory(10)->create();
         $this->seed(CategorySeeder::class);
+        $this->seed(MotiveSeeder::class);
     }
 
     public function createResource(array $args = [])

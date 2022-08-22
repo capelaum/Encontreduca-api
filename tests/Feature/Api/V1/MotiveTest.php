@@ -6,21 +6,22 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class CategoryTest extends TestCase
+class MotiveTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_list_categories()
+    public function test_list_motives()
     {
-        $response = $this->getJson(route('categories.index'))
+        $response = $this->getJson(route('motives.index'))
             ->assertOk()
             ->assertJsonStructure([
                 '*' => [
                     'id',
-                    'name'
+                    'name',
+                    'type'
                 ]
             ])->json();
 
-        $this->assertCount(7, $response);
+        $this->assertCount(13, $response);
     }
 }
