@@ -9,14 +9,12 @@ use App\Http\Resources\V1\Review\ReviewCollection;
 use App\Models\Category;
 use App\Models\Resource;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
 class ResourceTest extends TestCase
 {
     use RefreshDatabase;
-    use WithFaker;
 
     private mixed $resource;
 
