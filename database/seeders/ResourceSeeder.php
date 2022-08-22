@@ -146,6 +146,6 @@ class ResourceSeeder extends Seeder
             DB::table('resources')->insert($resource);
         }
 
-        Resource::factory(3000)->create();
+        Resource::factory(1000)->create();
     }
 }

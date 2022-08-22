@@ -38,7 +38,9 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     ]);
 
     Route::group(['prefix' => 'resources'], function () {
-        Route::post('/', [ResourceController::class, 'store']);
+        Route::post('/', [ResourceController::class, 'store'])
+            ->name('resources.store');
+
         Route::get('/{resource}/votes', [ResourceController::class, 'votes'])
             ->name('resources.votes');
     });
