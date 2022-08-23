@@ -24,7 +24,6 @@ class StoreReviewComplaintRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'userId' => 'required|integer|exists:users,id',
             'reviewId' => 'required|integer|exists:reviews,id',
             'motiveId' => 'required|integer|exists:motives,id',
         ];
@@ -33,7 +32,6 @@ class StoreReviewComplaintRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'user_id' => $this->userId,
             'review_id' => $this->reviewId,
             'motive_id' => $this->motiveId,
         ]);

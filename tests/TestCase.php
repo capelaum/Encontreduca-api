@@ -6,6 +6,7 @@ use App\Models\Motive;
 use App\Models\Resource;
 use App\Models\ResourceVote;
 use App\Models\Review;
+use App\Models\ReviewComplaint;
 use App\Models\Support;
 use App\Models\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
@@ -68,6 +69,11 @@ abstract class TestCase extends BaseTestCase
         return Support::factory()->create($args);
     }
 
+    public function createMotive(array $args = [])
+    {
+        return Motive::factory()->create($args);
+    }
+
     public function createResourceVotes(int $quantity = 1, array $args = [])
     {
         return ResourceVote::factory($quantity)->create($args);
@@ -76,5 +82,10 @@ abstract class TestCase extends BaseTestCase
     public function createReviews(int $quantity = 1, array $args = [])
     {
         return Review::factory($quantity)->create($args);
+    }
+
+    public function createReviewComplaint(array $args = [])
+    {
+        return ReviewComplaint::factory()->create($args);
     }
 }

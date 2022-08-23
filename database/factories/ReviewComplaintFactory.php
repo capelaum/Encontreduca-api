@@ -19,10 +19,14 @@ class ReviewComplaintFactory extends Factory
      */
     public function definition()
     {
+        $users = collect(User::all()->modelKeys());
+        $reviews = collect(Review::all()->modelKeys());
+        $motives = collect(Motive::all()->modelKeys());
+
         return [
-            'user_id' => $this->faker->numberBetween(1, User::count()),
-            'review_id' => $this->faker->numberBetween(1, Review::count()),
-            'motive_id' => $this->faker->numberBetween(1, Motive::count()),
+            'user_id' => $users->random(),
+            'review_id' => $reviews->random(),
+            'motive_id' => $motives->random(),
         ];
     }
 }
