@@ -74,7 +74,7 @@ class ReviewComplaintTest extends TestCase
     {
         $this->authUser();
 
-        $review = $this->createReviews()->first();
+        $review = $this->createReview();
         $motive = $this->createMotive();
 
         $this->postJson(route('reviews.complaints.store', [

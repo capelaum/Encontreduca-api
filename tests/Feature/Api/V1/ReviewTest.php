@@ -4,6 +4,7 @@ namespace Tests\Feature\Api\V1;
 
 use App\Http\Resources\V1\Review\ReviewResource;
 use App\Models\Review;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +28,7 @@ class ReviewTest extends TestCase
 
     public function test_list_reviews()
     {
-        $this->createReviews(10);
+        $this->createReview();
 
         $this->getJson(route('reviews.index'))
             ->assertOk()
@@ -36,7 +37,7 @@ class ReviewTest extends TestCase
 
     public function test_show_review()
     {
-        $review = $this->createReviews()->first();
+        $review = $this->createReview();
 
         $response = $this->getJson(route('reviews.show', $review->id))
             ->assertOk()
@@ -70,10 +71,10 @@ class ReviewTest extends TestCase
 
         $resource = $this->createResource();
 
-        $review = $this->createReviews(args: [
+        $review = $this->createReview([
             'user_id' => Auth::user()->id,
             'resource_id' => $resource->id
-        ])->first();
+        ]);
 
         $this->postJson(route('reviews.store'), [
             'resourceId' => $resource->id,
@@ -89,7 +90,7 @@ class ReviewTest extends TestCase
     public function test_update_review()
     {
         $this->authUser();
-        $review = $this->createReviews(args: ['user_id' => Auth::id()])->first();
+        $review = $this->createReview(['user_id' => Auth::id()]);
 
         $this->patchJson(route('reviews.update', $review->id), [
             'rating' => 5,
@@ -108,7 +109,10 @@ class ReviewTest extends TestCase
     {
         $this->withExceptionHandling();
         $this->authUser();
-        $review = $this->createReviews()->first();
+
+        $usersIds = collect(User::all()->modelKeys())->forget(Auth::id());
+
+        $review = $this->createReview(['user_id' => $usersIds->random()]);
 
         $this->patchJson(route('reviews.update', $review->id), [
             'rating' => 5,
@@ -122,7 +126,7 @@ class ReviewTest extends TestCase
     public function test_delete_review()
     {
         $this->authUser();
-        $review = $this->createReviews(args: ['user_id' => Auth::id()])->first();
+        $review = $this->createReview(['user_id' => Auth::id()]);
 
         $this->deleteJson(route('reviews.destroy', $review->id))
             ->assertNoContent();
@@ -136,7 +140,10 @@ class ReviewTest extends TestCase
     {
         $this->withExceptionHandling();
         $this->authUser();
-        $review = $this->createReviews()->first();
+
+        $usersIds = collect(User::all()->modelKeys())->forget(Auth::id());
+
+        $review = $this->createReview(['user_id' => $usersIds->random()]);
 
         $this->deleteJson(route('reviews.destroy', $review->id))
             ->assertStatus(401)

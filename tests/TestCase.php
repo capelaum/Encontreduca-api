@@ -31,8 +31,7 @@ abstract class TestCase extends BaseTestCase
 
         User::factory(10)->create();
         Resource::factory(10)->create();
-
-        $this->seed(ReviewSeeder::class);
+        Review::factory(10)->create();
     }
 
     public function createUser(array $args = [])
@@ -82,9 +81,9 @@ abstract class TestCase extends BaseTestCase
         return ResourceVote::factory()->create($args);
     }
 
-    public function createReviews(int $quantity = 1, array $args = [])
+    public function createReview(array $args = [])
     {
-        return Review::factory($quantity)->create($args);
+        return Review::factory()->create($args);
     }
 
     public function createReviewComplaint(array $args = [])

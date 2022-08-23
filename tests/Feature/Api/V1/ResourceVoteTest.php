@@ -4,6 +4,7 @@ namespace Tests\Feature\Api\V1;
 
 use App\Models\ResourceVote;
 use App\Models\Review;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Auth;
@@ -134,7 +135,10 @@ class ResourceVoteTest extends TestCase
     {
         $this->withExceptionHandling();
         $this->authUser();
-        $resourceVote = $this->createResourceVote();
+
+        $usersIds = collect(User::all()->modelKeys())->forget(Auth::id());
+
+        $resourceVote = $this->createResourceVote(['user_id' => $usersIds->random()]);
 
         $this->patchJson(route('votes.update', $resourceVote->id), [
             'vote' => false,

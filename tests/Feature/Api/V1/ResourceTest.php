@@ -85,9 +85,7 @@ class ResourceTest extends TestCase
 
     public function test_get_resource_reviews()
     {
-        $this->createReviews(3, [
-            'resource_id' => $this->resource->id
-        ]);
+        $this->createReview(['resource_id' => $this->resource->id]);
 
         $response = $this->getJson(route('resources.reviews', $this->resource->id))
             ->assertOk()
