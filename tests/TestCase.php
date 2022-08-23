@@ -10,11 +10,7 @@ use App\Models\Support;
 use App\Models\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Laravel\Sanctum\Sanctum;
-use Database\Seeders\{
-    UserSeeder,
-    CategorySeeder,
-    MotiveSeeder
-};
+use Database\Seeders\{ReviewSeeder, CategorySeeder, MotiveSeeder};
 
 abstract class TestCase extends BaseTestCase
 {
@@ -26,9 +22,13 @@ abstract class TestCase extends BaseTestCase
 
         $this->withoutExceptionHandling();
 
-        User::factory(10)->create();
         $this->seed(CategorySeeder::class);
         $this->seed(MotiveSeeder::class);
+
+        User::factory(10)->create();
+        Resource::factory(10)->create();
+
+        $this->seed(ReviewSeeder::class);
     }
 
     public function createUser(array $args = [])
