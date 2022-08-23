@@ -17,6 +17,23 @@ class ResourceTest extends TestCase
     use RefreshDatabase;
 
     private mixed $resource;
+    private array $resourceKeys = [
+        'id',
+        'userId',
+        'author',
+        'categoryId',
+        'categoryName',
+        'name',
+        'address',
+        'latitude',
+        'longitude',
+        'website',
+        'phone',
+        'cover',
+        'approved',
+        'createdAt',
+        'updatedAt'
+    ];
 
     public function setup(): void
     {
@@ -31,25 +48,7 @@ class ResourceTest extends TestCase
     {
         $this->getJson(route('resources.index'))
             ->assertOk()
-            ->assertJsonStructure([
-                '*' => [
-                    'id',
-                    'userId',
-                    'author',
-                    'categoryId',
-                    'categoryName',
-                    'name',
-                    'address',
-                    'latitude',
-                    'longitude',
-                    'website',
-                    'phone',
-                    'cover',
-                    'approved',
-                    'createdAt',
-                    'updatedAt'
-                ]
-            ]);
+            ->assertJsonStructure(['*' => $this->resourceKeys]);
     }
 
     public function test_show_resource()
@@ -60,6 +59,28 @@ class ResourceTest extends TestCase
         $resourceResponse = (new ResourceResource($this->resource))->toArray($this->resource);
 
         $this->assertEquals($response->json(), $resourceResponse);
+    }
+
+    public function test_store_resource()
+    {
+        $response = $this->postJson(route('resources.store'), [
+            'userId' => Auth::user()->id,
+            'categoryId' => Category::all()->random()->id,
+            'position' => [
+                'lat' => -15.7810843,
+                'lng' => -47.8928717
+            ],
+            'name' => 'Colégio Militar de Brasília',
+            'address' => '902/904 - Asa Norte, Brasília - DF, 70790-020',
+            'phone' => '(61) 3424-1128',
+            'website' => 'http://www.cmb.eb.mil.br',
+            'cover' => 'https://dummyimage.com/380x200/333/fff'
+        ])->assertCreated()->assertJsonStructure($this->resourceKeys)->json();
+
+        $this->assertDatabaseHas('resources', [
+            'id' => $response['id'],
+            'name' => $response['name'],
+        ]);
     }
 
     public function test_get_resource_reviews()
@@ -92,47 +113,5 @@ class ResourceTest extends TestCase
             ->toArray($this->resource->votes);
 
         $this->assertEquals($response, $resourceVotes);
-    }
-
-    public function test_store_resource()
-    {
-        $response = $this->postJson(route('resources.store'), [
-            'userId' => Auth::user()->id,
-            'categoryId' => Category::all()->random()->id,
-            'position' => [
-                'lat' => -15.7810843,
-                'lng' => -47.8928717
-            ],
-            'name' => 'Colégio Militar de Brasília',
-            'address' => '902/904 - Asa Norte, Brasília - DF, 70790-020',
-            'phone' => '(61) 3424-1128',
-            'website' => 'http://www.cmb.eb.mil.br',
-            'cover' => 'https://dummyimage.com/380x200/333/fff'
-        ])->assertCreated()->assertJsonStructure([
-            'id',
-            'user_id',
-            'category_id',
-            'name',
-            'address',
-            'phone',
-            'website',
-            'cover',
-            'latitude',
-            'longitude',
-            'updated_at',
-            'created_at',
-        ])->json();
-
-        $this->assertDatabaseHas('resources', [
-            'id' => $response['id'],
-            'name' => $response['name'],
-            'address' => $response['address'],
-            'cover' => $response['cover'],
-            'latitude' => $response['latitude'],
-            'longitude' => $response['longitude'],
-            'phone' => $response['phone'],
-            'website' => $response['website'],
-            'category_id' => $response['category_id']
-        ]);
     }
 }

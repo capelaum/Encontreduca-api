@@ -24,7 +24,6 @@ class StoreResourceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "userId" => "required|exists:users,id",
             "categoryId" => "required|exists:categories,id",
             "name" => "required|string|min:3|max:255",
             "position.lat" => "required|numeric|between:-90,90",
@@ -40,7 +39,6 @@ class StoreResourceRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'user_id' => $this->userId,
             'category_id' => $this->categoryId,
             'latitude' => $this->position['lat'],
             'longitude' => $this->position['lng'],

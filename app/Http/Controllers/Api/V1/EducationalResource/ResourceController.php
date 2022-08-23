@@ -12,6 +12,7 @@ use App\Http\Resources\V1\Review\ReviewCollection;
 use App\Models\Resource;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use function response;
 
@@ -48,17 +49,15 @@ class ResourceController extends Controller
      */
     public function store(StoreResourceRequest $request): JsonResponse
     {
-        $this->authorize('isRequestUser',
-            [
-                Resource::class,
-                $request->userId,
-                'criar esse recurso.'
-            ]
-        );
+        $data = $request->validated();
+        $data['user_id'] = Auth::id();
+        $data['category_id'] = $request->categoryId;
+        $data['latitude'] = $request->position['lat'];
+        $data['longitude'] = $request->position['lng'];
 
-        $resource = Resource::create($request->all());
+        $resource = Resource::create($data);
 
-        return response()->json($resource, 201);
+        return response()->json(new ResourceResource($resource), 201);
     }
 
     /**
