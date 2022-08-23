@@ -35,7 +35,7 @@ class ReviewComplaintController extends Controller
     /**
      * Show single Review Complaint data.
      *
-     * @param int $id
+     * @param ReviewComplaint $complaint
      * @return ReviewComplaintResource
      * @throws AuthorizationException
      */

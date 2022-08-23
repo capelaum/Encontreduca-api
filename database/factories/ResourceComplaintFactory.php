@@ -17,7 +17,7 @@ class ResourceComplaintFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition()
+    public function definition(): array
     {
         $users = collect(User::all()->modelKeys());
         $resources = collect(Resource::all()->modelKeys());
