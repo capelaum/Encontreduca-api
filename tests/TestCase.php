@@ -77,9 +77,9 @@ abstract class TestCase extends BaseTestCase
         return Motive::factory()->create($args);
     }
 
-    public function createResourceVotes(int $quantity = 1, array $args = [])
+    public function createResourceVote(array $args = [])
     {
-        return ResourceVote::factory($quantity)->create($args);
+        return ResourceVote::factory()->create($args);
     }
 
     public function createReviews(int $quantity = 1, array $args = [])

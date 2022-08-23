@@ -54,7 +54,6 @@ class ReviewTest extends TestCase
         $review = Review::factory()->make();
 
         $data = [
-            'userId' => Auth::user()->id,
             'resourceId' => $resource->id,
             'rating' => $review->rating,
             'comment' => $review->comment
@@ -71,13 +70,12 @@ class ReviewTest extends TestCase
 
         $resource = $this->createResource();
 
-        $review = $this->createReviews(1, [
+        $review = $this->createReviews(args: [
             'user_id' => Auth::user()->id,
             'resource_id' => $resource->id
         ])->first();
 
         $this->postJson(route('reviews.store'), [
-            'userId' => Auth::user()->id,
             'resourceId' => $resource->id,
             'rating' => $review->rating,
             'comment' => $review->comment

@@ -24,7 +24,7 @@ class ResourceComplaintTest extends TestCase
 
         $this->createResourceComplaint();
 
-        $response = $this->getJson(route('resources.complaints.index'))
+        $this->getJson(route('resources.complaints.index'))
             ->assertOk()
             ->assertJsonStructure(['*' => $this->resourceComplaintKeys])->json();
     }

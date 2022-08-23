@@ -76,6 +76,7 @@ class ReviewController extends Controller
      * @param UpdateReviewRequest $request
      * @param Review $review
      * @return JsonResponse
+     * @throws AuthorizationException
      */
     public function update(UpdateReviewRequest $request, Review $review): JsonResponse
     {

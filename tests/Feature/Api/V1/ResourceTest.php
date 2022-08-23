@@ -101,9 +101,7 @@ class ResourceTest extends TestCase
 
     public function test_get_resource_votes()
     {
-        $this->createResourceVotes(3, [
-            'resource_id' => $this->resource->id
-        ]);
+        $this->createResourceVote(['resource_id' => $this->resource->id]);
 
         $response = $this->getJson(route('resources.votes', $this->resource->id))
             ->assertOk()
