@@ -13,6 +13,13 @@ class SupportTest extends TestCase
 {
     use RefreshDatabase;
 
+    private array $supportKeys = [
+        'id',
+        'userId',
+        'message',
+        'createdAt'
+    ];
+
     public function test_list_supports()
     {
         $this->authAdmin();
@@ -21,14 +28,7 @@ class SupportTest extends TestCase
 
         $this->getJson(route('supports.index'))
             ->assertOk()
-            ->assertJsonStructure([
-                '*' => [
-                    'id',
-                    'userId',
-                    'message',
-                    'createdAt'
-                ]
-            ])->json();
+            ->assertJsonStructure(['*' => $this->supportKeys])->json();
     }
 
     public function test_user_cannot_list_supports()
@@ -55,12 +55,7 @@ class SupportTest extends TestCase
 
         $this->getJson(route('supports.show', $support->id))
             ->assertOk()
-            ->assertJsonStructure([
-                'id',
-                'userId',
-                'message',
-                'createdAt'
-            ])->json();
+            ->assertJsonStructure($this->supportKeys)->json();
     }
 
     public function test_user_cannot_show_support()
@@ -82,14 +77,15 @@ class SupportTest extends TestCase
     {
         $this->authAdmin();
 
-        $this->postJson(route('supports.store'), [
-            'userId' => Auth::user()->id,
+        $response = $this->postJson(route('supports.store'), [
+            'userId' => Auth::id(),
             'message' => 'test'
-        ])->assertOk()
-            ->assertJsonStructure([
-                'id',
-                'user_id',
-                'message'
-            ])->json();
+        ])->assertCreated()
+            ->assertJsonStructure($this->supportKeys)->json();
+
+        $this->assertDatabaseHas('supports', [
+            'id' => $response['id'],
+            'message' => $response['message'],
+        ]);
     }
 }

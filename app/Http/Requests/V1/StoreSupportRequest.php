@@ -24,15 +24,7 @@ class StoreSupportRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'userId' => 'required|integer|exists:users,id',
             'message' => 'required|string|min:3'
         ];
-    }
-
-    protected function prepareForValidation()
-    {
-        $this->merge([
-            'user_id' => $this->userId
-        ]);
     }
 }
