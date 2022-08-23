@@ -111,6 +111,6 @@ class ReviewController extends Controller
 
         $review->delete();
 
-        return response()->json(null);
+        return response()->json(null, 204);
     }
 }

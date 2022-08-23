@@ -91,7 +91,6 @@ class ReviewTest extends TestCase
     public function test_update_review()
     {
         $this->authUser();
-
         $review = $this->createReviews(args: ['user_id' => Auth::id()])->first();
 
         $this->patchJson(route('reviews.update', $review->id), [
@@ -99,20 +98,50 @@ class ReviewTest extends TestCase
             'comment' => 'New comment'
         ])->assertOk()
             ->assertJsonStructure($this->reviewResourceKeys);
+
+        $this->assertDatabaseHas('reviews', [
+            'id' => $review->id,
+            'rating' => 5,
+            'comment' => 'New comment'
+        ]);
     }
 
     public function test_user_cannot_update_review_of_another_user()
     {
         $this->withExceptionHandling();
-
         $this->authUser();
-
         $review = $this->createReviews()->first();
 
         $this->patchJson(route('reviews.update', $review->id), [
             'rating' => 5,
             'comment' => 'New comment'
         ])->assertStatus(401)
+            ->assertJsonStructure([
+                'message'
+            ]);
+    }
+
+    public function test_delete_review()
+    {
+        $this->authUser();
+        $review = $this->createReviews(args: ['user_id' => Auth::id()])->first();
+
+        $this->deleteJson(route('reviews.destroy', $review->id))
+            ->assertNoContent();
+
+        $this->assertDatabaseMissing('reviews', [
+            'id' => $review->id
+        ]);
+    }
+
+    public function test_user_cannot_delete_review_of_another_user()
+    {
+        $this->withExceptionHandling();
+        $this->authUser();
+        $review = $this->createReviews()->first();
+
+        $this->deleteJson(route('reviews.destroy', $review->id))
+            ->assertStatus(401)
             ->assertJsonStructure([
                 'message'
             ]);
