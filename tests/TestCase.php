@@ -3,9 +3,11 @@
 namespace Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\Sanctum;
 use Database\Seeders\{ReviewSeeder, CategorySeeder, MotiveSeeder};
-use App\Models\{
+use App\Models\{ResourceUser,
     User,
     Motive,
     Resource,
@@ -14,11 +16,14 @@ use App\Models\{
     ResourceVote,
     Review,
     ReviewComplaint,
-    Support};
+    Support
+};
 
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
+
+    public Collection $userIdsWithoutAuthUser;
 
     public function setup(): void
     {
@@ -32,6 +37,8 @@ abstract class TestCase extends BaseTestCase
         User::factory(10)->create();
         Resource::factory(10)->create();
         Review::factory(10)->create();
+
+        $this->userIdsWithoutAuthUser = collect(User::all()->modelKeys());
     }
 
     public function createUser(array $args = [])
@@ -69,6 +76,11 @@ abstract class TestCase extends BaseTestCase
     public function createResourceChange(array $args = [])
     {
         return ResourceChange::factory()->create($args);
+    }
+
+    public function createResourceUser(array $args = [])
+    {
+        return ResourceUser::factory()->create($args);
     }
 
     public function createSupport(array $args = [])

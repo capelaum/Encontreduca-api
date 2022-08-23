@@ -7,6 +7,7 @@ use App\Models\Review;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
@@ -110,9 +111,7 @@ class ReviewTest extends TestCase
         $this->withExceptionHandling();
         $this->authUser();
 
-        $usersIds = collect(User::all()->modelKeys())->forget(Auth::id());
-
-        $review = $this->createReview(['user_id' => $usersIds->random()]);
+        $review = $this->createReview(['user_id' => $this->userIdsWithoutAuthUser->random()]);
 
         $this->patchJson(route('reviews.update', $review->id), [
             'rating' => 5,
@@ -141,9 +140,7 @@ class ReviewTest extends TestCase
         $this->withExceptionHandling();
         $this->authUser();
 
-        $usersIds = collect(User::all()->modelKeys())->forget(Auth::id());
-
-        $review = $this->createReview(['user_id' => $usersIds->random()]);
+        $review = $this->createReview(['user_id' => $this->userIdsWithoutAuthUser->random()]);
 
         $this->deleteJson(route('reviews.destroy', $review->id))
             ->assertStatus(401)

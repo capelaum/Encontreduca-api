@@ -24,15 +24,13 @@ class StoreResourceUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|integer|exists:users,id',
-            'resource_id' => 'required|integer|exists:resources,id',
+            'resourceId' => 'required|integer|exists:resources,id',
         ];
     }
 
     protected function prepareForValidation()
     {
         $this->merge([
-            'user_id' => $this->userId,
             'resource_id' => $this->resourceId
         ]);
     }

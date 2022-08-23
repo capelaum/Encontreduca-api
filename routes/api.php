@@ -48,10 +48,14 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     });
 
     Route::group(['prefix' => 'users'], function () {
-        Route::delete('{user}/avatar', [UserController::class, 'deleteAvatar']);
+        Route::delete('{user}/avatar', [UserController::class, 'deleteAvatar'])
+            ->name('users.delete.avatar');
 
-        Route::post('/resources', [UserController::class, 'storeResource']);
-        Route::delete('{user}/resources/{resource}', [UserController::class, 'deleteResource']);
+        Route::post('/resources/{resource}', [UserController::class, 'storeResource'])
+            ->name('users.store.resource');
+
+        Route::delete('resources/{resource}', [UserController::class, 'deleteResource'])
+            ->name('users.delete.resource');
     });
 
     Route::apiResources([

@@ -3,8 +3,8 @@
 namespace App\Providers;
 
 
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use App\Policies\DefaultPolicy;
 use App\Models\{
     User,
     Review,
@@ -15,10 +15,6 @@ use App\Models\{
     ResourceComplaint,
     ReviewComplaint
 };
-use App\Policies\{
-    UserPolicy,
-    DefaultPolicy,
-};
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -28,7 +24,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        User::class => UserPolicy::class,
+        User::class => DefaultPolicy::class,
         Review::class => DefaultPolicy::class,
         Support::class => DefaultPolicy::class,
         Resource::class => DefaultPolicy::class,

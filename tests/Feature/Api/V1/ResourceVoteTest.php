@@ -136,9 +136,7 @@ class ResourceVoteTest extends TestCase
         $this->withExceptionHandling();
         $this->authUser();
 
-        $usersIds = collect(User::all()->modelKeys())->forget(Auth::id());
-
-        $resourceVote = $this->createResourceVote(['user_id' => $usersIds->random()]);
+        $resourceVote = $this->createResourceVote(['user_id' => $this->userIdsWithoutAuthUser->random()]);
 
         $this->patchJson(route('votes.update', $resourceVote->id), [
             'vote' => false,
