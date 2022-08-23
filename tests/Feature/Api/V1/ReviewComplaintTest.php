@@ -24,7 +24,7 @@ class ReviewComplaintTest extends TestCase
 
         $this->createReviewComplaint();
 
-        $this->getJson(route('complaints.index'))
+        $this->getJson(route('reviews.complaints.index'))
             ->assertOk()
             ->assertJsonStructure(['*' => $this->reviewComplaintKeys])->json();
     }
@@ -37,7 +37,7 @@ class ReviewComplaintTest extends TestCase
 
         $this->withExceptionHandling();
 
-        $this->getJson(route('complaints.index'))
+        $this->getJson(route('reviews.complaints.index'))
             ->assertStatus(401)
             ->assertJsonStructure([
                 'message'
@@ -50,7 +50,7 @@ class ReviewComplaintTest extends TestCase
 
         $reviewComplaint = $this->createReviewComplaint();
 
-        $this->getJson(route('complaints.show', $reviewComplaint->id))
+        $this->getJson(route('reviews.complaints.show', $reviewComplaint->id))
             ->assertOk()
             ->assertJsonStructure($this->reviewComplaintKeys)->json();
     }
@@ -63,7 +63,7 @@ class ReviewComplaintTest extends TestCase
 
         $this->withExceptionHandling();
 
-        $this->getJson(route('complaints.show', $reviewComplaint->id))
+        $this->getJson(route('reviews.complaints.show', $reviewComplaint->id))
             ->assertStatus(401)
             ->assertJsonStructure([
                 'message'
@@ -77,7 +77,7 @@ class ReviewComplaintTest extends TestCase
         $review = $this->createReviews()->first();
         $motive = $this->createMotive();
 
-        $this->postJson(route('complaints.store', [
+        $this->postJson(route('reviews.complaints.store', [
             'reviewId' => $review->id,
             'motiveId' => $motive->id,
         ]))

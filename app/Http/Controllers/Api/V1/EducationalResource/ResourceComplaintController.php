@@ -7,6 +7,7 @@ use App\Http\Requests\V1\EducationalResource\StoreResourceComplaintRequest;
 use App\Http\Resources\V1\EducationalResource\ResourceComplaintCollection;
 use App\Http\Resources\V1\EducationalResource\ResourceComplaintResource;
 use App\Models\ResourceComplaint;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use function response;
 
@@ -16,6 +17,7 @@ class ResourceComplaintController extends Controller
      * Returns list of all Resource Complaints.
      *
      * @return ResourceComplaintCollection
+     * @throws AuthorizationException
      */
     public function index(): ResourceComplaintCollection
     {
@@ -34,6 +36,7 @@ class ResourceComplaintController extends Controller
      *
      * @param int $id
      * @return ResourceComplaintResource
+     * @throws AuthorizationException
      */
     public function show(int $id): ResourceComplaintResource
     {

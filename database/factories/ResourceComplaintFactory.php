@@ -19,10 +19,14 @@ class ResourceComplaintFactory extends Factory
      */
     public function definition()
     {
+        $users = collect(User::all()->modelKeys());
+        $resources = collect(Resource::all()->modelKeys());
+        $motives = collect(Motive::all()->modelKeys());
+
         return [
-            'user_id' => $this->faker->numberBetween(1, User::count()),
-            'resource_id' => $this->faker->numberBetween(1, Resource::count()),
-            'motive_id' => $this->faker->numberBetween(1, Motive::count()),
+            'user_id' => $users->random(),
+            'resource_id' => $resources->random(),
+            'motive_id' => $motives->random(),
         ];
     }
 }

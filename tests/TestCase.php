@@ -2,16 +2,19 @@
 
 namespace Tests;
 
-use App\Models\Motive;
-use App\Models\Resource;
-use App\Models\ResourceVote;
-use App\Models\Review;
-use App\Models\ReviewComplaint;
-use App\Models\Support;
-use App\Models\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Laravel\Sanctum\Sanctum;
 use Database\Seeders\{ReviewSeeder, CategorySeeder, MotiveSeeder};
+use App\Models\{
+    User,
+    Motive,
+    Resource,
+    ResourceComplaint,
+    ResourceVote,
+    Review,
+    ReviewComplaint,
+    Support
+};
 
 abstract class TestCase extends BaseTestCase
 {
@@ -87,5 +90,10 @@ abstract class TestCase extends BaseTestCase
     public function createReviewComplaint(array $args = [])
     {
         return ReviewComplaint::factory()->create($args);
+    }
+
+    public function createResourceComplaint(array $args = [])
+    {
+        return ResourceComplaint::factory()->create($args);
     }
 }

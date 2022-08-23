@@ -27,14 +27,12 @@ Route::apiResources([
 
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
-    Route::apiResources([
-        'users' => UserController::class,
-        'supports' => SupportController::class,
-        'resources/complaints' => ResourceComplaintController::class,
-        'resources/changes' => ResourceChangeController::class,
-        'resources/votes' => ResourceVoteController::class,
-        'reviews/complaints' => ReviewComplaintController::class,
-        'reviews' => ReviewController::class
+    Route::apiResource('resources/complaints', ResourceComplaintController::class, [
+        'as' => 'resources'
+    ]);
+
+    Route::apiResource('reviews/complaints', ReviewComplaintController::class, [
+        'as' => 'reviews'
     ]);
 
     Route::group(['prefix' => 'resources'], function () {
@@ -51,6 +49,14 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
         Route::post('/resources', [UserController::class, 'storeResource']);
         Route::delete('{user}/resources/{resource}', [UserController::class, 'deleteResource']);
     });
+
+    Route::apiResources([
+        'users' => UserController::class,
+        'supports' => SupportController::class,
+        'resources/changes' => ResourceChangeController::class,
+        'resources/votes' => ResourceVoteController::class,
+        'reviews' => ReviewController::class
+    ]);
 });
 
 Route::group([
