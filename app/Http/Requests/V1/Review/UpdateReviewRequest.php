@@ -25,7 +25,7 @@ class UpdateReviewRequest extends FormRequest
     {
         $method = $this->method();
 
-        if ($method == 'PUT') {
+        if ($method === 'PUT') {
             return [
                 "rating" => "required|numeric|between:1,5",
                 "comment" => "required|string|min:3|max:1000"

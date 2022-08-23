@@ -10,6 +10,7 @@ use App\Http\Resources\V1\Review\ReviewResource;
 use App\Models\Review;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use function response;
 
 class ReviewController extends Controller
@@ -46,18 +47,10 @@ class ReviewController extends Controller
      */
     public function store(StoreReviewRequest $request): JsonResponse
     {
-        $userId = $request->userId;
+        $user = Auth::user();
         $resourceId = $request->resourceId;
 
-        $this->authorize('isRequestUser',
-            [
-                Review::class,
-                $request->userId,
-                'criar essa avaliação.'
-            ]
-        );
-
-        $review = Review::where('user_id', $userId)
+        $review = Review::where('user_id', $user->id)
             ->where('resource_id', $resourceId)
             ->first();
 
@@ -67,9 +60,14 @@ class ReviewController extends Controller
             ], 409);
         }
 
-        $review = Review::create($request->all());
+        $data = $request->validated();
 
-        return response()->json($review, 201);
+        $data['user_id'] = $user->id;
+        $data['resource_id'] = $resourceId;
+
+        $review = Review::create($data);
+
+        return response()->json(new ReviewResource($review), 201);
     }
 
     /**
@@ -78,18 +76,9 @@ class ReviewController extends Controller
      * @param UpdateReviewRequest $request
      * @param Review $review
      * @return JsonResponse
-     * @throws AuthorizationException
      */
     public function update(UpdateReviewRequest $request, Review $review): JsonResponse
     {
-        $this->authorize('isRequestUser',
-            [
-                Review::class,
-                $review->user_id,
-                'atualizar essa avaliação.'
-            ]
-        );
-
         $review->update($request->validated());
 
         return response()->json($review);
