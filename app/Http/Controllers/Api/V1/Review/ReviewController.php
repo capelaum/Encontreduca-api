@@ -90,7 +90,7 @@ class ReviewController extends Controller
             ]
         );
 
-        $review->update($request->all());
+        $review->update($request->validated());
 
         return response()->json($review);
     }

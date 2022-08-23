@@ -18,15 +18,19 @@ class ReviewFactory extends Factory
      */
     public function definition()
     {
+        $users = collect(User::all()->modelKeys());
+        $resources = collect(Resource::all()->modelKeys());
+
         $createdAt = fake()->dateTimeThisYear();
+        $updatedAt = $createdAt->add(new \DateInterval('P10D'));
 
         return [
-            'user_id' => User::all()->random()->id,
-            'resource_id' => Resource::all()->random()->id,
+            'user_id' => $users->random(),
+            'resource_id' => $resources->random(),
             'rating' => $this->faker->numberBetween(1, 5),
             'comment' => $this->faker->text,
             'created_at' => $createdAt,
-            'updated_at' => $createdAt->add(new \DateInterval('P10D'))
+            'updated_at' => $updatedAt
         ];
     }
 }
