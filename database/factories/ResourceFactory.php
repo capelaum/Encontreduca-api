@@ -18,12 +18,16 @@ class ResourceFactory extends Factory
      */
     public function definition()
     {
+        $users = collect(User::all()->modelKeys());
+        $categories = collect(Category::all()->modelKeys());
+
         $createdAt = fake()->dateTimeThisYear();
+        $updatedAt = $createdAt->add(new \DateInterval('P10D'));
 
         return [
             'name' => $this->faker->name,
-            'category_id' => Category::all()->random()->id,
-            'user_id' => User::all()->random()->id,
+            'category_id' => $categories->random(),
+            'user_id' => $users->random(),
             'latitude' => $this->faker->randomFloat(6, -15.70, -15.95),
             'longitude' => $this->faker->randomFloat(6, -47.75, -48.15),
             'address' => $this->faker->address,
@@ -32,7 +36,7 @@ class ResourceFactory extends Factory
             'cover' => 'https://dummyimage.com/380x200/333/fff',
             'approved' => $this->faker->boolean(50),
             'created_at' => $createdAt,
-            'updated_at' => $createdAt->add(new \DateInterval('P10D'))
+            'updated_at' => $updatedAt
         ];
     }
 }

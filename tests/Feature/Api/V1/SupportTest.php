@@ -71,7 +71,6 @@ class SupportTest extends TestCase
 
         $this->withExceptionHandling();
 
-        //assert that it throws AuthorizationException
         $this->getJson(route('supports.show', $support->id))
             ->assertStatus(401)
             ->assertJsonStructure([
