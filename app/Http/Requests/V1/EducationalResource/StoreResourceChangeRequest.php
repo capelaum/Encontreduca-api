@@ -27,7 +27,6 @@ class StoreResourceChangeRequest extends FormRequest
         $fieldList = implode(',', ResourceChange::$fields);
 
         return [
-            "userId" => "required|exists:users,id",
             "resourceId" => "required|exists:resources,id",
             "field" => "required|string|max:255|in:$fieldList",
             "oldValue" => "required|string|max:255",
@@ -38,7 +37,6 @@ class StoreResourceChangeRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'user_id' => $this->userId,
             'resource_id' => $this->resourceId,
             'old_value' => $this->oldValue,
             'new_value' => $this->newValue,

@@ -9,12 +9,12 @@ use App\Models\{
     User,
     Motive,
     Resource,
+    ResourceChange,
     ResourceComplaint,
     ResourceVote,
     Review,
     ReviewComplaint,
-    Support
-};
+    Support};
 
 abstract class TestCase extends BaseTestCase
 {
@@ -64,6 +64,11 @@ abstract class TestCase extends BaseTestCase
     public function createResource(array $args = [])
     {
         return Resource::factory()->create($args);
+    }
+
+    public function createResourceChange(array $args = [])
+    {
+        return ResourceChange::factory()->create($args);
     }
 
     public function createSupport(array $args = [])

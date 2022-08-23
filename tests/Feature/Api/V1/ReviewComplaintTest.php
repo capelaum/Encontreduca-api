@@ -52,7 +52,8 @@ class ReviewComplaintTest extends TestCase
 
         $this->getJson(route('reviews.complaints.show', $reviewComplaint->id))
             ->assertOk()
-            ->assertJsonStructure($this->reviewComplaintKeys)->json();
+            ->assertJsonStructure($this->reviewComplaintKeys)
+            ->json();
     }
 
     public function test_user_cannot_show_review_complaint()
@@ -82,7 +83,8 @@ class ReviewComplaintTest extends TestCase
             'motiveId' => $motive->id,
         ]))
             ->assertCreated()
-            ->assertJsonStructure($this->reviewComplaintKeys)->json();
+            ->assertJsonStructure($this->reviewComplaintKeys)
+            ->json();
 
         $this->assertDatabaseHas('review_complaints', [
             'review_id' => $review->id,

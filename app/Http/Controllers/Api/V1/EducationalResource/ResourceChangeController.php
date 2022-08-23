@@ -7,7 +7,9 @@ use App\Http\Requests\V1\EducationalResource\StoreResourceChangeRequest;
 use App\Http\Resources\V1\EducationalResource\ResourceChangeCollection;
 use App\Http\Resources\V1\EducationalResource\ResourceChangeResource;
 use App\Models\ResourceChange;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use function response;
 
 class ResourceChangeController extends Controller
@@ -16,6 +18,7 @@ class ResourceChangeController extends Controller
      * Returns list of all Resource Changes.
      *
      * @return ResourceChangeCollection
+     * @throws AuthorizationException
      */
     public function index(): ResourceChangeCollection
     {
@@ -34,6 +37,7 @@ class ResourceChangeController extends Controller
      *
      * @param int $id
      * @return ResourceChangeResource
+     * @throws AuthorizationException
      */
     public function show(int $id): ResourceChangeResource
     {
@@ -55,16 +59,14 @@ class ResourceChangeController extends Controller
      */
     public function store(StoreResourceChangeRequest $request): JsonResponse
     {
-        $this->authorize('isRequestUser',
-            [
-                ResourceChange::class,
-                $request->userId,
-                'criar essa sugestão de alteração de recurso.'
-            ]
-        );
+        $data = $request->validated();
+        $data['user_id'] = Auth::id();
+        $data['resource_id'] = $request->resourceId;
+        $data['old_value'] = $request->oldValue;
+        $data['new_value'] = $request->newValue;
 
-        $resourceChange = ResourceChange::create($request->all());
+        $resourceChange = ResourceChange::create($data);
 
-        return response()->json($resourceChange, 201);
+        return response()->json(new ResourceChangeResource($resourceChange), 201);
     }
 }
