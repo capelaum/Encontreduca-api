@@ -29,12 +29,27 @@ class ResourceTest extends TestCase
 
     public function test_list_all_resources()
     {
-        $response = $this->getJson(route('resources.index'))
-            ->assertOk();
-
-        $resourcesResponse = (new ResourceCollection([$this->resource]))->toArray($this->resource);
-
-        $response->assertJson($resourcesResponse);
+        $this->getJson(route('resources.index'))
+            ->assertOk()
+            ->assertJsonStructure([
+                '*' => [
+                    'id',
+                    'userId',
+                    'author',
+                    'categoryId',
+                    'categoryName',
+                    'name',
+                    'address',
+                    'latitude',
+                    'longitude',
+                    'website',
+                    'phone',
+                    'cover',
+                    'approved',
+                    'createdAt',
+                    'updatedAt'
+                ]
+            ]);
     }
 
     public function test_show_resource()
@@ -94,22 +109,22 @@ class ResourceTest extends TestCase
             'website' => 'http://www.cmb.eb.mil.br',
             'cover' => 'https://dummyimage.com/380x200/333/fff'
         ])->assertCreated()->assertJsonStructure([
-           'id',
-           'user_id',
-           'category_id',
-           'name',
-           'address',
-           'phone',
-           'website',
-           'cover',
-           'latitude',
-           'longitude',
-           'updated_at',
-           'created_at',
+            'id',
+            'user_id',
+            'category_id',
+            'name',
+            'address',
+            'phone',
+            'website',
+            'cover',
+            'latitude',
+            'longitude',
+            'updated_at',
+            'created_at',
         ])->json();
 
-        $this->assertDatabaseHas('resources',[
-            'id' =>  $response['id'],
+        $this->assertDatabaseHas('resources', [
+            'id' => $response['id'],
             'name' => $response['name'],
             'address' => $response['address'],
             'cover' => $response['cover'],
