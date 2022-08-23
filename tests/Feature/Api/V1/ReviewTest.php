@@ -92,12 +92,29 @@ class ReviewTest extends TestCase
     {
         $this->authUser();
 
-        $review =  $this->createReviews()->first();
+        $review = $this->createReviews(args: ['user_id' => Auth::id()])->first();
 
         $this->patchJson(route('reviews.update', $review->id), [
             'rating' => 5,
             'comment' => 'New comment'
         ])->assertOk()
             ->assertJsonStructure($this->reviewResourceKeys);
+    }
+
+    public function test_user_cannot_update_review_of_another_user()
+    {
+        $this->withExceptionHandling();
+
+        $this->authUser();
+
+        $review = $this->createReviews()->first();
+
+        $this->patchJson(route('reviews.update', $review->id), [
+            'rating' => 5,
+            'comment' => 'New comment'
+        ])->assertStatus(401)
+            ->assertJsonStructure([
+                'message'
+            ]);
     }
 }

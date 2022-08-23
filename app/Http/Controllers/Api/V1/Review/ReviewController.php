@@ -79,6 +79,14 @@ class ReviewController extends Controller
      */
     public function update(UpdateReviewRequest $request, Review $review): JsonResponse
     {
+        $this->authorize('isRequestUser',
+            [
+                Review::class,
+                $review->user_id,
+                'atualizar essa avaliação.'
+            ]
+        );
+
         $review->update($request->validated());
 
         return response()->json(new ReviewResource($review));
