@@ -81,7 +81,7 @@ class ReviewController extends Controller
     {
         $review->update($request->validated());
 
-        return response()->json($review);
+        return response()->json(new ReviewResource($review));
     }
 
     /**

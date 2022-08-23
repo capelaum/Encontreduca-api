@@ -13,25 +13,25 @@ class ReviewTest extends TestCase
 {
     use  RefreshDatabase;
 
+    private array $reviewResourceKeys = [
+        'id',
+        'userId',
+        'resourceId',
+        'author',
+        'authorAvatar',
+        'authorReviewCount',
+        'rating',
+        'comment',
+        'updatedAt'
+    ];
+
     public function test_list_reviews()
     {
         $this->createReviews(10);
 
         $this->getJson(route('reviews.index'))
             ->assertOk()
-            ->assertJsonStructure([
-                '*' => [
-                    'id',
-                    'userId',
-                    'resourceId',
-                    'author',
-                    'authorAvatar',
-                    'authorReviewCount',
-                    'rating',
-                    'comment',
-                    'updatedAt'
-                ]
-            ])->json();
+            ->assertJsonStructure(['*' => $this->reviewResourceKeys])->json();
     }
 
     public function test_show_review()
@@ -62,23 +62,15 @@ class ReviewTest extends TestCase
 
         $this->postJson(route('reviews.store'), $data)
             ->assertCreated()
-            ->assertJsonStructure([
-                'id',
-                'userId',
-                'resourceId',
-                'author',
-                'authorAvatar',
-                'authorReviewCount',
-                'rating',
-                'comment',
-                'updatedAt'
-            ]);
+            ->assertJsonStructure($this->reviewResourceKeys);
     }
 
     public function test_user_cannot_create_two_reviews_on_same_resource()
     {
         $this->authUser();
+
         $resource = $this->createResource();
+
         $review = $this->createReviews(1, [
             'user_id' => Auth::user()->id,
             'resource_id' => $resource->id
@@ -96,4 +88,16 @@ class ReviewTest extends TestCase
 
     }
 
+    public function test_update_review()
+    {
+        $this->authUser();
+
+        $review =  $this->createReviews()->first();
+
+        $this->patchJson(route('reviews.update', $review->id), [
+            'rating' => 5,
+            'comment' => 'New comment'
+        ])->assertOk()
+            ->assertJsonStructure($this->reviewResourceKeys);
+    }
 }
