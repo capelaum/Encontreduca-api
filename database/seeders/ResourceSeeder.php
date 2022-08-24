@@ -132,6 +132,18 @@ class ResourceSeeder extends Seeder
             'phone' => '(61) 3272-7742',
             'cover' => self::PLACEHOLDER,
             'approved' => false
+        ],
+        [
+            'name' => 'Colégio Militar de Brasília',
+            'category_id' => 1,
+            'user_id' => 1,
+            'latitude' => -15.7810843,
+            'longitude' => -47.8928717,
+            'address' => '902/904 - Asa Norte, Brasília - DF, 70790-020',
+            'website' => 'http://www.cmb.eb.mil.br',
+            'phone' => '(61) 3424-1128',
+            'cover' => self::PLACEHOLDER,
+            'approved' => true
         ]
     ];
 
