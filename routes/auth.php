@@ -15,7 +15,8 @@ Route::post('logout', [AuthController::class, 'logout'])
     ->middleware(['auth:sanctum', 'verified']);
 
 Route::get('user', [AuthController::class, 'getAuthUser'])
-    ->middleware(['auth:sanctum', 'verified']);
+    ->middleware(['auth:sanctum', 'verified'])
+    ->name('auth.user');
 
 Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, 'verify'])
     ->middleware(['signed', 'throttle:6,1'])
