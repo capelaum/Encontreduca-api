@@ -74,14 +74,15 @@ class UserTest extends TestCase
     public function test_update_user()
     {
         $this->authUser();
-        $updatedUser = User::factory(['password' => 'password'])->make();
+
+        $updatedUser = User::factory()->make();
 
         $this->patchJson(route('users.update', Auth::id()), [
             'name' => $updatedUser->name,
             'email' => $updatedUser->email,
             'avatarUrl' => $updatedUser->avatar_url,
-            'password' => $updatedUser->password,
-            'confirmPassword' => $updatedUser->password,
+            'password' => 'password',
+            'confirmPassword' => 'password',
         ])->assertOk()
             ->assertJsonStructure($this->userKeys);
 
@@ -100,7 +101,7 @@ class UserTest extends TestCase
         ]);
 
         // assert that new password matches the auth user password
-        $this->assertTrue(Hash::check($updatedUser->password, Auth::user()->getAuthPassword()));
+        $this->assertTrue(Hash::check('password', Auth::user()->getAuthPassword()));
     }
 
     public function test_update_user_except_email_and_password()
