@@ -17,7 +17,9 @@ class ResourceUserTest extends TestCase
 
         $resource = $this->createResource();
 
-        $this->postJson(route('resource.user.store', $resource->id))
+        $this->postJson(route('resource.user.store'), [
+            'resourceId' => $resource->id
+        ])
             ->assertCreated()
             ->assertJsonStructure([
                 'user_id',
@@ -40,7 +42,9 @@ class ResourceUserTest extends TestCase
             'resource_id' => $resource->id
         ]);
 
-        $this->postJson(route('resource.user.store', $resource->id))
+        $this->postJson(route('resource.user.store'), [
+            'resourceId' => $resource->id
+        ])
             ->assertStatus(409)
             ->assertJson([
                 'message' => 'Você já salvou este recurso.'

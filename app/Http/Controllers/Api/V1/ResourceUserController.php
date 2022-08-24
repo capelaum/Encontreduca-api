@@ -15,15 +15,19 @@ class ResourceUserController extends Controller
     /**
      * Create new user resource and store on database
      *
-     * @param Resource $resource
+     * @param Request $request
      * @return JsonResponse
      */
-    public function store(Resource $resource): JsonResponse
+    public function store(Request $request): JsonResponse
     {
+        $request->validate([
+            'resourceId' => 'required|exists:resources,id',
+        ]);
+
         $user = Auth::user();
 
         $resourceUser = ResourceUser::where('user_id', $user->id)
-            ->where('resource_id', $resource->id)
+            ->where('resource_id', $request->resourceId)
             ->first();
 
         if ($resourceUser) {
@@ -34,7 +38,7 @@ class ResourceUserController extends Controller
 
         $resourceUser = ResourceUser::create([
             'user_id' => $user->id,
-            'resource_id' => $resource->id
+            'resource_id' => $request->resourceId
         ]);
 
         return response()->json($resourceUser, 201);
@@ -55,7 +59,7 @@ class ResourceUserController extends Controller
             ->where('resource_id', $resource->id)
             ->first();
 
-        if(!$resourceUser) {
+        if (!$resourceUser) {
             return response()->json([
                 'message' => 'Você não possui esse recurso salvo.'
             ], 400);

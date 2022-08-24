@@ -193,4 +193,23 @@ class UserTest extends TestCase
                 'message'
             ]);
     }
+
+    public function test_user_votes()
+    {
+        $this->authUser();
+
+        $this->createResourceUser(['user_id' => Auth::id()]);
+
+        $this->getJson(route('users.votes'))
+            ->assertOk()
+            ->assertJsonStructure([
+                '*' => [
+                    'id',
+                    'userId',
+                    'resourceId',
+                    'vote',
+                    'justification'
+                ]
+            ]);
+    }
 }

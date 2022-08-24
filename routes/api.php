@@ -34,16 +34,10 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 
         Route::get('/votes', [UserController::class, 'votes'])
             ->name('users.votes');
-
-        Route::post('/resources/{resource}', [UserController::class, 'storeResource'])
-            ->name('users.store.resource');
-
-        Route::delete('resources/{resource}', [UserController::class, 'deleteResource'])
-            ->name('users.delete.resource');
     });
 
     Route::group(['prefix' => 'resource/user'], function () {
-        Route::post('/{resource}', [ResourceUserController::class, 'store'])
+        Route::post('/', [ResourceUserController::class, 'store'])
             ->name('resource.user.store');
 
         Route::delete('/{resource}', [ResourceUserController::class, 'destroy'])
