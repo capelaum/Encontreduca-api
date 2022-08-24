@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\RateLimiter;
 use function event;
 use function response;
 
@@ -57,6 +58,8 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request): Response
     {
+        $request->ensureIsNotRateLimited();
+
         if (Auth::attempt($request->validated())) {
             $user = Auth::user();
 
@@ -64,28 +67,17 @@ class AuthController extends Controller
                 $user->tokens()->delete();
             }
 
-            $userToken = $user->createToken('auth', [
-                'create:resource',
-                'create:resource-user',
-                'create:resource-change',
-                'create:resource-complaint',
-                'create:resource-vote',
-                'create:review',
-                'create:review-complaint',
-                'create:support',
-                'edit:user',
-                'edit:review',
-                'edit:resource-vote',
-                'delete:user',
-                'delete:review',
-                'delete:resource-user',
-            ]);
+            $userToken = $user->createToken('auth', ['user']);
+
+            RateLimiter::clear($request->throttleKey());
 
             return response([
                 'message' => "Usuário {$request->user()->name} logado com sucesso!",
                 'token' => $userToken->plainTextToken,
             ], 200);
         }
+
+        RateLimiter::hit($request->throttleKey());
 
         return response([
             'message' => 'Credenciais inválidas',

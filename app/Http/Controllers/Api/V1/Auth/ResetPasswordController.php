@@ -7,6 +7,7 @@ use App\Http\Requests\V1\Auth\ResetPasswordRequest;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -24,9 +25,9 @@ class ResetPasswordController extends Controller
      * Send forgot password link to user's email
      *
      * @param Request $request
-     * @return Application|ResponseFactory|Response
+     * @return JsonResponse
      */
-    public function email(Request $request): Response|Application|ResponseFactory
+    public function email(Request $request): JsonResponse
     {
         $request->validate(['email' => 'required|email']);
 
@@ -35,8 +36,8 @@ class ResetPasswordController extends Controller
         );
 
         return $status === Password::RESET_LINK_SENT
-            ? response(['status' => __($status)], 200)
-            : response(['email' => __($status)], 400);
+            ? response()->json(['status' => __($status)])
+            : response()->json(['email' => __($status)], 400);
     }
 
     /**
@@ -59,8 +60,10 @@ class ResetPasswordController extends Controller
      */
     public function update(ResetPasswordRequest $request): Response|Application|ResponseFactory
     {
+        $data = $request->only('email', 'password', 'password_confirmation', 'token');
+
         $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
+            $data,
             function ($user, $password) {
                 $user->forceFill([
                     'password' => Hash::make($password)

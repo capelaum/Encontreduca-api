@@ -18,9 +18,12 @@ class ResourceVoteFactory extends Factory
      */
     public function definition()
     {
+        $users = collect(User::all()->modelKeys());
+        $resources = collect(Resource::all()->modelKeys());
+
         return [
-            'resource_id' => $this->faker->numberBetween(1, Resource::count()),
-            'user_id' => $this->faker->numberBetween(1, User::count()),
+            'user_id' => $users->random(),
+            'resource_id' => $resources->random(),
             'vote' => $this->faker->boolean,
             'justification' => $this->faker->text
         ];

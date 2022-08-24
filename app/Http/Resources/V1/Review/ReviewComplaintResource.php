@@ -19,11 +19,8 @@ class ReviewComplaintResource extends JsonResource
         return [
             'id' => $this->id,
             'userId' => $this->user_id,
-            'user' => new UserResource($this->user),
             'reviewId' => $this->review_id,
-            'review' => new ReviewResource($this->review),
             'motiveId' => $this->motive_id,
-            'motive' => new MotiveResource($this->motive),
         ];
     }
 }

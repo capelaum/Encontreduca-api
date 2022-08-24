@@ -24,7 +24,6 @@ class StoreResourceComplaintRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "userId" => "required|exists:users,id",
             "resourceId" => "required|exists:resources,id",
             "motiveId" => "required|exists:motives,id"
         ];
@@ -33,7 +32,6 @@ class StoreResourceComplaintRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'user_id' => $this->userId,
             'resource_id' => $this->resourceId,
             'motive_id' => $this->motiveId
         ]);

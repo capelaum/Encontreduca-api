@@ -16,7 +16,8 @@ use \App\Http\Controllers\Api\V1\{
     UserController,
     CategoryController,
     MotiveController,
-    SupportController
+    SupportController,
+    ResourceUserController
 };
 
 
@@ -27,38 +28,63 @@ Route::apiResources([
 
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
+    Route::group(['prefix' => 'users'], function () {
+        Route::delete('{user}/avatar', [UserController::class, 'deleteAvatar'])
+            ->name('users.delete.avatar');
+
+        Route::get('/votes', [UserController::class, 'votes'])
+            ->name('users.votes');
+    });
+
+    Route::group(['prefix' => 'resource/user'], function () {
+        Route::post('/', [ResourceUserController::class, 'store'])
+            ->name('resource.user.store');
+
+        Route::delete('/{resource}', [ResourceUserController::class, 'destroy'])
+            ->name('resource.user.destroy');
+    });
+
+    Route::group(['prefix' => 'resources'], function () {
+        Route::post('/', [ResourceController::class, 'store'])
+            ->name('resources.store');
+
+        Route::get('/{resource}/votes', [ResourceController::class, 'votes'])
+            ->name('resources.votes');
+
+        Route::apiResource('complaints', ResourceComplaintController::class, [
+            'as' => 'resources'
+        ]);
+
+        Route::apiResource('changes', ResourceChangeController::class, [
+            'as' => 'resources'
+        ]);
+    });
+
+    Route::apiResource('reviews/complaints', ReviewComplaintController::class, [
+        'as' => 'reviews'
+    ]);
+
     Route::apiResources([
         'users' => UserController::class,
         'supports' => SupportController::class,
-        'resources/complaints' => ResourceComplaintController::class,
-        'resources/changes' => ResourceChangeController::class,
         'resources/votes' => ResourceVoteController::class,
-        'reviews/complaints' => ReviewComplaintController::class,
         'reviews' => ReviewController::class
     ]);
-
-    Route::post('resources', [ResourceController::class, 'store']);
-
-    Route::group(['prefix' => 'users'], function () {
-        Route::delete('{user}/avatar', [UserController::class, 'deleteAvatar']);
-
-        Route::post('/resources', [UserController::class, 'storeResource']);
-        Route::delete('{user}/resources/{resource}', [UserController::class, 'deleteResource']);
-    });
 });
 
 Route::group([
     'prefix' => 'resources',
     'controller' => ResourceController::class
 ], function () {
-    Route::get('/', 'index');
-    Route::get('/{resource}', 'show');
+    Route::get('/', 'index')->name('resources.index');
+    Route::get('/{resource}', 'show')->name('resources.show');
+    Route::get('/{resource}/reviews', 'reviews')->name('resources.reviews');
 });
 
 Route::group([
     'prefix' => 'reviews',
     'controller' => ReviewController::class
 ], function () {
-    Route::get('/', 'index');
-    Route::get('/{review}', 'show');
+    Route::get('/', 'index')->name('reviews.index');
+    Route::get('/{review}', 'show')->name('reviews.show');
 });

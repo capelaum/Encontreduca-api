@@ -10,6 +10,7 @@ use App\Http\Resources\V1\EducationalResource\ResourceVoteResource;
 use App\Models\ResourceVote;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use function response;
 
 class ResourceVoteController extends Controller
@@ -35,20 +36,18 @@ class ResourceVoteController extends Controller
     /**
      * Show single Resource Vote data.
      *
-     * @param int $id
+     * @param ResourceVote $vote
      * @return ResourceVoteResource
      * @throws AuthorizationException
      */
-    public function show(int $id): ResourceVoteResource
+    public function show(ResourceVote $vote): ResourceVoteResource
     {
         $this->authorize('isAdmin', [
             ResourceVote::class,
             'visualizar esse voto de recursos'
         ]);
 
-        $resourceVote = ResourceVote::findOrFail($id);
-
-        return new ResourceVoteResource($resourceVote);
+        return new ResourceVoteResource($vote);
     }
 
     /**
@@ -60,56 +59,51 @@ class ResourceVoteController extends Controller
      */
     public function store(StoreResourceVoteRequest $request): JsonResponse
     {
-        $userId = $request->userId;
+        $user = Auth::user();
         $resourceId = $request->resourceId;
 
-        $this->authorize('isRequestUser',
-            [
-                ResourceVote::class,
-                $userId,
-                'criar esse voto de recurso.'
-            ]
-        );
-
-        $resourceVote = ResourceVote::where('user_id', $userId)
+        $resourceVote = ResourceVote::where('user_id', $user->id)
             ->where('resource_id', $resourceId)
             ->first();
 
         if ($resourceVote) {
             return response()->json([
-                'message' => 'Voto já existe.'
+                'message' => 'Você já votou neste recurso.'
             ], 409);
         }
 
-        $resourceVote = ResourceVote::create($request->all());
+        $data = $request->validated();
 
-        return response()->json($resourceVote, 201);
+        $data['user_id'] = $user->id;
+        $data['resource_id'] = $resourceId;
+
+        $resourceVote = ResourceVote::create($data);
+
+        return response()->json(new ResourceVoteResource($resourceVote), 201);
     }
 
     /**
      * Update Resource Vote data.
      *
      * @param UpdateResourceVoteRequest $request
-     * @param int $id
+     * @param ResourceVote $vote
      * @return JsonResponse
      * @throws AuthorizationException
      */
     public function update(
         UpdateResourceVoteRequest $request,
-        int $id
+        ResourceVote $vote
     ): JsonResponse {
-        $resourceVote = ResourceVote::findOrFail($id);
-
         $this->authorize('isRequestUser',
             [
                 ResourceVote::class,
-                $resourceVote->user_id,
+                $vote->user_id,
                 'atualizar esse voto de recurso.'
             ]
         );
 
-        $resourceVote->update($request->only('vote', 'justification'));
+        $vote->update($request->validated());
 
-        return response()->json($resourceVote);
+        return response()->json(new ResourceVoteResource($vote));
     }
 }

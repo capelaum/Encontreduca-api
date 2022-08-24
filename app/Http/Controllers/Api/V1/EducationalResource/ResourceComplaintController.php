@@ -7,7 +7,9 @@ use App\Http\Requests\V1\EducationalResource\StoreResourceComplaintRequest;
 use App\Http\Resources\V1\EducationalResource\ResourceComplaintCollection;
 use App\Http\Resources\V1\EducationalResource\ResourceComplaintResource;
 use App\Models\ResourceComplaint;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use function response;
 
 class ResourceComplaintController extends Controller
@@ -16,6 +18,7 @@ class ResourceComplaintController extends Controller
      * Returns list of all Resource Complaints.
      *
      * @return ResourceComplaintCollection
+     * @throws AuthorizationException
      */
     public function index(): ResourceComplaintCollection
     {
@@ -32,19 +35,18 @@ class ResourceComplaintController extends Controller
     /**
      * Show single Resource Complaint data.
      *
-     * @param int $id
+     * @param ResourceComplaint $complaint
      * @return ResourceComplaintResource
+     * @throws AuthorizationException
      */
-    public function show(int $id): ResourceComplaintResource
+    public function show(ResourceComplaint $complaint): ResourceComplaintResource
     {
         $this->authorize('isAdmin', [
             ResourceComplaint::class,
-            'visualizar essa sugestão de fechamento de recursos'
+            'visualizar essa sugestão de fechamento de recurso.'
         ]);
 
-        $resourceComplaint = ResourceComplaint::findOrFail($id);
-
-        return new ResourceComplaintResource($resourceComplaint);
+        return new ResourceComplaintResource($complaint);
     }
 
     /**
@@ -55,16 +57,13 @@ class ResourceComplaintController extends Controller
      */
     public function store(StoreResourceComplaintRequest $request): JsonResponse
     {
-        $this->authorize('isRequestUser',
-            [
-                ResourceComplaint::class,
-                $request->userId,
-                'criar essa sugestão de fechamento de recurso.'
-            ]
-        );
+        $data = $request->validated();
+        $data['user_id'] = Auth::id();
+        $data['resource_id'] = $request->resourceId;
+        $data['motive_id'] = $request->motiveId;
 
-        $resourceComplaint = ResourceComplaint::create($request->all());
+        $resourceComplaint = ResourceComplaint::create($data);
 
-        return response()->json($resourceComplaint);
+        return response()->json(new ResourceComplaintResource($resourceComplaint), 201);
     }
 }

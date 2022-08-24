@@ -5,6 +5,10 @@ namespace App\Models;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\DB;
 
 class Resource extends Model
 {
@@ -25,28 +29,58 @@ class Resource extends Model
 
     protected $with = ['category', 'user'];
 
-    public function category()
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function users()
+    public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function reviews()
+    public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
     }
 
-    public function votes()
+    public function votes(): HasMany
     {
         return $this->hasMany(ResourceVote::class);
+    }
+
+    /**
+     * Query all Resources formatted.
+     *
+     * @return array
+     */
+    public static function getAllResources(): array
+    {
+        return DB::select("
+        SELECT
+            r.id,
+            r.user_id AS userId,
+            u.name AS author,
+            r.category_id AS categoryId,
+            c.name AS categoryName,
+            r.name,
+            r.address,
+            r.latitude,
+            r.longitude,
+            r.website,
+            r.phone,
+            r.cover,
+            r.approved,
+            DATE_FORMAT(r.created_at, '%d/%m/%Y') AS createdAt,
+            DATE_FORMAT(r.updated_at, '%d/%m/%Y') AS updatedAt
+        FROM resources r
+        JOIN users u ON u.id = r.user_id
+        JOIN categories c ON c.id = r.category_id
+        ");
     }
 }

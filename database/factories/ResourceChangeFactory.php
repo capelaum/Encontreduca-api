@@ -62,8 +62,10 @@ class ResourceChangeFactory extends Factory
 
         $randomResourceChange = $this->faker->randomElement($resourceChanges);
 
+        $users = collect(User::all()->modelKeys());
+
         return [
-            'user_id' => $this->faker->numberBetween(1, User::count()),
+            'user_id' => $users->random(),
             'resource_id' => $randomResource->id,
             'field' => $randomResourceChange['field'],
             'old_value' => $randomResourceChange['old_value'],

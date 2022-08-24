@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\V1\EducationalResource;
 
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ResourceVoteResource extends JsonResource
@@ -9,18 +11,17 @@ class ResourceVoteResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     * @param  Request  $request
+     * @return array
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
             'id' => $this->id,
-            'resourceId' => $this->resource_id,
             'userId' => $this->user_id,
+            'resourceId' => $this->resource_id,
             'vote' => $this->vote,
             'justification' => $this->justification,
-            'updatedAt' => date('d/m/Y', strtotime($this->updated_at)),
         ];
     }
 }

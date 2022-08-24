@@ -6,8 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\EducationalResource\StoreResourceRequest;
 use App\Http\Resources\V1\EducationalResource\ResourceCollection;
 use App\Http\Resources\V1\EducationalResource\ResourceResource;
+use App\Http\Resources\V1\EducationalResource\ResourceVoteCollection;
+use App\Http\Resources\V1\EducationalResource\ResourceVoteResource;
+use App\Http\Resources\V1\Review\ReviewCollection;
 use App\Models\Resource;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use function response;
 
 class ResourceController extends Controller
@@ -15,13 +21,12 @@ class ResourceController extends Controller
     /**
      * Returns list of all resources.
      *
-     * @return ResourceCollection
      */
-    public function index(): ResourceCollection
+    public function index(): JsonResponse
     {
-        $resources = Resource::all();
+        $resources = Resource::getAllResources();
 
-        return new ResourceCollection($resources);
+        return response()->json($resources);
     }
 
     /**
@@ -40,19 +45,46 @@ class ResourceController extends Controller
      *
      * @param StoreResourceRequest $request
      * @return JsonResponse
+     * @throws AuthorizationException
      */
     public function store(StoreResourceRequest $request): JsonResponse
     {
-        $this->authorize('isRequestUser',
-            [
-                Resource::class,
-                $request->userId,
-                'criar esse recurso.'
-            ]
-        );
+        $data = $request->validated();
+        $data['user_id'] = Auth::id();
+        $data['category_id'] = $request->categoryId;
+        $data['latitude'] = $request->position['lat'];
+        $data['longitude'] = $request->position['lng'];
 
-        $resource = Resource::create($request->all());
+        $resource = Resource::create($data);
 
-        return response()->json($resource, 201);
+        return response()->json(new ResourceResource($resource), 201);
+    }
+
+    /**
+     * Get resource reviews
+     *
+     * @param Resource $resource
+     * @return ReviewCollection
+     */
+    public function reviews(Resource $resource): ReviewCollection
+    {
+        return new ReviewCollection($resource->reviews);
+    }
+
+    /**
+     * Get resource votes
+     *
+     * @param Resource $resource
+     * @return ResourceVoteCollection
+     * @throws AuthorizationException
+     */
+    public function votes(Resource $resource): ResourceVoteCollection
+    {
+        $this->authorize('isAdmin', [
+            Resource::class,
+            'visualizar os votos desse recurso.'
+        ]);
+
+        return new ResourceVoteCollection($resource->votes);
     }
 }

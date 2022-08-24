@@ -16,8 +16,8 @@ class ResourceComplaintResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'resourceId' => $this->resource_id,
             'userId' => $this->user_id,
+            'resourceId' => $this->resource_id,
             'motiveId' => $this->motive_id,
             'createdAt' => date('d/m/Y', strtotime($this->created_at)),
         ];

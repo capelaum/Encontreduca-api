@@ -10,6 +10,7 @@ use App\Http\Resources\V1\Review\ReviewResource;
 use App\Models\Review;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use function response;
 
 class ReviewController extends Controller
@@ -46,17 +47,27 @@ class ReviewController extends Controller
      */
     public function store(StoreReviewRequest $request): JsonResponse
     {
-        $this->authorize('isRequestUser',
-            [
-                Review::class,
-                $request->userId,
-                'criar essa avaliação.'
-            ]
-        );
+        $user = Auth::user();
+        $resourceId = $request->resourceId;
 
-        $review = Review::create($request->all());
+        $review = Review::where('user_id', $user->id)
+            ->where('resource_id', $resourceId)
+            ->first();
 
-        return response()->json($review, 201);
+        if ($review) {
+            return response()->json([
+                'message' => 'Você já avaliou este recurso.'
+            ], 409);
+        }
+
+        $data = $request->validated();
+
+        $data['user_id'] = $user->id;
+        $data['resource_id'] = $resourceId;
+
+        $review = Review::create($data);
+
+        return response()->json(new ReviewResource($review), 201);
     }
 
     /**
@@ -77,9 +88,9 @@ class ReviewController extends Controller
             ]
         );
 
-        $review->update($request->all());
+        $review->update($request->validated());
 
-        return response()->json($review);
+        return response()->json(new ReviewResource($review));
     }
 
     /**
@@ -101,6 +112,6 @@ class ReviewController extends Controller
 
         $review->delete();
 
-        return response()->json(null);
+        return response()->json(null, 204);
     }
 }

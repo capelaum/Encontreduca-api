@@ -23,18 +23,9 @@ class UpdateReviewRequest extends FormRequest
      */
     public function rules(): array
     {
-        $method = $this->method();
-
-        if ($method == 'PUT') {
-            return [
-                "rating" => "required|numeric|between:1,5",
-                "comment" => "required|string|min:3|max:1000"
-            ];
-        }
-
         return [
-            "rating" => "sometimes|required|numeric|between:1,5",
-            "comment" => "sometimes|required|string|min:3|max:1000"
+            "rating" => "required|numeric|between:1,5",
+            "comment" => "required|string|min:3|max:1000"
         ];
     }
 }

@@ -23,18 +23,9 @@ class UpdateResourceVoteRequest extends FormRequest
      */
     public function rules(): array
     {
-        $method = $this->method();
-
-        if ($method == 'PUT') {
-            return [
-                "vote" => "required|boolean",
-                "justification" => "required|string|min:3"
-            ];
-        }
-
         return [
-            "vote" => "sometimes|required|boolean",
-            "justification" => "sometimes|required|string|min:3"
+            "vote" => "required|boolean",
+            "justification" => "required|string|min:3"
         ];
     }
 }

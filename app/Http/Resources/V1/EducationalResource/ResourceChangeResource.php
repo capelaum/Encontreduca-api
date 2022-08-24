@@ -16,12 +16,12 @@ class ResourceChangeResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'userId' => $this->user_id,
+            'resourceId' => $this->resource_id,
             'field' => $this->field,
             'oldValue' => $this->old_value,
             'newValue' => $this->new_value,
             'createdAt' => date('d/m/Y', strtotime($this->created_at)),
-            'userId' => $this->user_id,
-            'resourceId' => $this->resource_id,
         ];
     }
 }

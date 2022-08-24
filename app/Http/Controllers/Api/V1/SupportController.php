@@ -9,6 +9,7 @@ use App\Http\Resources\V1\SupportResource;
 use App\Models\Support;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 class SupportController extends Controller
 {
@@ -56,16 +57,11 @@ class SupportController extends Controller
      */
     public function store(StoreSupportRequest $request): JsonResponse
     {
-        $this->authorize('isRequestUser',
-            [
-                Support::class,
-                $request->userId,
-                'criar esse pedido de suporte.'
-            ]
-        );
+        $data = $request->validated();
+        $data['user_id'] = Auth::id();
 
-        $support = Support::create($request->all());
+        $support = Support::create($data);
 
-        return response()->json($support);
+        return response()->json(new SupportResource($support), 201);
     }
 }

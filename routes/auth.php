@@ -8,14 +8,19 @@ use App\Http\Controllers\Api\V1\Auth\{
 };
 
 
-Route::post('register', [AuthController::class, 'register']);
-Route::post('login', [AuthController::class, 'login']);
+Route::post('register', [AuthController::class, 'register'])
+    ->name('auth.register');
+
+Route::post('login', [AuthController::class, 'login'])
+    ->name('auth.login');
 
 Route::post('logout', [AuthController::class, 'logout'])
-    ->middleware(['auth:sanctum', 'verified']);
+    ->middleware(['auth:sanctum', 'verified'])
+    ->name('auth.logout');
 
 Route::get('user', [AuthController::class, 'getAuthUser'])
-    ->middleware(['auth:sanctum', 'verified']);
+    ->middleware(['auth:sanctum', 'verified'])
+    ->name('auth.user');
 
 Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, 'verify'])
     ->middleware(['signed', 'throttle:6,1'])

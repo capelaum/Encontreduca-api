@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\EducationalResource\ResourceVoteCollection;
+use App\Http\Resources\V1\EducationalResource\ResourceVoteResource;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\V1\{
     StoreResourceUserRequest,
@@ -12,11 +15,7 @@ use App\Http\Requests\V1\{
 };
 use App\Http\Resources\V1\UserCollection;
 use App\Http\Resources\V1\UserResource;
-use App\Models\{
-    User,
-    Resource,
-    ResourceUser
-};
+use App\Models\{ResourceVote, Review, User, Resource, ResourceUser};
 
 class UserController extends Controller
 {
@@ -42,12 +41,18 @@ class UserController extends Controller
      * Show single User data.
      *
      * @param User $user
-     * @return JsonResponse|UserResource
+     * @return UserResource
      * @throws AuthorizationException
      */
-    public function show(User $user): JsonResponse|UserResource
+    public function show(User $user): UserResource
     {
-        $this->authorize('isOwner', [$user, 'visualizar esse usuário.']);
+        $this->authorize('isRequestUser',
+            [
+                User::class,
+                $user->id,
+                'visualizar este usuário.'
+            ]
+        );
 
         return new UserResource($user);
     }
@@ -62,9 +67,16 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user): JsonResponse
     {
-        $this->authorize('isOwner', [$user, 'atualizar esse usuário.']);
+        $this->authorize('isRequestUser',
+            [
+                User::class,
+                $user->id,
+                'atualizar esse usuário.'
+            ]
+        );
 
-        $data = $request->all();
+        $data = $request->validated();
+        $data['avatar_url'] = $request->avatarUrl;
 
         if ($request->password) {
             $data['password'] = Hash::make($request->password);
@@ -74,8 +86,8 @@ class UserController extends Controller
             unset($data['password']);
         }
 
-        if (auth()->user()->email !== $request->email) {
-            auth()->user()->newEmail($request->email);
+        if ($request->email && Auth::user()->email !== $request->email) {
+            Auth::user()->newEmail($request->email);
             $data['email'] = auth()->user()->email;
         }
 
@@ -91,11 +103,17 @@ class UserController extends Controller
      */
     public function destroy(User $user): JsonResponse
     {
-        $this->authorize('isOwner', [$user, 'excluir esse usuário.']);
+        $this->authorize('isRequestUser',
+            [
+                User::class,
+                $user->id,
+                'excluir esse usuário.'
+            ]
+        );
 
         $user->delete();
 
-        return response()->json(['message' => 'Usuário excluído']);
+        return response()->json(null, 204);
     }
 
     /**
@@ -107,57 +125,31 @@ class UserController extends Controller
      */
     public function deleteAvatar(User $user): JsonResponse
     {
-        $this->authorize('isOwner', [
-            $user,
-            'excluir a imagem de perfil desse usuário.'
-        ]);
+        $this->authorize('isRequestUser',
+            [
+                User::class,
+                $user->id,
+                'excluir esse usuário.'
+            ]
+        );
 
         $user->avatar_url = null;
         $user->save();
 
-        return response()->json(['message' => 'Avatar excluído']);
+        return response()->json(null, 204);
     }
 
     /**
-     * Create new user resource and store on database
+     * List user votes
      *
-     * @param StoreResourceUserRequest $request
      * @return JsonResponse
-     * @throws AuthorizationException
      */
-    public function storeResource(StoreResourceUserRequest $request): JsonResponse
+    public function votes(): JsonResponse
     {
-        $this->authorize('isRequestUser',
-            [
-                User::class,
-                $request->userId,
-                'adicionar esse recurso na lista de salvos'
-            ]
-        );
+        $user = Auth::user();
 
-        $resourceUser = ResourceUser::create($request->validated());
+        $userVotes = ResourceVote::where('user_id', $user->id)->get();
 
-        return response()->json($resourceUser, 201);
-    }
-
-    /**
-     * Delete user resource from database
-     *
-     * @param User $user
-     * @param Resource $resource
-     * @return JsonResponse
-     * @throws AuthorizationException
-     */
-    public function deleteResource(User $user, Resource $resource): JsonResponse
-    {
-        $this->authorize('isRequestUser', [
-            User::class,
-            $user->id,
-            'adicionar esse recurso na lista de salvos'
-        ]);
-
-        $user->resources()->detach($resource);
-
-        return response()->json(['message' => 'Resource deleted']);
+        return response()->json(new ResourceVoteCollection($userVotes));
     }
 }
