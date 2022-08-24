@@ -110,6 +110,36 @@ class AuthTest extends TestCase
             ]);
     }
 
+    public function test_login_attempts_are_throttled()
+    {
+        $user = $this->createUser();
+
+        $this->withExceptionHandling();
+
+        for ($i = 0; $i < 5; $i++) {
+            $this->postJson(route('auth.login'), [
+                'email' => $user->email,
+                'password' => 'wrong-password'
+            ])
+                ->assertUnauthorized()
+                ->assertJson(['message' => 'Credenciais inválidas']);
+        }
+
+        $this->postJson(route('auth.login'), [
+            'email' => $user->email,
+            'password' => 'wrong-password'
+        ])
+            ->assertStatus(422)
+            ->assertJson([
+                'message' => 'Muitas tentativas de login. Tente novamente em 60 segundos.',
+                'errors' => [
+                    'email' => [
+                        'Muitas tentativas de login. Tente novamente em 60 segundos.'
+                    ]
+                ]
+            ]);
+    }
+
     public function test_user_cannot_login_with_invalid_email()
     {
         $this->postJson(route('auth.login', [
@@ -139,7 +169,7 @@ class AuthTest extends TestCase
         $this->postJson(route('auth.logout'))
             ->assertOk()
             ->assertJson([
-               'message' =>  'Logout realizado com sucesso!'
+                'message' => 'Logout realizado com sucesso!'
             ]);
     }
 
@@ -150,7 +180,7 @@ class AuthTest extends TestCase
         $this->postJson(route('auth.logout'))
             ->assertOk()
             ->assertJson([
-               'message' =>  'Logout realizado com sucesso!'
+                'message' => 'Logout realizado com sucesso!'
             ]);
     }
 }
