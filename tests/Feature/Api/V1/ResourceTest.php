@@ -99,6 +99,8 @@ class ResourceTest extends TestCase
 
     public function test_get_resource_votes()
     {
+        $this->authAdmin();
+
         $this->createResourceVote(['resource_id' => $this->resource->id]);
 
         $response = $this->getJson(route('resources.votes', $this->resource->id))
@@ -109,5 +111,20 @@ class ResourceTest extends TestCase
             ->toArray($this->resource->votes);
 
         $this->assertEquals($response, $resourceVotes);
+    }
+
+    public function test_user_cannot_get_resource_votes()
+    {
+        $this->authUser();
+
+        $this->createResourceVote(['resource_id' => $this->resource->id]);
+
+        $this->withExceptionHandling();
+
+        $this->getJson(route('resources.votes', $this->resource->id))
+            ->assertStatus(401)
+            ->assertJsonStructure([
+                'message'
+            ]);
     }
 }
