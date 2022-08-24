@@ -98,8 +98,8 @@ class AuthTest extends TestCase
     {
         $user = $this->createUser();
 
-        $this->withExceptionHandling();
-
+        $user->createToken('auth', ['user']);
+        
         $this->postJson(route('auth.login'), [
             'email' => $user->email,
             'password' => 'password'
