@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class ResourceSeeder extends Seeder
 {
+    const PLACEHOLDER = 'https://dummyimage.com/380x200/333/fff';
     private $resources = [
         [
             'name' => 'Escola Classe 405 Norte',
@@ -21,7 +22,7 @@ class ResourceSeeder extends Seeder
             'address' => 'SHCN SQN 405 - Asa Norte, Brasília - DF, 70846-000',
             'website' => null,
             'phone' => '(61) 3273-2972',
-            'cover' => 'https://dummyimage.com/380x200/333/fff',
+            'cover' => self::PLACEHOLDER,
             'approved' => true
         ],
         [
@@ -33,7 +34,7 @@ class ResourceSeeder extends Seeder
             'address' => 'SGAN 914 Conjunto I Setor de Grandes Áreas Norte, Asa Norte, Brasília - DF, 70790-140',
             'website' => 'https://www.leonardoonline.com.br',
             'phone' => '(61) 3340-1616',
-            'cover' => 'https://dummyimage.com/380x200/333/fff',
+            'cover' => self::PLACEHOLDER,
             'approved' => true
         ],
         [
@@ -69,7 +70,7 @@ class ResourceSeeder extends Seeder
             'address' => 'Campus Universitário Darcy Ribeiro, Gleba A - Asa Norte, Brasília - DF, 70910-900',
             'website' => 'http://www.bce.unb.br',
             'phone' => '(61) 3107-2676',
-            'cover' => 'https://dummyimage.com/380x200/333/fff',
+            'cover' => self::PLACEHOLDER,
             'approved' => true
         ],
         [
@@ -81,7 +82,7 @@ class ResourceSeeder extends Seeder
             'address' => 'SCRN 704/705 Bloco A, 53 - Asa Norte, Brasília - DF, 70730-610',
             'website' => 'https://www.cursoexatas.com.br',
             'phone' => '(61) 3242-0628',
-            'cover' => 'https://dummyimage.com/380x200/333/fff',
+            'cover' => self::PLACEHOLDER,
             'approved' => true
         ],
         [
@@ -93,7 +94,7 @@ class ResourceSeeder extends Seeder
             'address' => 'Ulysses Guimarães SDC, Bloco I, Zona Cívico e Administrativa- Ala Norte Piso 01, Eixo Monumental, Brasília - DF, 70655-775',
             'website' => 'http://thebraincoworking.com.br',
             'phone' => '(61) 3142-0106',
-            'cover' => 'https://dummyimage.com/380x200/333/fff',
+            'cover' => self::PLACEHOLDER,
             'approved' => true
         ],
         [
@@ -105,7 +106,7 @@ class ResourceSeeder extends Seeder
             'address' => 'SHCGN 713 ÁREA ESPECIAL',
             'website' => 'http://www.podion.com.br',
             'phone' => '(61) 3042-3849',
-            'cover' => 'https://dummyimage.com/380x200/333/fff',
+            'cover' => self::PLACEHOLDER,
             'approved' => false
         ],
         [
@@ -117,7 +118,7 @@ class ResourceSeeder extends Seeder
             'address' => 'SGAS I SGAS 912 - Asa Sul, Brasília - DF, 70390-120',
             'website' => 'https://sigmadf.com.br',
             'phone' => '(61) 3042-3849',
-            'cover' => 'https://dummyimage.com/380x200/333/fff',
+            'cover' => self::PLACEHOLDER,
             'approved' => false
         ],
         [
@@ -129,7 +130,7 @@ class ResourceSeeder extends Seeder
             'address' => '2º andar SHCGN, Quadra 712, Conjunto B s/n - Asa Norte, DF, 70360-702',
             'website' => 'http://www.podion.com.br',
             'phone' => '(61) 3272-7742',
-            'cover' => 'https://dummyimage.com/380x200/333/fff',
+            'cover' => self::PLACEHOLDER,
             'approved' => false
         ]
     ];

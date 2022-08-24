@@ -26,7 +26,7 @@ class UpdateUserRequest extends FormRequest
     {
         $method = $this->method();
 
-        if ($method == 'PUT') {
+        if ($method === 'PUT') {
             return [
                 "name" => "required|string|min:3|max:255",
                 "email" => [

@@ -76,6 +76,7 @@ class UserController extends Controller
         );
 
         $data = $request->validated();
+        $data['avatar_url'] = $request->avatarUrl;
 
         if ($request->password) {
             $data['password'] = Hash::make($request->password);
@@ -85,7 +86,7 @@ class UserController extends Controller
             unset($data['password']);
         }
 
-        if (Auth::user()->email !== $request->email) {
+        if ($request->email && Auth::user()->email !== $request->email) {
             Auth::user()->newEmail($request->email);
             $data['email'] = auth()->user()->email;
         }

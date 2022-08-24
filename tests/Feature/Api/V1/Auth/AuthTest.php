@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\RateLimiter;
 use Tests\TestCase;
 
 class AuthTest extends TestCase
@@ -93,13 +94,12 @@ class AuthTest extends TestCase
             ]);
     }
 
-
     public function test_login()
     {
         $user = $this->createUser();
 
         $user->createToken('auth', ['user']);
-        
+
         $this->postJson(route('auth.login'), [
             'email' => $user->email,
             'password' => 'password'

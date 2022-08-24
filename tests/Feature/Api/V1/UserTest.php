@@ -77,10 +77,10 @@ class UserTest extends TestCase
 
         $updatedUser = User::factory()->make();
 
-        $this->patchJson(route('users.update', Auth::id()), [
+        $this->putJson(route('users.update', Auth::id()), [
             'name' => $updatedUser->name,
             'email' => $updatedUser->email,
-            'avatarUrl' => $updatedUser->avatar_url,
+            'avatarUrl' => 'https://dummyimage.com/380x200/333/fff',
             'password' => 'password',
             'confirmPassword' => 'password',
         ])->assertOk()
@@ -89,7 +89,7 @@ class UserTest extends TestCase
         $this->assertDatabaseHas('users', [
             'name' => $updatedUser->name,
             'email' => Auth::user()->email,
-            'avatar_url' => $updatedUser->avatar_url,
+            'avatar_url' => 'https://dummyimage.com/380x200/333/fff',
             'email_verified_at' => date($updatedUser->email_verified_at),
         ]);
 
@@ -102,6 +102,24 @@ class UserTest extends TestCase
 
         // assert that new password matches the auth user password
         $this->assertTrue(Hash::check('password', Auth::user()->getAuthPassword()));
+    }
+
+    public function test_update_user_with_patch_request()
+    {
+        $this->authUser();
+
+        $updatedUser = User::factory()->make();
+
+        $this->patchJson(route('users.update', Auth::id()), [
+            'name' => $updatedUser->name,
+        ])->assertOk()
+            ->assertJsonStructure($this->userKeys);
+
+        $this->assertDatabaseHas('users', [
+            'id' => Auth::id(),
+            'name' => $updatedUser->name,
+            'email_verified_at' => date($updatedUser->email_verified_at),
+        ]);
     }
 
     public function test_update_user_except_email_and_password()

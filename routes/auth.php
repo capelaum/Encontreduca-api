@@ -12,7 +12,6 @@ Route::post('register', [AuthController::class, 'register'])
     ->name('auth.register');
 
 Route::post('login', [AuthController::class, 'login'])
-    ->middleware(['throttle:6,1'])
     ->name('auth.login');
 
 Route::post('logout', [AuthController::class, 'logout'])

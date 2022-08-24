@@ -93,7 +93,7 @@ class ReviewTest extends TestCase
         $this->authUser();
         $review = $this->createReview(['user_id' => Auth::id()]);
 
-        $this->patchJson(route('reviews.update', $review->id), [
+        $this->putJson(route('reviews.update', $review->id), [
             'rating' => 5,
             'comment' => 'New comment'
         ])->assertOk()
