@@ -27,9 +27,19 @@ Route::apiResources([
 
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
-    Route::apiResource('reviews/complaints', ReviewComplaintController::class, [
-        'as' => 'reviews'
-    ]);
+    Route::group(['prefix' => 'users'], function () {
+        Route::delete('{user}/avatar', [UserController::class, 'deleteAvatar'])
+            ->name('users.delete.avatar');
+
+        Route::get('/votes', [UserController::class, 'votes'])
+            ->name('users.votes');
+
+        Route::post('/resources/{resource}', [UserController::class, 'storeResource'])
+            ->name('users.store.resource');
+
+        Route::delete('resources/{resource}', [UserController::class, 'deleteResource'])
+            ->name('users.delete.resource');
+    });
 
     Route::group(['prefix' => 'resources'], function () {
         Route::post('/', [ResourceController::class, 'store'])
@@ -47,16 +57,9 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
         ]);
     });
 
-    Route::group(['prefix' => 'users'], function () {
-        Route::delete('{user}/avatar', [UserController::class, 'deleteAvatar'])
-            ->name('users.delete.avatar');
-
-        Route::post('/resources/{resource}', [UserController::class, 'storeResource'])
-            ->name('users.store.resource');
-
-        Route::delete('resources/{resource}', [UserController::class, 'deleteResource'])
-            ->name('users.delete.resource');
-    });
+    Route::apiResource('reviews/complaints', ReviewComplaintController::class, [
+        'as' => 'reviews'
+    ]);
 
     Route::apiResources([
         'users' => UserController::class,
