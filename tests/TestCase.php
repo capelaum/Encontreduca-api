@@ -5,6 +5,7 @@ namespace Tests;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
 use Laravel\Sanctum\Sanctum;
 use Database\Seeders\{ReviewSeeder, CategorySeeder, MotiveSeeder};
 use App\Models\{ResourceUser,
@@ -111,5 +112,10 @@ abstract class TestCase extends BaseTestCase
     public function createResourceComplaint(array $args = [])
     {
         return ResourceComplaint::factory()->create($args);
+    }
+
+    public function createPasswordResetToken(User $user): string
+    {
+        return Password::broker()->createToken($user);
     }
 }
