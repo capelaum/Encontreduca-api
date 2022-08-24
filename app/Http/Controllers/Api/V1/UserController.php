@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\EducationalResource\ResourceVoteCollection;
+use App\Http\Resources\V1\EducationalResource\ResourceVoteResource;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +15,7 @@ use App\Http\Requests\V1\{
 };
 use App\Http\Resources\V1\UserCollection;
 use App\Http\Resources\V1\UserResource;
-use App\Models\{Review, User, Resource, ResourceUser};
+use App\Models\{ResourceVote, Review, User, Resource, ResourceUser};
 
 class UserController extends Controller
 {
@@ -137,56 +139,16 @@ class UserController extends Controller
     }
 
     /**
-     * Create new user resource and store on database
+     * List user votes
      *
-     * @param Resource $resource
      * @return JsonResponse
      */
-    public function storeResource(Resource $resource): JsonResponse
+    public function votes(): JsonResponse
     {
         $user = Auth::user();
 
-        $resourceUser = ResourceUser::where('user_id', $user->id)
-            ->where('resource_id', $resource->id)
-            ->first();
+        $userVotes = ResourceVote::where('user_id', $user->id)->get();
 
-        if ($resourceUser) {
-            return response()->json([
-                'message' => 'Você já salvou este recurso.'
-            ], 409);
-        }
-
-        $resourceUser = ResourceUser::create([
-            'user_id' => $user->id,
-            'resource_id' => $resource->id
-        ]);
-
-        return response()->json($resourceUser, 201);
-    }
-
-    /**
-     * Delete user resource from database
-     *
-     * @param Resource $resource
-     * @return JsonResponse
-     * @throws AuthorizationException
-     */
-    public function deleteResource(Resource $resource): JsonResponse
-    {
-        $user = Auth::user();
-
-        $resourceUser = ResourceUser::where('user_id', $user->id)
-            ->where('resource_id', $resource->id)
-            ->first();
-
-        if(!$resourceUser) {
-            return response()->json([
-                'message' => 'Você não possui esse recurso salvo.'
-            ], 400);
-        }
-
-        $user->resources()->detach($resource);
-
-        return response()->json(null, 204);
+        return response()->json(new ResourceVoteCollection($userVotes));
     }
 }

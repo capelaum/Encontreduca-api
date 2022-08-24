@@ -16,7 +16,8 @@ use \App\Http\Controllers\Api\V1\{
     UserController,
     CategoryController,
     MotiveController,
-    SupportController
+    SupportController,
+    ResourceUserController
 };
 
 
@@ -39,6 +40,14 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 
         Route::delete('resources/{resource}', [UserController::class, 'deleteResource'])
             ->name('users.delete.resource');
+    });
+
+    Route::group(['prefix' => 'resource/user'], function () {
+        Route::post('/{resource}', [ResourceUserController::class, 'store'])
+            ->name('resource.user.store');
+
+        Route::delete('/{resource}', [ResourceUserController::class, 'destroy'])
+            ->name('resource.user.destroy');
     });
 
     Route::group(['prefix' => 'resources'], function () {
