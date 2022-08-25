@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\EducationalResource\ResourceVoteCollection;
 use App\Http\Resources\V1\EducationalResource\ResourceVoteResource;
+use Cloudinary\Cloudinary;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -76,7 +77,23 @@ class UserController extends Controller
         );
 
         $data = $request->validated();
-        $data['avatar_url'] = $request->avatarUrl;
+
+        if ($request->avatar) {
+            if (!$user->avatar_url) {
+                $data['avatar_url'] = $request->file('avatar')
+                    ->storeOnCloudinary('encontreduca/avatars')
+                    ->getSecurePath();
+            }
+
+            if ($user->avatar_url) {
+                $avatarUrlArray = explode('/', $user->avatar_url);
+                $publicId = explode('.', end($avatarUrlArray))[0];
+
+                $data['avatar_url'] = $request->file('avatar')
+                    ->storeOnCloudinaryAs('encontreduca/avatars', $publicId)
+                    ->getSecurePath();
+            }
+        }
 
         if ($request->password) {
             $data['password'] = Hash::make($request->password);
@@ -132,6 +149,16 @@ class UserController extends Controller
                 'excluir esse usuário.'
             ]
         );
+
+        if ($user->avatar_url) {
+            $avatarUrlArray = explode('/', $user->avatar_url);
+            $publicId = explode('.', end($avatarUrlArray))[0];
+
+//            dd($publicId);
+
+            cloudinary()->destroy("encontreduca/avatars/$publicId");
+        }
+
 
         $user->avatar_url = null;
         $user->save();

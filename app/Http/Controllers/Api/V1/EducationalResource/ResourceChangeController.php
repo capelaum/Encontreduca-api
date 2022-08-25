@@ -65,6 +65,12 @@ class ResourceChangeController extends Controller
         $data['old_value'] = $request->oldValue;
         $data['new_value'] = $request->newValue;
 
+        if ($request->hasFile('cover')) {
+            $data['new_value'] = $request->file('cover')
+                ->storeOnCloudinary('encontreduca/covers/changes')
+                ->getSecurePath();
+        }
+
         $resourceChange = ResourceChange::create($data);
 
         return response()->json(new ResourceChangeResource($resourceChange), 201);
