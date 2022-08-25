@@ -52,8 +52,10 @@ class ResourceController extends Controller
         $data = $request->validated();
         $data['user_id'] = Auth::id();
         $data['category_id'] = $request->categoryId;
-        $data['latitude'] = $request->position['lat'];
-        $data['longitude'] = $request->position['lng'];
+
+        $data['cover'] = $request->file('cover')
+            ->storeOnCloudinary('encontreduca/covers')
+            ->getSecurePath();
 
         $resource = Resource::create($data);
 

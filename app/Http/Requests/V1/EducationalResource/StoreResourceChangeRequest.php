@@ -31,6 +31,7 @@ class StoreResourceChangeRequest extends FormRequest
             "field" => "required|string|max:255|in:$fieldList",
             "oldValue" => "required|string|max:255",
             "newValue" => "required|string|max:255",
+            "cover" => "nullable|file|mimes:jpg,png,svg,webp"
         ];
     }
 

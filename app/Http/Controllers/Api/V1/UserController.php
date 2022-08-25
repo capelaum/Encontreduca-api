@@ -79,18 +79,18 @@ class UserController extends Controller
         $data = $request->validated();
 
         if ($request->avatar) {
+            if (!$user->avatar_url) {
+                $data['avatar_url'] = $request->file('avatar')
+                    ->storeOnCloudinary('encontreduca/avatars')
+                    ->getSecurePath();
+            }
+
             if ($user->avatar_url) {
                 $avatarUrlArray = explode('/', $user->avatar_url);
                 $publicId = explode('.', end($avatarUrlArray))[0];
 
                 $data['avatar_url'] = $request->file('avatar')
                     ->storeOnCloudinaryAs('encontreduca/avatars', $publicId)
-                    ->getSecurePath();
-            }
-
-            if (!$user->avatar_url) {
-                $data['avatar_url'] = $request->file('avatar')
-                    ->storeOnCloudinary('encontreduca/avatars')
                     ->getSecurePath();
             }
         }

@@ -26,12 +26,12 @@ class StoreResourceRequest extends FormRequest
         return [
             "categoryId" => "required|exists:categories,id",
             "name" => "required|string|min:3|max:255",
-            "position.lat" => "required|numeric|between:-90,90",
-            "position.lng" => "required|numeric|between:-180,180",
+            "latitude" => "required|numeric|between:-90,90",
+            "longitude" => "required|numeric|between:-180,180",
             "address" => "required|string|min:3|max:255",
             "website" => "nullable|string|min:7|max:255",
             "phone" => "nullable|string|min:14|max:15",
-            "cover" => "required|string|max:1000",
+            "cover" => "required|file|mimes:jpg,png,svg,webp",
             "approved" => "nullable|boolean"
         ];
     }
@@ -40,8 +40,6 @@ class StoreResourceRequest extends FormRequest
     {
         $this->merge([
             'category_id' => $this->categoryId,
-            'latitude' => $this->position['lat'],
-            'longitude' => $this->position['lng'],
         ]);
     }
 }
