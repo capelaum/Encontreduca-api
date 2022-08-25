@@ -36,7 +36,7 @@ class UpdateUserRequest extends FormRequest
                     'max:255',
                     Rule::unique('users')->ignore($this->user->id),
                 ],
-                "avatarUrl" => "nullable|string|max:1000",
+                "avatar" => "nullable|file|mimes:jpg,png,svg,webp",
                 "password" => "nullable|string|min:8|max:255|confirmed",
                 "confirmPassword" => "nullable|string|min:8|max:255",
             ];
@@ -52,7 +52,7 @@ class UpdateUserRequest extends FormRequest
                 'max:255',
                 Rule::unique('users')->ignore($this->user->id),
             ],
-            "avatarUrl" => "sometimes|nullable|string|max:1000",
+            "avatar" => "nullable|file|mimes:jpg,png,svg,webp",
             "password" => "sometimes|nullable|string|min:8|max:255|confirmed",
             "confirmPassword" => "sometimes|nullable|string|min:8|max:255",
         ];
@@ -60,12 +60,6 @@ class UpdateUserRequest extends FormRequest
 
     protected function prepareForValidation()
     {
-        if ($this->avatarUrl) {
-            $this->merge([
-                'avatar_url' => $this->avatarUrl,
-            ]);
-        }
-
         if ($this->confirmPassword) {
             $this->merge([
                 'password_confirmation' => $this->confirmPassword,

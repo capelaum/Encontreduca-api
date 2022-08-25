@@ -2,16 +2,30 @@
 
 namespace Tests\Feature\Api\V1;
 
+use App\Http\Requests\V1\UpdateUserRequest;
 use App\Models\User;
+use CloudinaryLabs\CloudinaryLaravel\CloudinaryEngine;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\Testing\File;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Mockery\MockInterface;
 use Tests\TestCase;
 
 class UserTest extends TestCase
 {
     use RefreshDatabase;
+
+    private string $avatarUrl = "https://res.cloudinary.com/capelaum/image/upload/v1661422020/encontreduca/avatars/pslj3lojhuzklk8fb9p6.jpg";
+    private string $publicId = 'pslj3lojhuzklk8fb9p6';
+
+    public function setup(): void
+    {
+        parent::setup();
+
+        $this->authUser();
+    }
 
     private array $userKeys = [
         'id',
@@ -33,8 +47,6 @@ class UserTest extends TestCase
 
     public function test_user_cannot_list_users()
     {
-        $this->authUser();
-
         $this->createUser();
 
         $this->withExceptionHandling();
@@ -48,8 +60,6 @@ class UserTest extends TestCase
 
     public function test_show_user()
     {
-        $this->authUser();
-
         $this->getJson(route('users.show', Auth::id()))
             ->assertOk()
             ->assertJsonStructure($this->userKeys)
@@ -58,8 +68,6 @@ class UserTest extends TestCase
 
     public function test_user_cannot_show_other_user_data()
     {
-        $this->authUser();
-
         $user = $this->createUser();
 
         $this->withExceptionHandling();
@@ -73,23 +81,34 @@ class UserTest extends TestCase
 
     public function test_update_user()
     {
-        $this->authUser();
-
         $updatedUser = User::factory()->make();
 
-        $this->putJson(route('users.update', Auth::id()), [
+        $avatar = $this->createFakeImageFile('avatar.jpg');
+
+        Cloudinary::shouldReceive('uploadFile')
+            ->once()
+            ->with($avatar->getRealPath(), [
+                'folder' => 'encontreduca/avatars'
+            ])
+            ->andReturnSelf()
+            ->shouldReceive('getSecurePath')
+            ->once()
+            ->andReturn($this->avatarUrl);
+
+        $response = $this->putJson(route('users.update', Auth::id()), [
             'name' => $updatedUser->name,
             'email' => $updatedUser->email,
-            'avatarUrl' => 'https://dummyimage.com/380x200/333/fff',
+            'avatar' => $avatar,
             'password' => 'password',
             'confirmPassword' => 'password',
         ])->assertOk()
-            ->assertJsonStructure($this->userKeys);
+            ->assertJsonStructure($this->userKeys)
+            ->json();
 
         $this->assertDatabaseHas('users', [
             'name' => $updatedUser->name,
             'email' => Auth::user()->email,
-            'avatar_url' => 'https://dummyimage.com/380x200/333/fff',
+            'avatar_url' => $response['avatarUrl'],
             'email_verified_at' => date($updatedUser->email_verified_at),
         ]);
 
@@ -106,52 +125,62 @@ class UserTest extends TestCase
 
     public function test_update_user_with_patch_request()
     {
-        $this->authUser();
+        $user = $this->authUser([
+            'avatar_url' => $this->avatarUrl
+        ]);
 
-        $updatedUser = User::factory()->make();
+        $avatar = $this->createFakeImageFile('avatar.jpg');
 
-        $this->patchJson(route('users.update', Auth::id()), [
-            'name' => $updatedUser->name,
+        Cloudinary::shouldReceive('uploadFile')
+            ->once()
+            ->with($avatar->getRealPath(), [
+                'folder' => 'encontreduca/avatars',
+                'public_id' => $this->publicId,
+            ])
+            ->andReturnSelf()
+            ->shouldReceive('getSecurePath')
+            ->once()
+            ->andReturn($this->avatarUrl);
+
+        $response = $this->patchJson(route('users.update', $user->id), [
+            'name' => 'updated Name',
+            'avatar' => $avatar,
         ])->assertOk()
-            ->assertJsonStructure($this->userKeys);
+            ->assertJsonStructure($this->userKeys)->json();
 
         $this->assertDatabaseHas('users', [
-            'id' => Auth::id(),
-            'name' => $updatedUser->name,
-            'email_verified_at' => date($updatedUser->email_verified_at),
+            'id' => $user->id,
+            'name' => 'updated Name',
+            'avatar_url' => $response['avatarUrl'],
+            'email_verified_at' => date($user->email_verified_at),
         ]);
     }
 
     public function test_update_user_except_email_and_password()
     {
-        $this->authUser();
         $updatedUser = User::factory()->make();
 
         $this->patchJson(route('users.update', Auth::id()), [
             'name' => $updatedUser->name,
             'email' => Auth::user()->email,
-            'avatarUrl' => $updatedUser->avatar_url,
         ])->assertOk()
             ->assertJsonStructure($this->userKeys);
 
         $this->assertDatabaseHas('users', [
             'name' => $updatedUser->name,
             'email' => Auth::user()->email,
-            'avatar_url' => $updatedUser->avatar_url,
         ]);
     }
 
     public function test_user_cannot_update_other_user()
     {
         $this->withExceptionHandling();
-        $this->authUser();
 
         $updatedUser = $this->createUser(['password' => 'password']);
 
         $this->patchJson(route('users.update', $updatedUser->id), [
             'name' => $updatedUser->name,
             'email' => $updatedUser->email,
-            'avatarUrl' => $updatedUser->avatar_url,
             'password' => $updatedUser->password,
             'confirmPassword' => $updatedUser->password
         ])->assertStatus(401)
@@ -162,8 +191,6 @@ class UserTest extends TestCase
 
     public function test_delete_user()
     {
-        $this->authUser();
-
         $this->deleteJson(route('users.destroy', Auth::id()))
             ->assertNoContent();
 
@@ -175,7 +202,6 @@ class UserTest extends TestCase
     public function test_user_cannot_delete_other_user()
     {
         $this->withExceptionHandling();
-        $this->authUser();
 
         $user = $this->createUser();
 
@@ -188,7 +214,9 @@ class UserTest extends TestCase
 
     public function test_delete_user_avatar()
     {
-        $this->authUser();
+        $this->authUser([
+            'avatar_url' => $this->avatarUrl
+        ]);
 
         $this->deleteJson(route('users.delete.avatar', Auth::id()))
             ->assertNoContent();
@@ -202,7 +230,6 @@ class UserTest extends TestCase
     public function test_user_cannot_delete_other_user_avatar()
     {
         $this->withExceptionHandling();
-        $this->authUser();
 
         $user = $this->createUser();
 
@@ -215,8 +242,6 @@ class UserTest extends TestCase
 
     public function test_user_votes()
     {
-        $this->authUser();
-
         $this->createResourceUser(['user_id' => Auth::id()]);
 
         $this->getJson(route('users.votes'))
@@ -231,4 +256,14 @@ class UserTest extends TestCase
                 ]
             ]);
     }
+
+    private function mockCloudinaryEngine(File $avatar)
+    {
+        $this->mock(CloudinaryEngine::class, function ($mock) use ($avatar) {
+            $mock->shouldReceive('getSecurePath')
+                ->once()
+                ->andReturn($this->avatarUrl);
+        });
+    }
 }
+

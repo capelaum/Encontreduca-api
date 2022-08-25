@@ -130,13 +130,9 @@ class AuthTest extends TestCase
             'password' => 'wrong-password'
         ])
             ->assertStatus(422)
-            ->assertJson([
-                'message' => 'Muitas tentativas de login. Tente novamente em 60 segundos.',
-                'errors' => [
-                    'email' => [
-                        'Muitas tentativas de login. Tente novamente em 60 segundos.'
-                    ]
-                ]
+            ->assertJsonStructure([
+                'message',
+                'errors' => ['email']
             ]);
     }
 

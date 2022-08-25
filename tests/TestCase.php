@@ -3,6 +3,7 @@
 namespace Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Http\Testing\File;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
@@ -47,9 +48,9 @@ abstract class TestCase extends BaseTestCase
         return User::factory()->create($args);
     }
 
-    public function authUser()
+    public function authUser(array $args = [])
     {
-        $user = $this->createUser();
+        $user = $this->createUser($args);
 
         Sanctum::actingAs($user, [
             'user'
@@ -117,5 +118,10 @@ abstract class TestCase extends BaseTestCase
     public function createPasswordResetToken(User $user): string
     {
         return Password::broker()->createToken($user);
+    }
+
+    public function createFakeImageFile(string $name): File
+    {
+        return File::fake()->image($name);
     }
 }
