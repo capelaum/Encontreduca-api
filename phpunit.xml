@@ -37,10 +37,10 @@
             <file>./app/Providers/RouteServiceProvider.php</file>
 
             <!-- Models -->
-            <file>./app/Models/Category.php</file>
+            <!--<file>./app/Models/Category.php</file>
             <file>./app/Models/Resource.php</file>
             <file>./app/Models/ResourceVote.php</file>
-            <file>./app/Models/Review.php</file>
+            <file>./app/Models/Review.php</file>-->
         </exclude>
     </coverage>
     <php>
