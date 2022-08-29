@@ -20,7 +20,7 @@ return new class extends Migration
                 ->nullable()
                 ->constrained('users')
                 ->onUpdate('CASCADE')
-                ->onDelete('SET NULL');
+                ->onDelete('CASCADE');
             $table->text('message');
             $table->timestamp('created_at')
                 ->default(DB::raw('CURRENT_TIMESTAMP'));

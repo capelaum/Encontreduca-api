@@ -154,8 +154,6 @@ class UserController extends Controller
             $avatarUrlArray = explode('/', $user->avatar_url);
             $publicId = explode('.', end($avatarUrlArray))[0];
 
-//            dd($publicId);
-
             cloudinary()->destroy("encontreduca/avatars/$publicId");
         }
 
