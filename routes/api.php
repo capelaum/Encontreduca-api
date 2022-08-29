@@ -26,7 +26,6 @@ Route::apiResources([
     'motives' => MotiveController::class
 ]);
 
-
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::group(['prefix' => 'users'], function () {
         Route::delete('{user}/avatar', [UserController::class, 'deleteAvatar'])
