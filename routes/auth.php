@@ -8,33 +8,50 @@ use App\Http\Controllers\Api\V1\Auth\{
 };
 
 
-Route::post('register', [AuthController::class, 'register'])
-    ->name('auth.register');
+Route::controller(AuthController::class)->group(function () {
+    Route::get('user', 'getAuthUser')
+        ->middleware(['auth:sanctum', 'verified'])
+        ->name('auth.user');
 
-Route::post('login', [AuthController::class, 'login'])
-    ->name('auth.login');
+    Route::post('register', 'register')
+        ->name('auth.register');
 
-Route::post('logout', [AuthController::class, 'logout'])
-    ->middleware(['auth:sanctum', 'verified'])
-    ->name('auth.logout');
+    Route::post('/login/{provider}', 'loginWithProvider')
+        ->name('auth.login.provider');
 
-Route::get('user', [AuthController::class, 'getAuthUser'])
-    ->middleware(['auth:sanctum', 'verified'])
-    ->name('auth.user');
+    Route::post('login', 'login')
+        ->name('auth.login');
 
-Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, 'verify'])
-    ->middleware(['signed', 'throttle:6,1'])
-    ->name('verification.verify');
+    Route::post('logout', 'logout')
+        ->middleware(['auth:sanctum', 'verified'])
+        ->name('auth.logout');
 
-Route::post('/email/verify/resend', [VerifyEmailController::class, 'send'])
-    ->middleware(['auth:sanctum', 'throttle:6,1'])
-    ->name('verification.send');
+});
 
-Route::post('/forgot-password', [ResetPasswordController::class, 'email'])
-    ->name('password.email');
 
-Route::get('/reset-password/{token}', [ResetPasswordController::class, 'reset'])
-    ->name('password.reset');
+Route::group([
+    'prefix' => 'email/verify',
+    'middleware' => 'throttle:6,1',
+    'controller' => VerifyEmailController::class
+], function () {
+    Route::get('/{id}/{hash}', 'verify')
+        ->middleware(['signed'])
+        ->name('verification.verify');
 
-Route::post('/reset-password', [ResetPasswordController::class, 'update'])
-    ->name('password.update');
+    Route::post('/resend', 'send')
+        ->middleware(['auth:sanctum'])
+        ->name('verification.send');
+});
+
+Route::controller(ResetPasswordController::class)->group(function () {
+    Route::post('/forgot-password', 'email')
+        ->name('password.email');
+
+    Route::get('/reset-password/{token}', 'reset')
+        ->name('password.reset');
+
+    Route::post('/reset-password', 'update')
+        ->name('password.update');
+});
+
+
