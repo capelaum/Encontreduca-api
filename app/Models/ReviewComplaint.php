@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ReviewComplaint extends Model
 {
@@ -19,17 +20,17 @@ class ReviewComplaint extends Model
 
     protected $with = ['user', 'review', 'motive'];
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function review()
+    public function review(): BelongsTo
     {
         return $this->belongsTo(Review::class);
     }
 
-    public function motive()
+    public function motive(): BelongsTo
     {
         return $this->belongsTo(Motive::class);
     }

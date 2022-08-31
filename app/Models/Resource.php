@@ -54,6 +54,16 @@ class Resource extends Model
         return $this->hasMany(ResourceVote::class);
     }
 
+    public function complaints(): HasMany
+    {
+        return $this->hasMany(ResourceComplaint::class);
+    }
+
+    public function changes(): HasMany
+    {
+        return $this->hasMany(ResourceChange::class);
+    }
+
     /**
      * Query all Resources formatted.
      *
