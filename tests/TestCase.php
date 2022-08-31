@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 use Laravel\Sanctum\Sanctum;
 use Database\Seeders\{ReviewSeeder, CategorySeeder, MotiveSeeder};
-use App\Models\{ResourceUser,
+use App\Models\{
+    ResourceUser,
     User,
     Motive,
     Resource,
@@ -17,6 +18,7 @@ use App\Models\{ResourceUser,
     ResourceComplaint,
     ResourceVote,
     Review,
+    Provider,
     ReviewComplaint,
     Support
 };
@@ -120,8 +122,15 @@ abstract class TestCase extends BaseTestCase
         return Password::broker()->createToken($user);
     }
 
+    public function createProvider()
+    {
+        return Provider::factory()->create();
+    }
+
     public function createFakeImageFile(string $name): File
     {
         return File::fake()->image($name);
     }
+
+
 }

@@ -9,8 +9,6 @@ use App\Http\Resources\V1\UserResource;
 use App\Models\Provider;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -37,7 +35,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Store new User.
+     * Register new User.
      *
      * @param RegisterRequest $request
      * @return Response
@@ -104,6 +102,8 @@ class AuthController extends Controller
     }
 
     /**
+     * Login with a social provider
+     *
      * @param string $provider
      * @param Request $request
      * @return JsonResponse
@@ -122,12 +122,12 @@ class AuthController extends Controller
             ], 400);
         }
 
-        $providerUser = Socialite::driver($provider)->userFromToken($request->accessToken);
-
-        if (!$providerUser) {
+        try {
+            $providerUser = Socialite::driver($provider)->userFromToken($request->accessToken);
+        } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Não foi possível autenticar com o provedor informado.'
-            ], 401);
+                'message' => 'Token inválido.',
+            ], 400);
         }
 
         $providerId = Provider::where('provider_id', $providerUser->getId())->first();
