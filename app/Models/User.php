@@ -26,6 +26,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'avatar_url',
         'password',
+        'email_verified_at'
     ];
 
     /**
@@ -62,5 +63,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function votes(): HasMany
     {
         return $this->hasMany(ResourceVote::class);
+    }
+
+    public function providers(): HasMany
+    {
+        return $this->hasMany(Provider::class);
     }
 }
