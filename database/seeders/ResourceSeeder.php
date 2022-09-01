@@ -169,9 +169,12 @@ class ResourceSeeder extends Seeder
 
         $resource = Resource::factory(1000)
             ->has(Review::factory(5)
-                ->state(function (array $attributes, Resource $resource) {
-                    return ['resource_id' => $resource->id];
-                }), 'reviews'
+                ->state(
+                    fn(
+                        array $attributes,
+                        Resource $resource
+                    ) => ['resource_id' => $resource->id]
+                ), 'reviews'
             )
             ->create();
     }

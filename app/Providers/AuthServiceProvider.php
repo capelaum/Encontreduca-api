@@ -5,6 +5,7 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use App\Policies\DefaultPolicy;
+use Illuminate\Support\Facades\Gate;
 use App\Models\{
     User,
     Review,
@@ -43,6 +44,6 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-
+        Gate::define('is_admin', fn(User $user) => $user->is_admin);
     }
 }
