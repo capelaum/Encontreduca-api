@@ -26,7 +26,9 @@ Route::apiResources([
     'motives' => MotiveController::class
 ]);
 
-Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
+Route::group([
+    'middleware' => ['auth:sanctum', 'verified']
+], function () {
     Route::group([
         'prefix' => 'users',
         'as' => 'users.'
@@ -78,11 +80,12 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 
 Route::group([
     'prefix' => 'resources',
+    'as' => 'resources.',
     'controller' => ResourceController::class
 ], function () {
-    Route::get('/', 'index')->name('resources.index');
-    Route::get('/{resource}', 'show')->name('resources.show');
-    Route::get('/{resource}/reviews', 'reviews')->name('resources.reviews');
+    Route::get('/', 'index')->name('index');
+    Route::get('/{resource}', 'show')->name('show');
+    Route::get('/{resource}/reviews', 'reviews')->name('reviews');
 });
 
 Route::group([
