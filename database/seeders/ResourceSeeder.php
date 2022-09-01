@@ -4,6 +4,12 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Resource;
+use App\Models\ResourceChange;
+use App\Models\ResourceComplaint;
+use App\Models\ResourceUser;
+use App\Models\ResourceVote;
+use App\Models\Review;
+use App\Models\ReviewComplaint;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -161,6 +167,12 @@ class ResourceSeeder extends Seeder
             Resource::insert($resource);
         }
 
-        Resource::factory(1000)->create();
+        $resource = Resource::factory(1000)
+            ->has(Review::factory(5)
+                ->state(function (array $attributes, Resource $resource) {
+                    return ['resource_id' => $resource->id];
+                }), 'reviews'
+            )
+            ->create();
     }
 }

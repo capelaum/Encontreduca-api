@@ -17,15 +17,15 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             CategorySeeder::class,
-            ResourceSeeder::class,
-            ResourceUserSeeder::class,
-            ReviewSeeder::class,
             MotiveSeeder::class,
+            ResourceSeeder::class,
+//            ReviewSeeder::class,
             ReviewComplaintSeeder::class,
             ResourceComplaintSeeder::class,
             ResourceChangeSeeder::class,
             ResourceVoteSeeder::class,
             SupportSeeder::class,
+            ResourceUserSeeder::class,
         ]);
     }
 }

@@ -18,7 +18,7 @@ class ResourceChangeFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition()
+    public function definition(): array
     {
         $randomResource = new ResourceResource(Resource::inRandomOrder()->first());
 

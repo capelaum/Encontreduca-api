@@ -17,7 +17,7 @@ class ReviewComplaintFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition()
+    public function definition(): array
     {
         $users = collect(User::all()->modelKeys());
         $reviews = collect(Review::all()->modelKeys());
