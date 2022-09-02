@@ -1,9 +1,7 @@
 <?php
 
-namespace App\Http\Resources\V1;
+namespace App\Http\Resources\Admin;
 
-use App\Http\Resources\V1\EducationalResource\ResourceVoteCollection;
-use App\Models\ResourceVote;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -22,9 +20,10 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'avatarUrl' => $this->avatar_url,
-            'reviewCount' => $this->reviews()->count(),
-            'resourcesIds' => $this->savedResources()->pluck('id')->toArray(),
-            'votes' => new ResourceVoteCollection($this->votes),
+            'resources' => new ResourceCollection($this->resources),
+            'reviewsCount' => $this->reviews()->count(),
+            'savedResourcesCount' => $this->savedResources()->count(),
+            'votesCount' => $this->votes()->count(),
         ];
     }
 }

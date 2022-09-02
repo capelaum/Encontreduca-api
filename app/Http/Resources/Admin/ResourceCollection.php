@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\V1;
+namespace App\Http\Resources\Admin;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Http\Resources\Json\ResourceCollection as DefaultResourceCollection;
 
-class UserCollection extends ResourceCollection
+class ResourceCollection extends DefaultResourceCollection
 {
     /**
      * Transform the resource collection into an array.
