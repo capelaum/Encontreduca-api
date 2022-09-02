@@ -26,15 +26,17 @@ class AuthController extends Controller
         $request->ensureIsNotRateLimited();
 
         if (Auth::attempt($request->validated())) {
-            $this->authorize('is_admin');
+            try {
+                $this->authorize('is_admin');
+            } catch (AuthorizationException $e) {
+                Auth::logout();
+
+                return  response()->json([
+                    'message' => 'Você não tem permissão para fazer login.',
+                ], 401);
+            }
 
             $admin = Auth::user();
-
-//            if (!$admin->is_admin) {
-//                return response()->json([
-//                    'message' => 'Você não tem permissão.',
-//                ], 401);
-//            }
 
             $adminToken = $admin->createToken('admin', ['admin'])->plainTextToken;
 
