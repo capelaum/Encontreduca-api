@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\ResourceCollection;
 use App\Http\Resources\Admin\ResourceResource;
-use App\Http\Resources\V1\EducationalResource\ResourceVoteCollection;
+use App\Http\Resources\Admin\ResourceVoteCollection;
 use App\Http\Resources\V1\Review\ReviewCollection;
 use App\Models\Resource;
 use Illuminate\Auth\Access\AuthorizationException;
