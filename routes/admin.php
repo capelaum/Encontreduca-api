@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\Admin\AuthController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\ResourceController;
-use App\Http\Controllers\Admin\ResourceVoteController;
-use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\{AuthController,
+    DashboardController,
+    ResourceController,
+    ResourceVoteController,
+    ReviewController,
+    UserController};
 
 Route::group([
     'as' => 'admin.auth.',
@@ -42,6 +43,8 @@ Route::middleware(['auth:sanctum', 'verified', 'is_admin'])->group(function () {
         Route::apiResource('users', UserController::class);
     });
 
+
+
     Route::group([
         'as' => 'admin.',
         'controller' => ResourceController::class,
@@ -59,6 +62,12 @@ Route::middleware(['auth:sanctum', 'verified', 'is_admin'])->group(function () {
         'resources/votes',
         ResourceVoteController::class,
         ['as' => 'admin']
+    );
+
+    Route::apiResource(
+        'reviews',
+        ReviewController::class,
+        ['as' => 'admin.']
     );
 
 });

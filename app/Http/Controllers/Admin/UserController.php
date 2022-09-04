@@ -18,17 +18,26 @@ class UserController extends Controller
     /**
      * Returns list of all users.
      *
+     * @param Request $request
      * @return UserCollection
      * @throws AuthorizationException
      */
-    public function index(): UserCollection
+    public function index(Request $request): UserCollection
     {
         $this->authorize('isAdmin', [
             User::class,
             'listar os usuários.'
         ]);
 
-        $users = User::all();
+        $users = User::query();
+
+        $users->when($request->search, function ($query, $search) {
+            return $query
+                ->where('name', 'like', "%{$search}%")
+                ->orWhere('email', 'like', "%{$search}%");
+        });
+
+        $users = $users->paginate(20);
 
         return new UserCollection($users);
     }
