@@ -91,6 +91,7 @@ class Resource extends Model
         FROM resources r
         JOIN users u ON u.id = r.user_id
         JOIN categories c ON c.id = r.category_id
+        ORDER BY r.id
         ");
     }
 }

@@ -72,21 +72,4 @@ class ResourceController extends Controller
     {
         return new ReviewCollection($resource->reviews);
     }
-
-    /**
-     * Get resource votes
-     *
-     * @param Resource $resource
-     * @return ResourceVoteCollection
-     * @throws AuthorizationException
-     */
-    public function votes(Resource $resource): ResourceVoteCollection
-    {
-        $this->authorize('isAdmin', [
-            Resource::class,
-            'visualizar os votos desse recurso.'
-        ]);
-
-        return new ResourceVoteCollection($resource->votes);
-    }
 }

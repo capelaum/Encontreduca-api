@@ -58,9 +58,6 @@ Route::group([
         Route::post('/', [ResourceController::class, 'store'])
             ->name('store');
 
-        Route::get('/{resource}/votes', [ResourceController::class, 'votes'])
-            ->name('votes');
-
         Route::apiResource('complaints', ResourceComplaintController::class);
 
         Route::apiResource('changes', ResourceChangeController::class);
