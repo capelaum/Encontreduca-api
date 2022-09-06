@@ -6,7 +6,7 @@ namespace App\Providers;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use App\Policies\DefaultPolicy;
 use Illuminate\Support\Facades\Gate;
-use App\Models\{
+use App\Models\{Category,
     User,
     Review,
     Support,
@@ -14,8 +14,7 @@ use App\Models\{
     ResourceChange,
     ResourceVote,
     ResourceComplaint,
-    ReviewComplaint
-};
+    ReviewComplaint};
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -33,6 +32,7 @@ class AuthServiceProvider extends ServiceProvider
         ResourceChange::class => DefaultPolicy::class,
         ResourceComplaint::class => DefaultPolicy::class,
         ReviewComplaint::class => DefaultPolicy::class,
+        Category::class => DefaultPolicy::class,
     ];
 
     /**

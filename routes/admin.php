@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\{AuthController,
+    CategoryController,
     DashboardController,
     ResourceController,
     ResourceVoteController,
@@ -65,6 +66,12 @@ Route::middleware(['auth:sanctum', 'verified', 'is_admin'])->group(function () {
     Route::apiResource(
         'reviews',
         ReviewController::class,
+        ['as' => 'admin']
+    );
+
+    Route::apiResource(
+        'categories',
+        CategoryController::class,
         ['as' => 'admin']
     );
 
