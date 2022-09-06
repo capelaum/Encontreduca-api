@@ -5,7 +5,7 @@ namespace App\Http\Resources\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class ShowUserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -20,10 +20,10 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'avatarUrl' => $this->avatar_url,
-            'reviewsCount' => $this->reviews()->count(),
-            'resourcesCount' => $this->resources()->count(),
-            'savedResourcesCount' => $this->savedResources()->count(),
-            'votesCount' => $this->votes()->count(),
+            'resources' => new ResourceCollection($this->resources),
+            'savedResources' => new ResourceCollection($this->savedResources),
+            'reviews' => new ReviewCollection($this->reviews),
+            'votes' => new ResourceVoteCollection($this->votes),
         ];
     }
 }

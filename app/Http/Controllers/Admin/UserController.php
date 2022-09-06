@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\UpdateUserRequest;
+use App\Http\Resources\Admin\ShowUserResource;
 use App\Http\Resources\Admin\UserCollection;
 use App\Http\Resources\Admin\UserResource;
 use App\Models\User;
@@ -46,17 +47,17 @@ class UserController extends Controller
      * Show single User data.
      *
      * @param User $user
-     * @return UserResource
+     * @return ShowUserResource
      * @throws AuthorizationException
      */
-    public function show(User $user): UserResource
+    public function show(User $user): ShowUserResource
     {
         $this->authorize('isAdmin', [
             User::class,
             'visualizar este usuário.'
         ]);
 
-        return new UserResource($user);
+        return new ShowUserResource($user);
     }
 
     /**
