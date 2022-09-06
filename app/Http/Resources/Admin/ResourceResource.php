@@ -29,8 +29,6 @@ class ResourceResource extends JsonResource
             'phone' => $this->phone,
             'cover' => $this->cover,
             'approved' => $this->approved,
-            'votes' => new ResourceVoteCollection($this->votes),
-            'reviews' => new ReviewCollection($this->reviews),
             'createdAt' => date('d/m/Y', strtotime($this->created_at)),
             'updatedAt' => date('d/m/Y', strtotime($this->updated_at))
         ];

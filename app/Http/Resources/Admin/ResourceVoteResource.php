@@ -21,6 +21,7 @@ class ResourceVoteResource extends JsonResource
             'resourceId' => $this->resource_id,
             'author' => $this->user->name,
             'authorEmail' => $this->user->email,
+            'authorAvatar' => $this->user->avatar_url,
             'vote' => $this->vote,
             'justification' => $this->justification,
         ];
