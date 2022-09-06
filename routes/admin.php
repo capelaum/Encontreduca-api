@@ -21,7 +21,6 @@ Route::group([
         Route::post('logout', 'logout')
             ->name('logout');
     });
-
 });
 
 Route::middleware(['auth:sanctum', 'verified', 'is_admin'])->group(function () {
@@ -42,7 +41,6 @@ Route::middleware(['auth:sanctum', 'verified', 'is_admin'])->group(function () {
 
         Route::apiResource('users', UserController::class);
     });
-
 
 
     Route::group([
@@ -67,7 +65,7 @@ Route::middleware(['auth:sanctum', 'verified', 'is_admin'])->group(function () {
     Route::apiResource(
         'reviews',
         ReviewController::class,
-        ['as' => 'admin.']
+        ['as' => 'admin']
     );
 
 });
