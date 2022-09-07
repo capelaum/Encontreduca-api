@@ -38,7 +38,7 @@ class ReviewController extends Controller
                 });
             });
 
-        $reviews = $reviews->paginate(20);
+        $reviews = $reviews->paginate(10);
 
         return new ReviewCollection($reviews);
     }

@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StoreUserRequest;
 use App\Http\Requests\V1\UpdateUserRequest;
 use App\Http\Resources\Admin\ShowUserResource;
 use App\Http\Resources\Admin\UserCollection;
-use App\Http\Resources\Admin\UserResource;
 use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,7 +39,7 @@ class UserController extends Controller
                 ->orWhere('email', 'like', "%{$search}%");
         });
 
-        $users = $users->paginate(20);
+        $users = $users->paginate(10);
 
         return new UserCollection($users);
     }
@@ -58,6 +59,35 @@ class UserController extends Controller
         ]);
 
         return new ShowUserResource($user);
+    }
+
+    /**
+     * @param StoreUserRequest $request
+     * @return JsonResponse
+     * @throws AuthorizationException
+     */
+    public function store(StoreUserRequest $request): JsonResponse
+    {
+        $this->authorize('isAdmin', [
+            User::class,
+            'atualizar este usuário.'
+        ]);
+
+        $data = $request->validated();
+
+        $data['password'] = Hash::make($data['password']);
+
+        if ($request->avatar) {
+            $data['avatar_url'] = $request->file('avatar')
+                ->storeOnCloudinary('encontreduca/avatars')
+                ->getSecurePath();
+        }
+
+        $user = User::create($data);
+
+        event(new Registered($user));
+
+        return response()->json(new ShowUserResource($user), 201);
     }
 
     /**
@@ -109,7 +139,7 @@ class UserController extends Controller
 
         $user->update($data);
 
-        return response()->json(new UserResource($user));
+        return response()->json(new ShowUserResource($user));
     }
 
     /**

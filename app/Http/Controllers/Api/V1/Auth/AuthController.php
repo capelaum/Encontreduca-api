@@ -38,9 +38,9 @@ class AuthController extends Controller
      * Register new User.
      *
      * @param RegisterRequest $request
-     * @return Response
+     * @return JsonResponse
      */
-    public function register(RegisterRequest $request): Response
+    public function register(RegisterRequest $request): JsonResponse
     {
         $data = $request->validated();
 
@@ -50,7 +50,7 @@ class AuthController extends Controller
 
         event(new Registered($user));
 
-        return response([
+        return response()->json([
             'user' => new UserResource($user),
         ], 201);
     }
