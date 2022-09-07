@@ -45,7 +45,6 @@ class ResourceController extends Controller
      *
      * @param StoreResourceRequest $request
      * @return JsonResponse
-     * @throws AuthorizationException
      */
     public function store(StoreResourceRequest $request): JsonResponse
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\V1\EducationalResource;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -11,7 +11,7 @@ class StoreResourceRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize(): bool
+    public function authorize()
     {
         return true;
     }
@@ -32,6 +32,7 @@ class StoreResourceRequest extends FormRequest
             "website" => "nullable|string|min:7|max:255",
             "phone" => "nullable|string|min:14|max:15",
             "cover" => "required|file|mimes:jpg,png,svg,webp",
+            "approved" => "required|boolean",
         ];
     }
 

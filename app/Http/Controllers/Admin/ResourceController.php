@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StoreResourceRequest;
+use App\Http\Requests\Admin\UpdateResourceRequest;
 use App\Models\Resource;
 use App\Models\ResourceVote;
 use App\Models\Review;
@@ -36,7 +38,7 @@ class ResourceController extends Controller
             return $query->where('name', 'like', "%{$search}%");
         });
 
-        $resources = $resources->paginate(20);
+        $resources = $resources->paginate(10);
 
         return new ResourceCollection($resources);
     }
@@ -56,6 +58,87 @@ class ResourceController extends Controller
         ]);
 
         return new ResourceResource($resource);
+    }
+
+    /**
+     * Create new resource and store on database
+     *
+     * @param StoreResourceRequest $request
+     * @return JsonResponse
+     * @throws AuthorizationException
+     */
+    public function store(StoreResourceRequest $request): JsonResponse
+    {
+        $this->authorize('isAdmin', [
+            Resource::class,
+            'editar este recurso.'
+        ]);
+
+        $data = $request->validated();
+        $data['user_id'] = auth()->id();
+        $data['category_id'] = $request->categoryId;
+
+        $data['cover'] = $request->file('cover')
+            ->storeOnCloudinary('encontreduca/covers')
+            ->getSecurePath();
+
+        $resource = Resource::create($data);
+
+        return response()->json(new ResourceResource($resource), 201);
+    }
+
+    /**
+     * Update resource data
+     *
+     * @param UpdateResourceRequest $request
+     * @param Resource $resource
+     * @return JsonResponse
+     * @throws AuthorizationException
+     */
+    public function update(UpdateResourceRequest $request, Resource $resource): JsonResponse
+    {
+        $this->authorize('isAdmin', [
+            Resource::class,
+            'editar este recurso.'
+        ]);
+
+        $data = $request->validated();
+
+        if($request->categoryId) {
+            $data['category_id'] = $request->categoryId;
+        }
+
+        if ($request->hasFile('cover')) {
+            $coverUrlArray = explode('/', $resource->cover);
+            $publicId = explode('.', end($coverUrlArray))[0];
+
+            $data['cover'] = $request->file('cover')
+                ->storeOnCloudinaryAs('encontreduca/covers', $publicId)
+                ->getSecurePath();
+        }
+
+        $resource->update($data);
+
+        return response()->json(new ResourceResource($resource));
+    }
+
+    /**
+     * Delete resource
+     *
+     * @param Resource $resource
+     * @return JsonResponse
+     * @throws AuthorizationException
+     */
+    public function destroy(Resource $resource): JsonResponse
+    {
+        $this->authorize('isAdmin', [
+            Resource::class,
+            'deletar este recurso.'
+        ]);
+
+        $resource->delete();
+
+        return response()->json(null, 204);
     }
 
     /**
