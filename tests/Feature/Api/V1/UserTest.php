@@ -166,6 +166,14 @@ class UserTest extends TestCase
 
     public function test_delete_user()
     {
+        $avatarUrlArray = explode('/', auth()->user()->avatar_url);
+        $publicId = explode('.', end($avatarUrlArray))[0];
+
+        Cloudinary::shouldReceive('destroy')
+            ->once()
+            ->with("encontreduca/avatars/$publicId")
+            ->andReturnSelf();
+
         $this->deleteJson(route('users.destroy', Auth::id()))
             ->assertNoContent();
 

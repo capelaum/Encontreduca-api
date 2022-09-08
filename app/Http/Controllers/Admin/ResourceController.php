@@ -79,7 +79,7 @@ class ResourceController extends Controller
     ): JsonResponse {
         $this->authorize('isAdmin', [
             Resource::class,
-            'editar este recurso.'
+            'criar este recurso.'
         ]);
 
         $data = $request->validated();
@@ -148,6 +148,11 @@ class ResourceController extends Controller
             Resource::class,
             'deletar este recurso.'
         ]);
+
+        $coverUrlArray = explode('/', $resource->cover);
+        $publicId = explode('.', end($coverUrlArray))[0];
+
+        cloudinary()->destroy("encontreduca/covers/$publicId");
 
         $resource->delete();
 

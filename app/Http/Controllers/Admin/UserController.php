@@ -181,6 +181,11 @@ class UserController extends Controller
             'deletar o avatar deste usuário.'
         ]);
 
+        $avatarUrlArray = explode('/', $user->avatar_url);
+        $publicId = explode('.', end($avatarUrlArray))[0];
+
+        cloudinary()->destroy("encontreduca/avatars/$publicId");
+
         $user->delete();
 
         return response()->json(null, 204);
