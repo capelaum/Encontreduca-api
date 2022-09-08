@@ -84,15 +84,10 @@ Route::group([
             ->name('destroy');
     });
 
-    Route::group([
-        'prefix' => 'reviews',
-        'as' => 'reviews.'
-    ], function () {
-        Route::apiResource('/', ReviewController::class);
+    Route::apiResource('reviews', ReviewController::class);
 
-        Route::post('complaints', [ReviewComplaintController::class, 'store'])
-            ->name('store');
-    });
+    Route::post('reviews/complaints', [ReviewComplaintController::class, 'store'])
+        ->name('reviews.complaints.store');
 
     Route::post('supports', [SupportController::class, 'store'])
         ->name('store');
