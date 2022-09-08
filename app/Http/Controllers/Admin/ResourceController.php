@@ -34,9 +34,13 @@ class ResourceController extends Controller
 
         $resources = Resource::query();
 
-        $resources->when($request->search, function ($query, $search) {
-            return $query->where('name', 'like', "%{$search}%");
-        });
+        $resources
+            ->when($request->search,
+                fn($query, $search) => $query->where('name', 'like', "%{$search}%"))
+            ->when($request->approved,
+                fn($query, $approved) => $query->where('approved', $approved))
+            ->when($request->category,
+                fn($query, $category) => $query->where('category_id', $category));
 
         $resources = $resources->paginate(10);
 
@@ -50,8 +54,10 @@ class ResourceController extends Controller
      * @return ResourceResource
      * @throws AuthorizationException
      */
-    public function show(Resource $resource): ResourceResource
-    {
+    public
+    function show(
+        Resource $resource
+    ): ResourceResource {
         $this->authorize('isAdmin', [
             Resource::class,
             'visualizar este recurso.'
@@ -67,8 +73,10 @@ class ResourceController extends Controller
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function store(StoreResourceRequest $request): JsonResponse
-    {
+    public
+    function store(
+        StoreResourceRequest $request
+    ): JsonResponse {
         $this->authorize('isAdmin', [
             Resource::class,
             'editar este recurso.'
@@ -95,8 +103,11 @@ class ResourceController extends Controller
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function update(UpdateResourceRequest $request, Resource $resource): JsonResponse
-    {
+    public
+    function update(
+        UpdateResourceRequest $request,
+        Resource $resource
+    ): JsonResponse {
         $this->authorize('isAdmin', [
             Resource::class,
             'editar este recurso.'
@@ -104,7 +115,7 @@ class ResourceController extends Controller
 
         $data = $request->validated();
 
-        if($request->categoryId) {
+        if ($request->categoryId) {
             $data['category_id'] = $request->categoryId;
         }
 
@@ -129,8 +140,10 @@ class ResourceController extends Controller
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function destroy(Resource $resource): JsonResponse
-    {
+    public
+    function destroy(
+        Resource $resource
+    ): JsonResponse {
         $this->authorize('isAdmin', [
             Resource::class,
             'deletar este recurso.'
@@ -149,8 +162,11 @@ class ResourceController extends Controller
      * @return ResourceVoteCollection
      * @throws AuthorizationException
      */
-    public function votes(Resource $resource, Request $request): ResourceVoteCollection
-    {
+    public
+    function votes(
+        Resource $resource,
+        Request $request
+    ): ResourceVoteCollection {
         $this->authorize('isAdmin', [
             Resource::class,
             'visualizar os votos desse recurso.'
@@ -181,8 +197,11 @@ class ResourceController extends Controller
      * @return ReviewCollection
      * @throws AuthorizationException
      */
-    public function reviews(Resource $resource, Request $request): ReviewCollection
-    {
+    public
+    function reviews(
+        Resource $resource,
+        Request $request
+    ): ReviewCollection {
         $this->authorize('isAdmin', [
             Resource::class,
             'visualizar os votos desse recurso.'
