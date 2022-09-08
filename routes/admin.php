@@ -43,6 +43,10 @@ Route::group([
         Route::apiResource('users', UserController::class);
     });
 
+    Route::apiResource(
+        'resources/votes',
+        ResourceVoteController::class
+    );
 
     Route::group([
         'controller' => ResourceController::class,
@@ -57,11 +61,6 @@ Route::group([
     });
 
     Route::apiResource(
-        'resources/votes',
-        ResourceVoteController::class
-    );
-
-    Route::apiResource(
         'reviews',
         ReviewController::class
     );
@@ -70,5 +69,4 @@ Route::group([
         'categories',
         CategoryController::class
     );
-
 });

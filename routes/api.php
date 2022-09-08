@@ -66,7 +66,10 @@ Route::group([
         Route::post('/votes', [ResourceVoteController::class, 'store'])
             ->name('votes.store');
 
-        Route::put('/votes', [ResourceVoteController::class, 'update'])
+        Route::put('/votes/{vote}', [ResourceVoteController::class, 'update'])
+            ->name('votes.update');
+
+        Route::patch('/votes/{vote}', [ResourceVoteController::class, 'update'])
             ->name('votes.update');
 
         Route::post('/changes', [ResourceChangeController::class, 'store'])
