@@ -39,7 +39,7 @@ class UserController extends Controller
                 ->orWhere('email', 'like', "%{$search}%");
         });
 
-        $users = $users->paginate(10);
+        $users = $users->paginate(20);
 
         return new UserCollection($users);
     }

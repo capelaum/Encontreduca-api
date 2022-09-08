@@ -38,7 +38,7 @@ class ReviewController extends Controller
                 });
             });
 
-        $reviews = $reviews->paginate(10);
+        $reviews = $reviews->paginate(20);
 
         return new ReviewCollection($reviews);
     }
@@ -69,7 +69,13 @@ class ReviewController extends Controller
      */
     public function store(StoreReviewRequest $request): JsonResponse
     {
+        $this->authorize('isAdmin', [
+            Review::class,
+            'criar avaliação.'
+        ]);
+
         $user = auth()->user();
+
         $resourceId = $request->resourceId;
 
         $review = Review::where('user_id', $user->id)

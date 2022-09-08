@@ -42,7 +42,7 @@ class ResourceController extends Controller
             ->when($request->category,
                 fn($query, $category) => $query->where('category_id', $category));
 
-        $resources = $resources->paginate(10);
+        $resources = $resources->paginate(20);
 
         return new ResourceCollection($resources);
     }
