@@ -99,8 +99,6 @@ class AuthTest extends TestCase
     {
         $user = $this->createUser();
 
-        $user->createToken('auth', ['user']);
-
         $this->postJson(route('auth.login'), [
             'email' => $user->email,
             'password' => 'password'
@@ -172,13 +170,10 @@ class AuthTest extends TestCase
 
     public function test_user_cannot_logout_if_unauthenticated()
     {
-        $this->authUser();
+        $this->withExceptionHandling();
 
         $this->postJson(route('auth.logout'))
-            ->assertOk()
-            ->assertJson([
-                'message' => 'Logout realizado com sucesso!'
-            ]);
+            ->assertUnauthorized();
     }
 
     public function test_login_with_provider()
