@@ -7,7 +7,8 @@ use App\Http\Controllers\Admin\{AuthController,
     ResourceController,
     ResourceVoteController,
     ReviewController,
-    UserController};
+    UserController
+};
 
 Route::group([
     'as' => 'admin.auth.',
@@ -24,9 +25,12 @@ Route::group([
     });
 });
 
-Route::middleware(['auth:sanctum', 'verified', 'is_admin'])->group(function () {
+Route::group([
+    'middleware' => ['auth:sanctum', 'verified', 'is_admin'],
+    'as' => 'admin.',
+], function () {
     Route::group([
-        'as' => 'admin.dashboard.',
+        'as' => 'dashboard.',
         'controller' => DashboardController::class,
     ], function () {
         Route::get('dashboard', 'index')
@@ -34,7 +38,6 @@ Route::middleware(['auth:sanctum', 'verified', 'is_admin'])->group(function () {
     });
 
     Route::group([
-        'as' => 'admin.',
         'controller' => UserController::class,
     ], function () {
         Route::delete('users/{user}/avatar', 'deleteAvatar')
@@ -45,7 +48,6 @@ Route::middleware(['auth:sanctum', 'verified', 'is_admin'])->group(function () {
 
 
     Route::group([
-        'as' => 'admin.',
         'controller' => ResourceController::class,
     ], function () {
         Route::get('resources/{resource}/votes', 'votes')
@@ -59,20 +61,17 @@ Route::middleware(['auth:sanctum', 'verified', 'is_admin'])->group(function () {
 
     Route::apiResource(
         'resources/votes',
-        ResourceVoteController::class,
-        ['as' => 'admin']
+        ResourceVoteController::class
     );
 
     Route::apiResource(
         'reviews',
-        ReviewController::class,
-        ['as' => 'admin']
+        ReviewController::class
     );
 
     Route::apiResource(
         'categories',
-        CategoryController::class,
-        ['as' => 'admin']
+        CategoryController::class
     );
 
 });

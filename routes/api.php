@@ -38,6 +38,28 @@ Route::group([
 
         Route::get('/votes', [UserController::class, 'votes'])
             ->name('votes');
+
+        Route::apiResource('/', UserController::class);
+    });
+
+    Route::group([
+        'prefix' => 'resources',
+        'as' => 'resources.'
+    ], function () {
+        Route::post('/', [ResourceController::class, 'store'])
+            ->name('store');
+
+        Route::post('/complaints', [ResourceComplaintController::class, 'store'])
+            ->name('complaints.store');
+
+        Route::post('/votes', [ResourceVoteController::class, 'store'])
+            ->name('votes.store');
+
+        Route::put('/votes', [ResourceVoteController::class, 'update'])
+            ->name('votes.update');
+
+        Route::post('/changes', [ResourceChangeController::class, 'store'])
+            ->name('changes.store');
     });
 
     Route::group([
@@ -52,27 +74,17 @@ Route::group([
     });
 
     Route::group([
-        'prefix' => 'resources',
-        'as' => 'resources.'
+        'prefix' => 'reviews',
+        'as' => 'reviews.'
     ], function () {
-        Route::post('/', [ResourceController::class, 'store'])
+        Route::apiResource('/', ReviewController::class);
+
+        Route::post('complaints', [ReviewComplaintController::class, 'store'])
             ->name('store');
-
-        Route::apiResource('complaints', ResourceComplaintController::class);
-
-        Route::apiResource('changes', ResourceChangeController::class);
     });
 
-    Route::apiResource('reviews/complaints', ReviewComplaintController::class, [
-        'as' => 'reviews'
-    ]);
-
-    Route::apiResources([
-        'users' => UserController::class,
-        'supports' => SupportController::class,
-        'resources/votes' => ResourceVoteController::class,
-        'reviews' => ReviewController::class
-    ]);
+    Route::post('supports', [SupportController::class, 'store'])
+        ->name('store');
 });
 
 Route::group([
