@@ -61,9 +61,10 @@ abstract class TestCase extends BaseTestCase
         return $user;
     }
 
-    public function authAdmin()
+    public function authAdmin(array $args = [])
     {
-        $admin = $this->createUser();
+        $args['is_admin'] = true;
+        $admin = $this->createUser($args);
 
         Sanctum::actingAs($admin, [
             'admin'

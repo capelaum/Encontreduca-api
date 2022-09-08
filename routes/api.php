@@ -31,15 +31,26 @@ Route::group([
 ], function () {
     Route::group([
         'prefix' => 'users',
-        'as' => 'users.'
+        'as' => 'users.',
+        'controller' => UserController::class,
     ], function () {
-        Route::delete('{user}/avatar', [UserController::class, 'deleteAvatar'])
+        Route::delete('{user}/avatar', 'deleteAvatar')
             ->name('delete.avatar');
 
-        Route::get('/votes', [UserController::class, 'votes'])
+        Route::get('/votes', 'votes')
             ->name('votes');
 
-        Route::apiResource('/', UserController::class);
+        Route::get('/{user}', 'show')
+            ->name('show');
+
+        Route::put('/{user}', 'update')
+            ->name('update');
+
+        Route::patch('/{user}', 'update')
+            ->name('update');
+
+        Route::delete('/{user}', 'destroy')
+            ->name('destroy');
     });
 
     Route::group([

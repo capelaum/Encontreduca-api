@@ -17,12 +17,9 @@ Route::group([
     Route::post('login', 'login')
         ->name('login');
 
-    Route::group([
-        'middleware' => ['auth:sanctum', 'verified', 'is_admin']
-    ], function () {
-        Route::post('logout', 'logout')
-            ->name('logout');
-    });
+    Route::post('logout', 'logout')
+        ->middleware(['auth:sanctum', 'verified', 'is_admin'])
+        ->name('logout');
 });
 
 Route::group([
