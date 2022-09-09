@@ -155,11 +155,23 @@ class AdminUserTest extends TestCase
 
     public function test_admin_can_delete_user()
     {
-        $this->deleteJson(route('admin.users.destroy', Auth::id()))
+        $user = $this->createUser([
+            'avatar_url' => $this->avatarUrl
+        ]);
+
+        $avatarUrlArray = explode('/', $this->avatarUrl);
+        $publicId = explode('.', end($avatarUrlArray))[0];
+
+        Cloudinary::shouldReceive('destroy')
+            ->once()
+            ->with("encontreduca/avatars/$publicId")
+            ->andReturnSelf();
+
+        $this->deleteJson(route('admin.users.destroy', $user->id))
             ->assertNoContent();
 
         $this->assertDatabaseMissing('users', [
-            'id' => Auth::id()
+            'id' => $user->id
         ]);
     }
 
@@ -168,6 +180,14 @@ class AdminUserTest extends TestCase
         $this->authAdmin([
             'avatar_url' => $this->avatarUrl
         ]);
+
+        $avatarUrlArray = explode('/', $this->avatarUrl);
+        $publicId = explode('.', end($avatarUrlArray))[0];
+
+        Cloudinary::shouldReceive('destroy')
+            ->once()
+            ->with("encontreduca/avatars/$publicId")
+            ->andReturnSelf();
 
         $this->deleteJson(route('admin.users.delete.avatar', Auth::id()))
             ->assertNoContent();
