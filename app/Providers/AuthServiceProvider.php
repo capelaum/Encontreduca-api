@@ -7,6 +7,7 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use App\Policies\DefaultPolicy;
 use Illuminate\Support\Facades\Gate;
 use App\Models\{Category,
+    Motive,
     User,
     Review,
     Support,
@@ -33,6 +34,7 @@ class AuthServiceProvider extends ServiceProvider
         ResourceComplaint::class => DefaultPolicy::class,
         ReviewComplaint::class => DefaultPolicy::class,
         Category::class => DefaultPolicy::class,
+        Motive::class => DefaultPolicy::class,
     ];
 
     /**

@@ -21,7 +21,9 @@ class ResourceComplaintFactory extends Factory
     {
         $users = collect(User::all()->modelKeys());
         $resources = collect(Resource::all()->modelKeys());
-        $motives = collect(Motive::all()->modelKeys());
+        $motives = collect(Motive::where('type', 'resource_complaint')
+            ->get()
+            ->modelKeys());
 
         return [
             'user_id' => $users->random(),

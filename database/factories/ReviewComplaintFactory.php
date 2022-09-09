@@ -21,7 +21,9 @@ class ReviewComplaintFactory extends Factory
     {
         $users = collect(User::all()->modelKeys());
         $reviews = collect(Review::all()->modelKeys());
-        $motives = collect(Motive::all()->modelKeys());
+        $motives = collect(Motive::where('type', 'review_complaint')
+            ->get()
+            ->modelKeys());
 
         return [
             'user_id' => $users->random(),

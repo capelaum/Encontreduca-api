@@ -35,7 +35,19 @@ class AdminResourceComplaintTest extends TestCase
     {
         $this->getJson(route('admin.resources.complaints.index'))
             ->assertOk()
-            ->assertJsonStructure(['*' => $this->resourceComplaintKeys])->json();
+            ->assertJsonStructure([
+                'data' => [
+                    '*' => $this->resourceComplaintKeys
+                ],
+                'meta' => [
+                    'current_page',
+                    'from',
+                    'last_page',
+                    'path',
+                    'per_page',
+                    'total'
+                ]
+            ]);
     }
 
     public function test_user_cannot_list_reviews_complaints()

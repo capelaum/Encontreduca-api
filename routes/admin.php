@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\{AuthController,
     CategoryController,
     DashboardController,
+    MotiveController,
     ResourceComplaintController,
     ResourceController,
     ResourceVoteController,
@@ -90,6 +91,11 @@ Route::group([
     Route::apiResource(
         'categories',
         CategoryController::class
+    );
+
+    Route::apiResource(
+        'motives',
+        MotiveController::class
     );
 
 });
