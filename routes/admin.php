@@ -7,9 +7,9 @@ use App\Http\Controllers\Admin\{AuthController,
     ResourceComplaintController,
     ResourceController,
     ResourceVoteController,
+    ReviewComplaintController,
     ReviewController,
-    UserController
-};
+    UserController};
 
 Route::group([
     'as' => 'admin.auth.',
@@ -55,6 +55,15 @@ Route::group([
         [
             'only' => ['index', 'show', 'destroy'],
             'as' => 'resources'
+        ]
+    );
+
+    Route::apiResource(
+        'reviews/complaints',
+        ReviewComplaintController::class,
+        [
+            'only' => ['index', 'show', 'destroy'],
+            'as' => 'reviews'
         ]
     );
 

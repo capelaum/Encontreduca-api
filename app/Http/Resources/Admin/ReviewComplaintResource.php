@@ -1,9 +1,7 @@
 <?php
 
-namespace App\Http\Resources\V1\Review;
+namespace App\Http\Resources\Admin;
 
-use App\Http\Resources\V1\MotiveResource;
-use App\Http\Resources\V1\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,8 +18,14 @@ class ReviewComplaintResource extends JsonResource
         return [
             'id' => $this->id,
             'userId' => $this->user_id,
+            'author' => $this->user->name,
+            'authorEmail' => $this->user->email,
+            'authorAvatar' => $this->user->avatar_url,
             'reviewId' => $this->review_id,
+            'review' => $this->review,
             'motiveId' => $this->motive_id,
+            'motiveName' => $this->motive->name,
+            'createdAt' => date('d/m/Y', strtotime($this->created_at)),
         ];
     }
 }
