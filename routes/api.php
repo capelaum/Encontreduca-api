@@ -93,7 +93,7 @@ Route::group([
         ->name('reviews.complaints.store');
 
     Route::post('supports', [SupportController::class, 'store'])
-        ->name('store');
+        ->name('supports.store');
 });
 
 Route::group([

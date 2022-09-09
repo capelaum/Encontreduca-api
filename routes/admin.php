@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\{AuthController,
     ResourceVoteController,
     ReviewComplaintController,
     ReviewController,
+    SupportController,
     UserController};
 
 Route::group([
@@ -96,6 +97,14 @@ Route::group([
     Route::apiResource(
         'motives',
         MotiveController::class
+    );
+
+    Route::apiResource(
+        'supports',
+        SupportController::class,
+        [
+            'only' => ['index', 'show', 'destroy']
+        ]
     );
 
 });

@@ -14,41 +14,6 @@ use Illuminate\Support\Facades\Auth;
 class SupportController extends Controller
 {
     /**
-     * List all support requests.
-     *
-     * @return SupportCollection
-     * @throws AuthorizationException
-     */
-    public function index(): SupportCollection
-    {
-        $this->authorize('isAdmin', [
-            Support::class,
-            'listar os pedidos de suporte.'
-        ]);
-
-        $supports = Support::all();
-
-        return new SupportCollection($supports);
-    }
-
-    /**
-     * Show a support request.
-     *
-     * @param Support $support
-     * @return SupportResource
-     * @throws AuthorizationException
-     */
-    public function show(Support $support): SupportResource
-    {
-        $this->authorize('isAdmin', [
-            Support::class,
-            'visualizar esse pedido de suporte.'
-        ]);
-
-        return new SupportResource($support);
-    }
-
-    /**
      * Store a support request in database.
      *
      * @param StoreSupportRequest $request
