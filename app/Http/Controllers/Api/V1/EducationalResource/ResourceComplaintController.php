@@ -14,8 +14,6 @@ use function response;
 
 class ResourceComplaintController extends Controller
 {
-
-
     /**
      * Create new Resource Complaint and store on database
      *

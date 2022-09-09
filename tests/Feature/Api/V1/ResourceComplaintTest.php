@@ -18,58 +18,6 @@ class ResourceComplaintTest extends TestCase
         'createdAt',
     ];
 
-    public function test_list_resources_complaints()
-    {
-        $this->authAdmin();
-
-        $this->createResourceComplaint();
-
-        $this->getJson(route('resources.complaints.index'))
-            ->assertOk()
-            ->assertJsonStructure(['*' => $this->resourceComplaintKeys])->json();
-    }
-
-    public function test_user_cannot_list_reviews_complaints()
-    {
-        $this->authUser();
-
-        $this->createResourceComplaint();
-
-        $this->withExceptionHandling();
-
-        $this->getJson(route('resources.complaints.index'))
-            ->assertStatus(401)
-            ->assertJsonStructure([
-                'message'
-            ]);
-    }
-
-    public function test_show_review_complaint()
-    {
-        $this->authAdmin();
-
-        $resourceComplaint = $this->createResourceComplaint();
-
-        $this->getJson(route('resources.complaints.show', $resourceComplaint->id))
-            ->assertOk()
-            ->assertJsonStructure($this->resourceComplaintKeys)->json();
-    }
-
-    public function test_user_cannot_show_resource_complaint()
-    {
-        $this->authUser();
-
-        $resourceComplaint = $this->createResourceComplaint();
-
-        $this->withExceptionHandling();
-
-        $this->getJson(route('resources.complaints.show', $resourceComplaint->id))
-            ->assertStatus(401)
-            ->assertJsonStructure([
-                'message'
-            ]);
-    }
-
     public function test_store_resource_complaint()
     {
         $this->authUser();

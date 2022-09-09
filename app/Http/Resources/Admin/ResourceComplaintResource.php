@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Admin;
 
+use App\Models\Resource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,9 +19,13 @@ class ResourceComplaintResource extends JsonResource
         return [
             'id' => $this->id,
             'userId' => $this->user_id,
+            'author' => $this->user ? $this->user->name : 'Anônimo',
+            'authorEmail' =>  $this->user ? $this->user->email : 'Anônimo',
+            'authorAvatar' => $this->user ? $this->user->avatar_url : null,
             'resourceId' => $this->resource_id,
-            'resourceName' => $this->resource->name,
+            'resourceName' => Resource::find($this->resource_id)->name,
             'motiveId' => $this->motive_id,
+            'motiveName' => $this->motive->name,
             'createdAt' => date('d/m/Y', strtotime($this->created_at)),
         ];
     }

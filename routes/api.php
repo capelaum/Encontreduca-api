@@ -60,9 +60,6 @@ Route::group([
         Route::post('/', [ResourceController::class, 'store'])
             ->name('store');
 
-        Route::post('/complaints', [ResourceComplaintController::class, 'store'])
-            ->name('complaints.store');
-
         Route::post('/votes', [ResourceVoteController::class, 'store'])
             ->name('votes.store');
 
@@ -71,6 +68,9 @@ Route::group([
 
         Route::patch('/votes/{vote}', [ResourceVoteController::class, 'update'])
             ->name('votes.update');
+
+        Route::post('/complaints', [ResourceComplaintController::class, 'store'])
+            ->name('complaints.store');
 
         Route::post('/changes', [ResourceChangeController::class, 'store'])
             ->name('changes.store');

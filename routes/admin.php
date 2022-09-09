@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\{AuthController,
     CategoryController,
     DashboardController,
+    ResourceComplaintController,
     ResourceController,
     ResourceVoteController,
     ReviewController,
@@ -48,6 +49,15 @@ Route::group([
         ResourceVoteController::class
     );
 
+    Route::apiResource(
+        'resources/complaints',
+        ResourceComplaintController::class,
+        [
+            'only' => ['index', 'show', 'destroy'],
+            'as' => 'resources'
+        ]
+    );
+
     Route::group([
         'controller' => ResourceController::class,
     ], function () {
@@ -56,6 +66,9 @@ Route::group([
 
         Route::get('resources/{resource}/reviews', 'reviews')
             ->name('resources.reviews');
+
+        Route::get('resources/{resource}/complaints', 'complaints')
+            ->name('resources.complaints');
 
         Route::apiResource('resources', ResourceController::class);
     });
@@ -69,4 +82,5 @@ Route::group([
         'categories',
         CategoryController::class
     );
+
 });

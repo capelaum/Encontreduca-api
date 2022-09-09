@@ -6,26 +6,26 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreResourceRequest;
 use App\Http\Requests\Admin\UpdateResourceRequest;
 use App\Models\Resource;
+use App\Models\ResourceComplaint;
 use App\Models\ResourceVote;
 use App\Models\Review;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Http\Resources\Admin\{
-    ResourceCollection,
+use App\Http\Resources\Admin\{ResourceCollection,
+    ResourceComplaintCollection,
     ResourceResource,
     ResourceVoteCollection,
-    ReviewCollection
-};
+    ReviewCollection};
 
 class ResourceController extends Controller
 {
     /**
      * @param Request $request
-     * @return JsonResponse|ResourceCollection
+     * @return ResourceCollection
      * @throws AuthorizationException
      */
-    public function index(Request $request): JsonResponse|ResourceCollection
+    public function index(Request $request): ResourceCollection
     {
         $this->authorize('isAdmin', [
             Resource::class,
@@ -209,7 +209,7 @@ class ResourceController extends Controller
     ): ReviewCollection {
         $this->authorize('isAdmin', [
             Resource::class,
-            'visualizar os votos desse recurso.'
+            'visualizar as avaliações desse recurso.'
         ]);
 
         $reviews = Review::query();
@@ -227,5 +227,40 @@ class ResourceController extends Controller
         $reviews = $reviews->paginate(20);
 
         return new ReviewCollection($reviews);
+    }
+
+    /**
+     * Get resource reviews
+     *
+     * @param Resource $resource
+     * @param Request $request
+     * @return ResourceComplaintCollection
+     * @throws AuthorizationException
+     */
+    public
+    function complaints(
+        Resource $resource,
+        Request $request
+    ): ResourceComplaintCollection {
+        $this->authorize('isAdmin', [
+            Resource::class,
+            'visualizar as reclamações desse recurso.'
+        ]);
+
+        $resourceComplaints = ResourceComplaint::query();
+
+        $resourceComplaints
+            ->where('resource_id', $resource->id)
+            ->when($request->search, function ($query, $search) {
+                return $query->whereHas('user', function ($query) use ($search) {
+                    return $query
+                        ->where('name', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%");
+                });
+            });
+
+        $resourceComplaints = $resourceComplaints->paginate(20);
+
+        return new ResourceComplaintCollection($resourceComplaints);
     }
 }
