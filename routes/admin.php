@@ -5,13 +5,15 @@ use App\Http\Controllers\Admin\{AuthController,
     CategoryController,
     DashboardController,
     MotiveController,
+    ResourceChangeController,
     ResourceComplaintController,
     ResourceController,
     ResourceVoteController,
     ReviewComplaintController,
     ReviewController,
     SupportController,
-    UserController};
+    UserController
+};
 
 Route::group([
     'as' => 'admin.auth.',
@@ -61,11 +63,11 @@ Route::group([
     );
 
     Route::apiResource(
-        'reviews/complaints',
-        ReviewComplaintController::class,
+        'resources/changes',
+        ResourceChangeController::class,
         [
             'only' => ['index', 'show', 'destroy'],
-            'as' => 'reviews'
+            'as' => 'resources'
         ]
     );
 
@@ -83,6 +85,15 @@ Route::group([
 
         Route::apiResource('resources', ResourceController::class);
     });
+
+    Route::apiResource(
+        'reviews/complaints',
+        ReviewComplaintController::class,
+        [
+            'only' => ['index', 'show', 'destroy'],
+            'as' => 'reviews'
+        ]
+    );
 
     Route::apiResource(
         'reviews',
@@ -106,5 +117,4 @@ Route::group([
             'only' => ['index', 'show', 'destroy']
         ]
     );
-
 });

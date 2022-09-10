@@ -23,59 +23,6 @@ class ResourceChangeTest extends TestCase
         'createdAt',
     ];
 
-    public function test_list_resources_changes()
-    {
-        $this->authAdmin();
-
-        $this->createResourceChange();
-
-        $this->getJson(route('resources.changes.index'))
-            ->assertOk()
-            ->assertJsonStructure(['*' => $this->resourceChangeKeys]);
-    }
-
-    public function test_user_cannot_list_resources_changes()
-    {
-        $this->authUser();
-
-        $this->createResourceChange();
-
-        $this->withExceptionHandling();
-
-        $this->getJson(route('resources.changes.index'))
-            ->assertStatus(401)
-            ->assertJsonStructure([
-                'message'
-            ]);
-    }
-
-    public function test_show_resource_change()
-    {
-        $this->authAdmin();
-
-        $resourceChange = $this->createResourceChange();
-
-        $this->getJson(route('resources.changes.show', $resourceChange->id))
-            ->assertOk()
-            ->assertJsonStructure($this->resourceChangeKeys)
-            ->json();
-    }
-
-    public function test_user_cannot_show_resource_change()
-    {
-        $this->authUser();
-
-        $resourceChange = $this->createResourceChange();
-
-        $this->withExceptionHandling();
-
-        $this->getJson(route('resources.changes.show', $resourceChange->id))
-            ->assertStatus(401)
-            ->assertJsonStructure([
-                'message'
-            ]);
-    }
-
     public function test_store_resource_change()
     {
         $this->authUser();
