@@ -91,6 +91,40 @@ class AdminUserTest extends TestCase
             ->json();
     }
 
+    public function test_admin_store_user()
+    {
+        $avatar = $this->createFakeImageFile('avatar.jpg');
+
+        $user = User::factory()->make([
+            'name' => 'John Doe',
+            'email' => 'john_doe@email.com',
+            'password' => '12345678',
+            'avatar' => $avatar
+        ]);
+
+        Cloudinary::shouldReceive('uploadFile')
+            ->once()
+            ->with($avatar->getRealPath(), [
+                'folder' => 'encontreduca/avatars'
+            ])
+            ->andReturnSelf()
+            ->shouldReceive('getSecurePath')
+            ->once()
+            ->andReturn($this->avatarUrl);
+
+        $this->postJson(route('admin.users.store'), [
+            'name' => $user->name,
+            'email' => $user->email,
+            'password' => $user->password,
+            'confirmPassword' => $user->password,
+            'avatar' => $user->avatar
+        ])
+            ->assertCreated()
+            ->assertJsonStructure($this->showUserKeys)
+            ->json();
+
+    }
+
     public function test_admin_can_update_user()
     {
         $updatedUser = User::factory()->make();
@@ -117,8 +151,6 @@ class AdminUserTest extends TestCase
             ->assertJsonStructure($this->showUserKeys)
             ->json();
 
-//        dd($response);
-
         $this->assertDatabaseHas('users', [
             'name' => $updatedUser->name,
             'email' => Auth::user()->email,
@@ -139,17 +171,38 @@ class AdminUserTest extends TestCase
 
     public function test_admin_can_update_user_except_email_and_password()
     {
+        $user = $this->createUser([
+            'avatar_url' => $this->avatarUrl
+        ]);
+
         $updatedUser = User::factory()->make();
 
-        $this->patchJson(route('admin.users.update', Auth::id()), [
+        $avatar = $this->createFakeImageFile('avatar.jpg');
+
+        $avatarUrlArray = explode('/', $this->avatarUrl);
+        $publicId = explode('.', end($avatarUrlArray))[0];
+
+        Cloudinary::shouldReceive('uploadFile')
+            ->once()
+            ->with($avatar->getRealPath(), [
+                'folder' => 'encontreduca/avatars',
+                'public_id' => $publicId
+            ])
+            ->andReturnSelf()
+            ->shouldReceive('getSecurePath')
+            ->once()
+            ->andReturn($this->avatarUrl);
+
+        $this->patchJson(route('admin.users.update', $user->id), [
             'name' => $updatedUser->name,
-            'email' => Auth::user()->email,
+            'email' => $user->email,
+            'avatar' => $avatar,
         ])->assertOk()
             ->assertJsonStructure($this->showUserKeys);
 
         $this->assertDatabaseHas('users', [
             'name' => $updatedUser->name,
-            'email' => Auth::user()->email,
+            'email' => $user->email,
         ]);
     }
 
