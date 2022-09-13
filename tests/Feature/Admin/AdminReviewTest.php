@@ -36,7 +36,9 @@ class AdminReviewTest extends TestCase
     {
         $this->createReview();
 
-        $this->getJson(route('admin.reviews.index'))
+        $this->getJson(route('admin.reviews.index', [
+            'search' => 'test'
+        ]))
             ->assertOk()
             ->assertJsonStructure([
                 'data' => [

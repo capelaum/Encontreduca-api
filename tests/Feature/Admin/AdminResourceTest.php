@@ -152,7 +152,7 @@ class AdminResourceTest extends TestCase
             ->once()
             ->andReturn($this->coverUrl);
 
-        $response = $this->putJson(route('admin.resources.update', $resource->id), [
+        $response = $this->patchJson(route('admin.resources.update', $resource->id), [
             'userId' => Auth::user()->id,
             'categoryId' => Category::all()->random()->id,
             'latitude' => -15.7810843,

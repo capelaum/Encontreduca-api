@@ -33,7 +33,9 @@ class AdminResourceChangeTest extends TestCase
 
         $this->createResourceChange();
 
-        $this->getJson(route('admin.resources.changes.index'))
+        $this->getJson(route('admin.resources.changes.index', [
+            'search' => 'name',
+        ]))
             ->assertOk()
             ->assertJsonStructure([
                 'data' => [

@@ -33,7 +33,9 @@ class AdminResourceComplaintTest extends TestCase
 
     public function test_admin_list_resources_complaints()
     {
-        $this->getJson(route('admin.resources.complaints.index'))
+        $this->getJson(route('admin.resources.complaints.index', [
+            'search' => 'name',
+        ]))
             ->assertOk()
             ->assertJsonStructure([
                 'data' => [
@@ -77,6 +79,25 @@ class AdminResourceComplaintTest extends TestCase
         $this->withExceptionHandling();
 
         $this->getJson(route('admin.resources.complaints.show', $this->resourceComplaint->id))
+            ->assertStatus(401)
+            ->assertJsonStructure([
+                'message'
+            ]);
+    }
+
+    public function test_delete_resource_complaint()
+    {
+        $this->deleteJson(route('admin.resources.complaints.destroy', $this->resourceComplaint->id))
+            ->assertNoContent();
+    }
+
+    public function test_user_cannot_delete_resource_complaint()
+    {
+        $this->authUser();
+
+        $this->withExceptionHandling();
+
+        $this->deleteJson(route('admin.resources.complaints.destroy', $this->resourceComplaint->id))
             ->assertStatus(401)
             ->assertJsonStructure([
                 'message'

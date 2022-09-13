@@ -33,7 +33,9 @@ class AdminSupportTest extends TestCase
 
     public function test_admin_list_supports()
     {
-        $this->getJson(route('admin.supports.index'))
+        $this->getJson(route('admin.supports.index', [
+            'search' => 'test'
+        ]))
             ->assertOk()
             ->assertJsonStructure([
                 'data' => [
