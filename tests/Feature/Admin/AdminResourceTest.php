@@ -229,4 +229,154 @@ class AdminResourceTest extends TestCase
         $this->deleteJson(route('admin.resources.destroy', $this->resource->id))
             ->assertUnauthorized();
     }
+
+    public function test_admin_list_resource_votes()
+    {
+        $this->createResourceVote([
+            'resource_id' => $this->resource->id,
+            'user_id' => auth()->user()->id
+        ]);
+
+        $this->getJson(route('admin.resources.votes', [
+            'resource' => $this->resource->id,
+            'search' => 'name'
+        ]))
+            ->assertOk()
+            ->assertJsonStructure([
+                'data' => [
+                    '*' => [
+                        'id',
+                        'userId',
+                        'resourceId',
+                        'author',
+                        'authorEmail',
+                        'authorAvatar',
+                        'vote',
+                        'justification'
+                    ]
+                ],
+                'meta' => [
+                    'current_page',
+                    'from',
+                    'last_page',
+                    'path',
+                    'per_page',
+                    'total'
+                ]
+            ]);
+    }
+
+    public function test_admin_list_resource_reviews()
+    {
+        $this->createReview([
+            'resource_id' => $this->resource->id,
+            'user_id' => auth()->user()->id
+        ]);
+
+        $this->getJson(route('admin.resources.reviews', [
+            'resource' => $this->resource->id,
+            'search' => 'name'
+        ]))
+            ->assertOk()
+            ->assertJsonStructure([
+                'data' => [
+                    '*' => [
+                        'id',
+                        'userId',
+                        'resourceId',
+                        'author',
+                        'authorEmail',
+                        'authorAvatar',
+                        'rating',
+                        'comment',
+                        'updatedAt'
+                    ]
+                ],
+                'meta' => [
+                    'current_page',
+                    'from',
+                    'last_page',
+                    'path',
+                    'per_page',
+                    'total'
+                ]
+            ]);
+    }
+
+    public function test_admin_list_resource_complaints()
+    {
+        $this->createResourceComplaint([
+            'resource_id' => $this->resource->id,
+            'user_id' => auth()->user()->id
+        ]);
+
+        $this->getJson(route('admin.resources.complaints', [
+            'resource' => $this->resource->id,
+            'search' => 'name'
+        ]))
+            ->assertOk()
+            ->assertJsonStructure([
+                'data' => [
+                    '*' => [
+                        'id',
+                        'userId',
+                        'resourceId',
+                        'resourceName',
+                        'author',
+                        'authorEmail',
+                        'authorAvatar',
+                        'motiveId',
+                        'motiveName',
+                        'createdAt'
+                    ]
+                ],
+                'meta' => [
+                    'current_page',
+                    'from',
+                    'last_page',
+                    'path',
+                    'per_page',
+                    'total'
+                ]
+            ]);
+    }
+
+    public function test_admin_list_resource_changes()
+    {
+        $this->createResourceChange([
+            'resource_id' => $this->resource->id,
+            'user_id' => auth()->user()->id
+        ]);
+
+        $this->getJson(route('admin.resources.changes', [
+            'resource' => $this->resource->id,
+            'search' => 'name'
+        ]))
+            ->assertOk()
+            ->assertJsonStructure([
+                'data' => [
+                    '*' => [
+                        'id',
+                        'userId',
+                        'resourceId',
+                        'resourceName',
+                        'author',
+                        'authorEmail',
+                        'authorAvatar',
+                        'field',
+                        'oldValue',
+                        'newValue',
+                        'createdAt'
+                    ]
+                ],
+                'meta' => [
+                    'current_page',
+                    'from',
+                    'last_page',
+                    'path',
+                    'per_page',
+                    'total'
+                ]
+            ]);
+    }
 }
