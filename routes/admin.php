@@ -83,6 +83,9 @@ Route::group([
         Route::get('resources/{resource}/complaints', 'complaints')
             ->name('resources.complaints');
 
+        Route::get('resources/{resource}/changes', 'changes')
+            ->name('resources.changes');
+
         Route::apiResource('resources', ResourceController::class);
     });
 

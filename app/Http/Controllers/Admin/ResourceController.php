@@ -6,17 +6,20 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreResourceRequest;
 use App\Http\Requests\Admin\UpdateResourceRequest;
 use App\Models\Resource;
+use App\Models\ResourceChange;
 use App\Models\ResourceComplaint;
 use App\Models\ResourceVote;
 use App\Models\Review;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Http\Resources\Admin\{ResourceCollection,
+use App\Http\Resources\Admin\{ResourceChangeCollection,
+    ResourceCollection,
     ResourceComplaintCollection,
     ResourceResource,
     ResourceVoteCollection,
-    ReviewCollection};
+    ReviewCollection
+};
 
 class ResourceController extends Controller
 {
@@ -54,10 +57,8 @@ class ResourceController extends Controller
      * @return ResourceResource
      * @throws AuthorizationException
      */
-    public
-    function show(
-        Resource $resource
-    ): ResourceResource {
+    public function show(Resource $resource): ResourceResource
+    {
         $this->authorize('isAdmin', [
             Resource::class,
             'visualizar este recurso.'
@@ -103,11 +104,8 @@ class ResourceController extends Controller
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public
-    function update(
-        UpdateResourceRequest $request,
-        Resource $resource
-    ): JsonResponse {
+    public function update(UpdateResourceRequest $request, Resource $resource): JsonResponse
+    {
         $this->authorize('isAdmin', [
             Resource::class,
             'editar este recurso.'
@@ -140,10 +138,8 @@ class ResourceController extends Controller
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public
-    function destroy(
-        Resource $resource
-    ): JsonResponse {
+    public function destroy(Resource $resource): JsonResponse
+    {
         $this->authorize('isAdmin', [
             Resource::class,
             'deletar este recurso.'
@@ -167,11 +163,8 @@ class ResourceController extends Controller
      * @return ResourceVoteCollection
      * @throws AuthorizationException
      */
-    public
-    function votes(
-        Resource $resource,
-        Request $request
-    ): ResourceVoteCollection {
+    public function votes(Resource $resource, Request $request): ResourceVoteCollection
+    {
         $this->authorize('isAdmin', [
             Resource::class,
             'visualizar os votos desse recurso.'
@@ -202,11 +195,8 @@ class ResourceController extends Controller
      * @return ReviewCollection
      * @throws AuthorizationException
      */
-    public
-    function reviews(
-        Resource $resource,
-        Request $request
-    ): ReviewCollection {
+    public function reviews(Resource $resource, Request $request): ReviewCollection
+    {
         $this->authorize('isAdmin', [
             Resource::class,
             'visualizar as avaliações desse recurso.'
@@ -237,11 +227,8 @@ class ResourceController extends Controller
      * @return ResourceComplaintCollection
      * @throws AuthorizationException
      */
-    public
-    function complaints(
-        Resource $resource,
-        Request $request
-    ): ResourceComplaintCollection {
+    public function complaints(Resource $resource, Request $request): ResourceComplaintCollection
+    {
         $this->authorize('isAdmin', [
             Resource::class,
             'visualizar as reclamações desse recurso.'
@@ -262,5 +249,28 @@ class ResourceController extends Controller
         $resourceComplaints = $resourceComplaints->paginate(20);
 
         return new ResourceComplaintCollection($resourceComplaints);
+    }
+
+    public function changes(Resource $resource, Request $request)
+    {
+        $this->authorize('isAdmin', [
+            Resource::class,
+            'visualizar as sugestões de alterações desse recurso.'
+        ]);
+
+        $changes = ResourceChange::query();
+
+        $changes
+            ->where('resource_id', $resource->id)
+            ->when($request->search, function ($query, $search) {
+                return $query->whereHas('resource', function ($query) use ($search) {
+                    return $query
+                        ->where('name', 'like', "%{$search}%");
+                });
+            });
+
+        $changes = $changes->paginate(20);
+
+        return new ResourceChangeCollection($changes);
     }
 }
