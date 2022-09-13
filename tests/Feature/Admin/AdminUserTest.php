@@ -48,8 +48,6 @@ class AdminUserTest extends TestCase
 
     public function test_admin_can_list_users()
     {
-        $this->withExceptionHandling();
-
         $this->getJson(route('admin.users.index', ['search' => 'admin']))
             ->assertOk()
             ->assertJsonStructure([

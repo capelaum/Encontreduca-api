@@ -31,13 +31,8 @@ Route::group([
     'middleware' => ['auth:sanctum', 'verified', 'is_admin'],
     'as' => 'admin.',
 ], function () {
-    Route::group([
-        'as' => 'dashboard.',
-        'controller' => DashboardController::class,
-    ], function () {
-        Route::get('dashboard', 'index')
-            ->name('index');
-    });
+    Route::get('dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard.index');
 
     Route::group([
         'controller' => UserController::class,

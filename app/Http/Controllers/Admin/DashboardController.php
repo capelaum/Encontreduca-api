@@ -48,7 +48,6 @@ class DashboardController extends Controller
         $motivesCount = Motive::count();
         $supportsCount = Support::count();
 
-
         return response()->json([
             'usersCount' => $usersCount,
 
