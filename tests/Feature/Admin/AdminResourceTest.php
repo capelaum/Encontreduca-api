@@ -152,15 +152,14 @@ class AdminResourceTest extends TestCase
             ->once()
             ->andReturn($this->coverUrl);
 
-        $response = $this->patchJson(route('admin.resources.update', $resource->id), [
-            'userId' => Auth::user()->id,
+        $response = $this->putJson(route('admin.resources.update', $resource->id), [
             'categoryId' => Category::all()->random()->id,
+            'name' => 'Colégio Militar de Brasília',
             'latitude' => -15.7810843,
             'longitude' => -47.8928717,
-            'name' => 'Colégio Militar de Brasília',
             'address' => '902/904 - Asa Norte, Brasília - DF, 70790-020',
-            'phone' => '(61) 3424-1128',
             'website' => 'http://www.cmb.eb.mil.br',
+            'phone' => '(61) 3424-1128',
             'cover' => $cover,
             'approved' => true,
         ])
@@ -173,6 +172,32 @@ class AdminResourceTest extends TestCase
             'name' => $response['name'],
             'cover' => $this->coverUrl,
             'approved' => true,
+        ]);
+    }
+
+    public function test_admin_update_resource_with_patch()
+    {
+        $resource = $this->createResource();
+
+        $response = $this->patchJson(route('admin.resources.update', $resource->id), [
+            'categoryId' => Category::all()->random()->id,
+            'name' => 'Colégio Militar de Brasília',
+            'latitude' => -15.7810843,
+            'longitude' => -47.8928717,
+            'address' => '902/904 - Asa Norte, Brasília - DF, 70790-020',
+            'website' => 'http://www.cmb.eb.mil.br',
+            'phone' => '(61) 3424-1128',
+            'approved' => false,
+        ])
+            ->assertOk()
+            ->assertJsonStructure($this->resourceKeys)
+            ->json();
+
+        $this->assertDatabaseHas('resources', [
+            'id' => $response['id'],
+            'name' => $response['name'],
+            'category_id' => $response['categoryId'],
+            'approved' => false,
         ]);
     }
 

@@ -36,6 +36,9 @@
             <file>./app/Providers/EventServiceProvider.php</file>
             <file>./app/Providers/RouteServiceProvider.php</file>
 
+            <!-- Resources -->
+<!--            <file>./app/Http/Resources/Admin/UserResource.php</file>-->
+
             <!-- Models -->
             <!--<file>./app/Models/Category.php</file>
             <file>./app/Models/Resource.php</file>
