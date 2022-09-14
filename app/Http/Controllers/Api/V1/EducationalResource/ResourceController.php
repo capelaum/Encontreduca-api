@@ -45,7 +45,6 @@ class ResourceController extends Controller
      *
      * @param StoreResourceRequest $request
      * @return JsonResponse
-     * @throws AuthorizationException
      */
     public function store(StoreResourceRequest $request): JsonResponse
     {
@@ -71,22 +70,5 @@ class ResourceController extends Controller
     public function reviews(Resource $resource): ReviewCollection
     {
         return new ReviewCollection($resource->reviews);
-    }
-
-    /**
-     * Get resource votes
-     *
-     * @param Resource $resource
-     * @return ResourceVoteCollection
-     * @throws AuthorizationException
-     */
-    public function votes(Resource $resource): ResourceVoteCollection
-    {
-        $this->authorize('isAdmin', [
-            Resource::class,
-            'visualizar os votos desse recurso.'
-        ]);
-
-        return new ResourceVoteCollection($resource->votes);
     }
 }

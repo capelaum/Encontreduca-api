@@ -32,7 +32,6 @@ class StoreResourceRequest extends FormRequest
             "website" => "nullable|string|min:7|max:255",
             "phone" => "nullable|string|min:14|max:15",
             "cover" => "required|file|mimes:jpg,png,svg,webp",
-            "approved" => "nullable|boolean"
         ];
     }
 

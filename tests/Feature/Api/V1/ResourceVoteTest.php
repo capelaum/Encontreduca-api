@@ -14,6 +14,13 @@ class ResourceVoteTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function setup(): void
+    {
+        parent::setup();
+
+        $this->authUser();
+    }
+
     private array $resourceVoteKeys = [
         'id',
         'userId',
@@ -22,61 +29,8 @@ class ResourceVoteTest extends TestCase
         'justification'
     ];
 
-    public function test_list_resources_votes()
-    {
-        $this->authAdmin();
-
-        $this->createResourceVote();
-
-        $this->getJson(route('votes.index'))
-            ->assertOk()
-            ->assertJsonStructure(['*' => $this->resourceVoteKeys]);
-    }
-
-    public function test_user_cannot_list_resources_votes()
-    {
-        $this->authUser();
-
-        $this->createResourceVote();
-
-        $this->withExceptionHandling();
-
-        $this->getJson(route('votes.index'))
-            ->assertStatus(401)
-            ->assertJsonStructure([
-                'message'
-            ]);
-    }
-
-    public function test_show_resources_vote()
-    {
-        $this->authAdmin();
-
-        $resourceVote = $this->createResourceVote();
-
-        $this->getJson(route('votes.show', $resourceVote->id))
-            ->assertOk()
-            ->assertJsonStructure($this->resourceVoteKeys)->json();
-    }
-
-    public function test_user_cannot_show_resource_vote()
-    {
-        $this->authUser();
-
-        $resourceVote = $this->createResourceVote();
-
-        $this->withExceptionHandling();
-
-        $this->getJson(route('votes.show', $resourceVote->id))
-            ->assertStatus(401)
-            ->assertJsonStructure([
-                'message'
-            ]);
-    }
-
     public function test_store_resource_vote()
     {
-        $this->authUser();
         $resource = $this->createResource();
         $resourceVote = ResourceVote::factory()->make();
 
@@ -86,15 +40,13 @@ class ResourceVoteTest extends TestCase
             'justification' => $resourceVote->justification,
         ];
 
-        $this->postJson(route('votes.store'), $data)
+        $this->postJson(route('resources.votes.store'), $data)
             ->assertCreated()
             ->assertJsonStructure($this->resourceVoteKeys);
     }
 
     public function test_user_cannot_create_two_votes_on_same_resource()
     {
-        $this->authUser();
-
         $resource = $this->createResource();
 
         $resourceVote = $this->createResourceVote([
@@ -102,7 +54,7 @@ class ResourceVoteTest extends TestCase
             'resource_id' => $resource->id
         ]);
 
-        $this->postJson(route('votes.store'), [
+        $this->postJson(route('resources.votes.store'), [
             'resourceId' => $resource->id,
             'vote' => $resourceVote->vote,
             'justification' => $resourceVote->justification
@@ -115,10 +67,9 @@ class ResourceVoteTest extends TestCase
 
     public function test_update_resource_vote()
     {
-        $this->authUser();
         $resourceVote = $this->createResourceVote(['user_id' => Auth::id()]);
 
-        $this->patchJson(route('votes.update', $resourceVote->id), [
+        $this->patchJson(route('resources.votes.update', $resourceVote->id), [
             'vote' => true,
             'justification' => 'New justification'
         ])->assertOk()
@@ -133,12 +84,13 @@ class ResourceVoteTest extends TestCase
 
     public function test_user_cannot_update_resource_vote_of_another_user()
     {
-        $this->withExceptionHandling();
         $this->authUser();
+
+        $this->withExceptionHandling();
 
         $resourceVote = $this->createResourceVote(['user_id' => $this->userIdsWithoutAuthUser->random()]);
 
-        $this->patchJson(route('votes.update', $resourceVote->id), [
+        $this->patchJson(route('resources.votes.update', $resourceVote->id), [
             'vote' => false,
             'justification' => 'New justification'
         ])->assertStatus(401)

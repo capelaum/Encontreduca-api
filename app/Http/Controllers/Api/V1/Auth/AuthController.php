@@ -38,9 +38,9 @@ class AuthController extends Controller
      * Register new User.
      *
      * @param RegisterRequest $request
-     * @return Response
+     * @return JsonResponse
      */
-    public function register(RegisterRequest $request): Response
+    public function register(RegisterRequest $request): JsonResponse
     {
         $data = $request->validated();
 
@@ -50,7 +50,7 @@ class AuthController extends Controller
 
         event(new Registered($user));
 
-        return response([
+        return response()->json([
             'user' => new UserResource($user),
         ], 201);
     }
@@ -59,10 +59,10 @@ class AuthController extends Controller
      * Handle an incoming authentication request.
      *
      * @param LoginRequest $request
-     * @return Response
+     * @return JsonResponse
      * @throws ValidationException
      */
-    public function login(LoginRequest $request): Response
+    public function login(LoginRequest $request): JsonResponse
     {
         $request->ensureIsNotRateLimited();
 
@@ -73,7 +73,7 @@ class AuthController extends Controller
 
             RateLimiter::clear($request->throttleKey());
 
-            return response([
+            return response()->json([
                 'message' => "Usuário {$user->name} logado com sucesso!",
                 'token' => $userToken,
             ], 200);
@@ -81,7 +81,7 @@ class AuthController extends Controller
 
         RateLimiter::hit($request->throttleKey());
 
-        return response([
+        return response()->json([
             'message' => 'Credenciais inválidas',
         ], 401);
     }
@@ -90,13 +90,13 @@ class AuthController extends Controller
      * Destroy an authenticated session.
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
-    public function logout(Request $request): Response
+    public function logout(Request $request): JsonResponse
     {
         $request->user()->currentAccessToken()->delete();
 
-        return response([
+        return response()->json([
             'message' => 'Logout realizado com sucesso!'
         ], 200);
     }

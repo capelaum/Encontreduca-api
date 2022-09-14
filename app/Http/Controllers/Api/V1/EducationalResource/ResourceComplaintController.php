@@ -15,41 +15,6 @@ use function response;
 class ResourceComplaintController extends Controller
 {
     /**
-     * Returns list of all Resource Complaints.
-     *
-     * @return ResourceComplaintCollection
-     * @throws AuthorizationException
-     */
-    public function index(): ResourceComplaintCollection
-    {
-        $this->authorize('isAdmin', [
-            ResourceComplaint::class,
-            'listar as sugestões de fechamento de recursos.'
-        ]);
-
-        $resourceComplaints = ResourceComplaint::all();
-
-        return new ResourceComplaintCollection($resourceComplaints);
-    }
-
-    /**
-     * Show single Resource Complaint data.
-     *
-     * @param ResourceComplaint $complaint
-     * @return ResourceComplaintResource
-     * @throws AuthorizationException
-     */
-    public function show(ResourceComplaint $complaint): ResourceComplaintResource
-    {
-        $this->authorize('isAdmin', [
-            ResourceComplaint::class,
-            'visualizar essa sugestão de fechamento de recurso.'
-        ]);
-
-        return new ResourceComplaintResource($complaint);
-    }
-
-    /**
      * Create new Resource Complaint and store on database
      *
      * @param StoreResourceComplaintRequest $request

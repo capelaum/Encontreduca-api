@@ -11,33 +11,15 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\V1\{
-    StoreResourceUserRequest,
     UpdateUserRequest
 };
 use App\Http\Resources\V1\UserCollection;
 use App\Http\Resources\V1\UserResource;
 use App\Models\{ResourceVote, Review, User, Resource, ResourceUser};
 
+
 class UserController extends Controller
 {
-    /**
-     * Returns list of all users.
-     *
-     * @return UserCollection
-     * @throws AuthorizationException
-     */
-    public function index(): UserCollection
-    {
-        $this->authorize('isAdmin', [
-            User::class,
-            'listar os usuários.'
-        ]);
-
-        $users = User::all();
-
-        return new UserCollection($users);
-    }
-
     /**
      * Show single User data.
      *
@@ -127,6 +109,11 @@ class UserController extends Controller
                 'excluir esse usuário.'
             ]
         );
+
+        $avatarUrlArray = explode('/', $user->avatar_url);
+        $publicId = explode('.', end($avatarUrlArray))[0];
+
+        cloudinary()->destroy("encontreduca/avatars/$publicId");
 
         $user->delete();
 

@@ -33,29 +33,6 @@ class UserTest extends TestCase
         'resourcesIds'
     ];
 
-    public function test_list_users()
-    {
-        $this->authAdmin();
-
-        $this->getJson(route('users.index'))
-            ->assertOk()
-            ->assertJsonStructure(['*' => $this->userKeys])
-            ->json();
-    }
-
-    public function test_user_cannot_list_users()
-    {
-        $this->createUser();
-
-        $this->withExceptionHandling();
-
-        $this->getJson(route('users.index'))
-            ->assertStatus(401)
-            ->assertJsonStructure([
-                'message'
-            ]);
-    }
-
     public function test_show_user()
     {
         $this->getJson(route('users.show', Auth::id()))
@@ -189,6 +166,14 @@ class UserTest extends TestCase
 
     public function test_delete_user()
     {
+        $avatarUrlArray = explode('/', auth()->user()->avatar_url);
+        $publicId = explode('.', end($avatarUrlArray))[0];
+
+        Cloudinary::shouldReceive('destroy')
+            ->once()
+            ->with("encontreduca/avatars/$publicId")
+            ->andReturnSelf();
+
         $this->deleteJson(route('users.destroy', Auth::id()))
             ->assertNoContent();
 

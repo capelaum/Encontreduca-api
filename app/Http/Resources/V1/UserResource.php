@@ -23,7 +23,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'avatarUrl' => $this->avatar_url,
             'reviewCount' => $this->reviews()->count(),
-            'resourcesIds' => $this->resources()->pluck('id')->toArray(),
+            'resourcesIds' => $this->savedResources()->pluck('id')->toArray(),
             'votes' => new ResourceVoteCollection($this->votes),
         ];
     }

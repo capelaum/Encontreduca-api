@@ -18,7 +18,7 @@ class ResourceComplaint extends Model
         'motive_id',
     ];
 
-    protected $with = ['user', 'resource', 'motive'];
+//    protected $with = ['user', 'resource', 'motive'];
 
     public function user(): BelongsTo
     {

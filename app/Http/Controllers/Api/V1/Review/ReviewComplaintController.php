@@ -15,41 +15,6 @@ use function response;
 class ReviewComplaintController extends Controller
 {
     /**
-     * Returns list of all Review Complaints.
-     *
-     * @return ReviewComplaintCollection
-     * @throws AuthorizationException
-     */
-    public function index(): ReviewComplaintCollection
-    {
-        $this->authorize('isAdmin', [
-            ReviewComplaint::class,
-            'listar as denúncias de avaliações.'
-        ]);
-
-        $reviewComplaints = ReviewComplaint::all();
-
-        return new ReviewComplaintCollection($reviewComplaints);
-    }
-
-    /**
-     * Show single Review Complaint data.
-     *
-     * @param ReviewComplaint $complaint
-     * @return ReviewComplaintResource
-     * @throws AuthorizationException
-     */
-    public function show(ReviewComplaint $complaint): ReviewComplaintResource
-    {
-        $this->authorize('isAdmin', [
-            ReviewComplaint::class,
-            'visualizar essa denúncia de avaliação.'
-        ]);
-
-        return new ReviewComplaintResource($complaint);
-    }
-
-    /**
      * Create new Review Complaint and store on database
      *
      * @param StoreReviewComplaintRequest $request

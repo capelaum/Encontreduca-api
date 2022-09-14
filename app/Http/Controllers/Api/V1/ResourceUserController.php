@@ -65,7 +65,7 @@ class ResourceUserController extends Controller
             ], 400);
         }
 
-        $user->resources()->detach($resource);
+        $user->savedResources()->detach($resource);
 
         return response()->json(null, 204);
     }

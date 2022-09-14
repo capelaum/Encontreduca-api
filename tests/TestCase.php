@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 use Laravel\Sanctum\Sanctum;
 use Database\Seeders\{ReviewSeeder, CategorySeeder, MotiveSeeder};
-use App\Models\{
+use App\Models\{Category,
     ResourceUser,
     User,
     Motive,
@@ -20,8 +20,7 @@ use App\Models\{
     Review,
     Provider,
     ReviewComplaint,
-    Support
-};
+    Support};
 
 abstract class TestCase extends BaseTestCase
 {
@@ -61,15 +60,21 @@ abstract class TestCase extends BaseTestCase
         return $user;
     }
 
-    public function authAdmin()
+    public function authAdmin(array $args = [])
     {
-        $admin = $this->createUser();
+        $args['is_admin'] = true;
+        $admin = $this->createUser($args);
 
         Sanctum::actingAs($admin, [
             'admin'
         ]);
 
         return $admin;
+    }
+
+    public function createCategory(array $args = [])
+    {
+        return Category::factory()->create($args);
     }
 
     public function createResource(array $args = [])
@@ -131,6 +136,4 @@ abstract class TestCase extends BaseTestCase
     {
         return File::fake()->image($name);
     }
-
-
 }

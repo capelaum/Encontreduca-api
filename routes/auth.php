@@ -8,39 +8,43 @@ use App\Http\Controllers\Api\V1\Auth\{
 };
 
 
-Route::controller(AuthController::class)->group(function () {
-    Route::get('user', 'getAuthUser')
-        ->middleware(['auth:sanctum', 'verified'])
-        ->name('auth.user');
-
+Route::group([
+    'as' => 'auth.',
+    'controller' => AuthController::class
+], function () {
     Route::post('register', 'register')
-        ->name('auth.register');
+        ->name('register');
 
     Route::post('/login/{provider}', 'loginWithProvider')
-        ->name('auth.login.provider');
+        ->name('login.provider');
 
     Route::post('login', 'login')
-        ->name('auth.login');
+        ->name('login');
 
-    Route::post('logout', 'logout')
-        ->middleware(['auth:sanctum', 'verified'])
-        ->name('auth.logout');
+    Route::group([
+        'middleware' => ['auth:sanctum', 'verified']
+    ], function () {
+        Route::get('user', 'getAuthUser')
+            ->name('user');
 
+        Route::post('logout', 'logout')
+            ->name('logout');
+    });
 });
 
-
 Route::group([
+    'as' => 'verification.',
     'prefix' => 'email/verify',
     'middleware' => 'throttle:6,1',
     'controller' => VerifyEmailController::class
 ], function () {
-    Route::get('/{id}/{hash}', 'verify')
+    Route::get('{id}/{hash}', 'verify')
         ->middleware(['signed'])
-        ->name('verification.verify');
+        ->name('verify');
 
-    Route::post('/resend', 'send')
+    Route::post('resend', 'send')
         ->middleware(['auth:sanctum'])
-        ->name('verification.send');
+        ->name('send');
 });
 
 Route::controller(ResetPasswordController::class)->group(function () {

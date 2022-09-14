@@ -50,9 +50,19 @@ class User extends Authenticatable implements MustVerifyEmail
 
     // protected $with = ['resources'];
 
-    public function resources(): BelongsToMany
+    public function savedResources(): BelongsToMany
     {
         return $this->belongsToMany(Resource::class);
+    }
+
+    public function resources(): HasMany
+    {
+        return $this->hasMany(Resource::class);
+    }
+
+    public function resourceComplaints(): HasMany
+    {
+        return $this->hasMany(ResourceComplaint::class);
     }
 
     public function reviews(): HasMany

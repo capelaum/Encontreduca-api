@@ -5,7 +5,9 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use App\Policies\DefaultPolicy;
-use App\Models\{
+use Illuminate\Support\Facades\Gate;
+use App\Models\{Category,
+    Motive,
     User,
     Review,
     Support,
@@ -13,8 +15,7 @@ use App\Models\{
     ResourceChange,
     ResourceVote,
     ResourceComplaint,
-    ReviewComplaint
-};
+    ReviewComplaint};
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -32,6 +33,8 @@ class AuthServiceProvider extends ServiceProvider
         ResourceChange::class => DefaultPolicy::class,
         ResourceComplaint::class => DefaultPolicy::class,
         ReviewComplaint::class => DefaultPolicy::class,
+        Category::class => DefaultPolicy::class,
+        Motive::class => DefaultPolicy::class,
     ];
 
     /**
@@ -43,6 +46,6 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-
+        Gate::define('is_admin', fn(User $user) => $user->is_admin);
     }
 }

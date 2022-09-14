@@ -26,16 +26,54 @@ Route::apiResources([
     'motives' => MotiveController::class
 ]);
 
-Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
+Route::group([
+    'middleware' => ['auth:sanctum', 'verified']
+], function () {
     Route::group([
         'prefix' => 'users',
-        'as' => 'users.'
+        'as' => 'users.',
+        'controller' => UserController::class,
     ], function () {
-        Route::delete('{user}/avatar', [UserController::class, 'deleteAvatar'])
+        Route::delete('{user}/avatar', 'deleteAvatar')
             ->name('delete.avatar');
 
-        Route::get('/votes', [UserController::class, 'votes'])
+        Route::get('/votes', 'votes')
             ->name('votes');
+
+        Route::get('/{user}', 'show')
+            ->name('show');
+
+        Route::put('/{user}', 'update')
+            ->name('update');
+
+        Route::patch('/{user}', 'update')
+            ->name('update');
+
+        Route::delete('/{user}', 'destroy')
+            ->name('destroy');
+    });
+
+    Route::group([
+        'prefix' => 'resources',
+        'as' => 'resources.'
+    ], function () {
+        Route::post('/', [ResourceController::class, 'store'])
+            ->name('store');
+
+        Route::post('/votes', [ResourceVoteController::class, 'store'])
+            ->name('votes.store');
+
+        Route::put('/votes/{vote}', [ResourceVoteController::class, 'update'])
+            ->name('votes.update');
+
+        Route::patch('/votes/{vote}', [ResourceVoteController::class, 'update'])
+            ->name('votes.update');
+
+        Route::post('/complaints', [ResourceComplaintController::class, 'store'])
+            ->name('complaints.store');
+
+        Route::post('/changes', [ResourceChangeController::class, 'store'])
+            ->name('changes.store');
     });
 
     Route::group([
@@ -49,40 +87,23 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
             ->name('destroy');
     });
 
-    Route::group([
-        'prefix' => 'resources',
-        'as' => 'resources.'
-    ], function () {
-        Route::post('/', [ResourceController::class, 'store'])
-            ->name('store');
+    Route::apiResource('reviews', ReviewController::class);
 
-        Route::get('/{resource}/votes', [ResourceController::class, 'votes'])
-            ->name('votes');
+    Route::post('reviews/complaints', [ReviewComplaintController::class, 'store'])
+        ->name('reviews.complaints.store');
 
-        Route::apiResource('complaints', ResourceComplaintController::class);
-
-        Route::apiResource('changes', ResourceChangeController::class);
-    });
-
-    Route::apiResource('reviews/complaints', ReviewComplaintController::class, [
-        'as' => 'reviews'
-    ]);
-
-    Route::apiResources([
-        'users' => UserController::class,
-        'supports' => SupportController::class,
-        'resources/votes' => ResourceVoteController::class,
-        'reviews' => ReviewController::class
-    ]);
+    Route::post('supports', [SupportController::class, 'store'])
+        ->name('supports.store');
 });
 
 Route::group([
     'prefix' => 'resources',
+    'as' => 'resources.',
     'controller' => ResourceController::class
 ], function () {
-    Route::get('/', 'index')->name('resources.index');
-    Route::get('/{resource}', 'show')->name('resources.show');
-    Route::get('/{resource}/reviews', 'reviews')->name('resources.reviews');
+    Route::get('/', 'index')->name('index');
+    Route::get('/{resource}', 'show')->name('show');
+    Route::get('/{resource}/reviews', 'reviews')->name('reviews');
 });
 
 Route::group([
