@@ -19,12 +19,12 @@ class UserSeeder extends Seeder
         User::factory()->create([
             'is_admin' => true,
             'name' => 'Luís V. Capelletto',
-            'email' => 'luis@email.com',
+            'email' => 'thecapellett@gmail.com',
             'password' => Hash::make('password'),
             'email_verified_at' => now(),
             'avatar_url' => null,
         ]);
 
-        User::factory(19)->create();
+//        User::factory(19)->create();
     }
 }

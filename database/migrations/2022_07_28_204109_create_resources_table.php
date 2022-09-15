@@ -17,10 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')
                 ->nullable()
-                ->constrained('users')
                 ->onDelete('SET NULL');
-            $table->foreignId('category_id')
-                ->constrained('categories');
+            $table->foreignId('category_id');
             $table->string('name');
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);
