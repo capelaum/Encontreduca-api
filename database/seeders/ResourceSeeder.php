@@ -167,7 +167,7 @@ class ResourceSeeder extends Seeder
             Resource::insert($resource);
         }
 
-//        $resource = Resource::factory(1000)
+//        Resource::factory(1000)
 //            ->has(Review::factory(5)
 //                ->state(
 //                    fn(
