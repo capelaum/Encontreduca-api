@@ -18,11 +18,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')
                 ->nullable()
-                ->constrained('users')
                 ->onDelete('SET NULL')
                 ->onUpdate('CASCADE');
             $table->foreignId('resource_id')
-                ->constrained('resources')
                 ->onDelete('CASCADE')
                 ->onUpdate('CASCADE');
             $table->string('field');

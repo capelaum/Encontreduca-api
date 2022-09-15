@@ -167,15 +167,15 @@ class ResourceSeeder extends Seeder
             Resource::insert($resource);
         }
 
-        $resource = Resource::factory(1000)
-            ->has(Review::factory(5)
-                ->state(
-                    fn(
-                        array $attributes,
-                        Resource $resource
-                    ) => ['resource_id' => $resource->id]
-                ), 'reviews'
-            )
-            ->create();
+//        $resource = Resource::factory(1000)
+//            ->has(Review::factory(5)
+//                ->state(
+//                    fn(
+//                        array $attributes,
+//                        Resource $resource
+//                    ) => ['resource_id' => $resource->id]
+//                ), 'reviews'
+//            )
+//            ->create();
     }
 }

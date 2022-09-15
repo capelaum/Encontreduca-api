@@ -17,7 +17,6 @@ return new class extends Migration
         Schema::create('supports', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')
-                ->constrained('users')
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE');
             $table->text('message');

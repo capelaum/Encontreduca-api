@@ -18,15 +18,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')
                 ->nullable()
-                ->constrained('users')
                 ->onDelete('SET NULL')
                 ->onUpdate('CASCADE');
             $table->foreignId('review_id')
-                ->constrained('reviews')
                 ->onDelete('CASCADE')
                 ->onUpdate('CASCADE');
             $table->foreignId('motive_id')
-                ->constrained('motives')
                 ->onDelete('CASCADE')
                 ->onUpdate('CASCADE');
             $table->timestamp('created_at')

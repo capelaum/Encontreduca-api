@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('providers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')
-                ->constrained()
                 ->onDelete('CASCADE');
             $table->string('provider');
             $table->string('provider_id');
