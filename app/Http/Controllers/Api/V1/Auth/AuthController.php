@@ -74,7 +74,7 @@ class AuthController extends Controller
             RateLimiter::clear($request->throttleKey());
 
             return response()->json([
-                'message' => "Usuário {$user->name} logado com sucesso!",
+                'message' => "Bem vindo(a) {$user->name} 🚀",
                 'token' => $userToken,
             ], 200);
         }
@@ -162,7 +162,7 @@ class AuthController extends Controller
         $userToken = $user->createToken('auth', ['user'])->plainTextToken;
 
         return response()->json([
-            'message' => "Usuário {$user->name} logado com sucesso!",
+            'message' => "Bem vindo(a) {$user->name} 🚀",
             'token' => $userToken,
         ], 200);
     }
