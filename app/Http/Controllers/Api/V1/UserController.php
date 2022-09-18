@@ -21,26 +21,6 @@ use App\Models\{ResourceVote, Review, User, Resource, ResourceUser};
 class UserController extends Controller
 {
     /**
-     * Show single User data.
-     *
-     * @param User $user
-     * @return UserResource
-     * @throws AuthorizationException
-     */
-    public function show(User $user): UserResource
-    {
-        $this->authorize('isRequestUser',
-            [
-                User::class,
-                $user->id,
-                'visualizar este usuário.'
-            ]
-        );
-
-        return new UserResource($user);
-    }
-
-    /**
      * Update user and store on database
      *
      * @param UpdateUserRequest $request
@@ -149,19 +129,5 @@ class UserController extends Controller
         $user->save();
 
         return response()->json(null, 204);
-    }
-
-    /**
-     * List user votes
-     *
-     * @return JsonResponse
-     */
-    public function votes(): JsonResponse
-    {
-        $user = Auth::user();
-
-        $userVotes = ResourceVote::where('user_id', $user->id)->get();
-
-        return response()->json(new ResourceVoteCollection($userVotes));
     }
 }

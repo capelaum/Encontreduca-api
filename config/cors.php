@@ -19,7 +19,13 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => [config('app.frontend_url'), 'http://localhost:3000'],
+    'allowed_origins' => [
+        config('app.frontend_url'),
+        'https://www.encontreduca.com.br',
+        'https://www.admin.encontreduca.com.br',
+        'https://admin.encontreduca.com.br',
+        'http://localhost:3000'
+    ],
 
     'allowed_origins_patterns' => [],
 

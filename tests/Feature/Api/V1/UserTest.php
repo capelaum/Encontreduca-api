@@ -33,27 +33,6 @@ class UserTest extends TestCase
         'resourcesIds'
     ];
 
-    public function test_show_user()
-    {
-        $this->getJson(route('users.show', Auth::id()))
-            ->assertOk()
-            ->assertJsonStructure($this->userKeys)
-            ->json();
-    }
-
-    public function test_user_cannot_show_other_user_data()
-    {
-        $user = $this->createUser();
-
-        $this->withExceptionHandling();
-
-        $this->getJson(route('users.show', $user->id))
-            ->assertStatus(401)
-            ->assertJsonStructure([
-                'message'
-            ]);
-    }
-
     public function test_update_user()
     {
         $updatedUser = User::factory()->make();
@@ -220,23 +199,6 @@ class UserTest extends TestCase
             ->assertStatus(401)
             ->assertJsonStructure([
                 'message'
-            ]);
-    }
-
-    public function test_user_votes()
-    {
-        $this->createResourceUser(['user_id' => Auth::id()]);
-
-        $this->getJson(route('users.votes'))
-            ->assertOk()
-            ->assertJsonStructure([
-                '*' => [
-                    'id',
-                    'userId',
-                    'resourceId',
-                    'vote',
-                    'justification'
-                ]
             ]);
     }
 

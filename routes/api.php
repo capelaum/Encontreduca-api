@@ -21,10 +21,11 @@ use \App\Http\Controllers\Api\V1\{
 };
 
 
-Route::apiResources([
-    'categories' => CategoryController::class,
-    'motives' => MotiveController::class
-]);
+Route::get('categories', [CategoryController::class, 'index'])
+    ->name('categories.index');
+
+Route::get('motives', [MotiveController::class, 'index'])
+    ->name('motives.index');
 
 Route::group([
     'middleware' => ['auth:sanctum', 'verified']
@@ -36,12 +37,6 @@ Route::group([
     ], function () {
         Route::delete('{user}/avatar', 'deleteAvatar')
             ->name('delete.avatar');
-
-        Route::get('/votes', 'votes')
-            ->name('votes');
-
-        Route::get('/{user}', 'show')
-            ->name('show');
 
         Route::put('/{user}', 'update')
             ->name('update');

@@ -15,7 +15,6 @@ use function response;
 
 class ResourceVoteController extends Controller
 {
-
     /**
      * Create new Resource Vote and store on database.
      *
