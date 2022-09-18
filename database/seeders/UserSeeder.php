@@ -25,6 +25,6 @@ class UserSeeder extends Seeder
             'avatar_url' => null,
         ]);
 
-//        User::factory(19)->create();
+        User::factory(29)->create();
     }
 }

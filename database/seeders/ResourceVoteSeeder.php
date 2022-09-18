@@ -14,6 +14,6 @@ class ResourceVoteSeeder extends Seeder
      */
     public function run()
     {
-        ResourceVote::factory(900)->create();
+        ResourceVote::factory(30)->create();
     }
 }

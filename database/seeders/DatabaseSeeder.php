@@ -19,13 +19,13 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             MotiveSeeder::class,
             ResourceSeeder::class,
-//            ReviewSeeder::class,
-//            ReviewComplaintSeeder::class,
-//            ResourceComplaintSeeder::class,
-//            ResourceChangeSeeder::class,
-//            ResourceVoteSeeder::class,
-//            SupportSeeder::class,
-//            ResourceUserSeeder::class,
+            ReviewSeeder::class,
+            ReviewComplaintSeeder::class,
+            ResourceComplaintSeeder::class,
+            ResourceChangeSeeder::class,
+            ResourceVoteSeeder::class,
+            SupportSeeder::class,
+            ResourceUserSeeder::class,
         ]);
     }
 }
