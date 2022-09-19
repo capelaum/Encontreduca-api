@@ -45,7 +45,10 @@ Route::group([
 
     Route::apiResource(
         'resources/votes',
-        ResourceVoteController::class
+        ResourceVoteController::class,
+        [
+            'except' => ['store']
+        ]
     );
 
     Route::apiResource(

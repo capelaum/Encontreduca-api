@@ -29,6 +29,21 @@ class CategoryController extends Controller
     }
 
     /**
+     * @param Category $category
+     * @return CategoryResource
+     * @throws AuthorizationException
+     */
+    public function show(Category $category): CategoryResource
+    {
+        $this->authorize('isAdmin', [
+            Category::class,
+            'visualizar essa categoria.'
+        ]);
+
+        return new CategoryResource($category);
+    }
+
+    /**
      * @param Request $request
      * @return JsonResponse
      * @throws AuthorizationException
