@@ -15,8 +15,7 @@ return new class extends Migration
     {
         Schema::create('providers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')
-                ->onDelete('CASCADE');
+            $table->foreignId('user_id');
             $table->string('provider');
             $table->string('provider_id');
             $table->timestamps();

@@ -16,16 +16,9 @@ return new class extends Migration
     {
         Schema::create('review_complaints', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')
-                ->nullable()
-                ->onDelete('SET NULL')
-                ->onUpdate('CASCADE');
-            $table->foreignId('review_id')
-                ->onDelete('CASCADE')
-                ->onUpdate('CASCADE');
-            $table->foreignId('motive_id')
-                ->onDelete('CASCADE')
-                ->onUpdate('CASCADE');
+            $table->foreignId('user_id')->nullable();
+            $table->foreignId('review_id');
+            $table->foreignId('motive_id');
             $table->timestamp('created_at')
                 ->default(DB::raw('CURRENT_TIMESTAMP'));
         });

@@ -14,12 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('resource_user', function (Blueprint $table) {
-            $table->foreignId('user_id')
-                ->onDelete('CASCADE')
-                ->onUpdate('CASCADE');
-            $table->foreignId('resource_id')
-                ->onDelete('CASCADE')
-                ->onUpdate('CASCADE');
+            $table->foreignId('user_id');
+            $table->foreignId('resource_id');
             $table->primary(['user_id', 'resource_id']);
         });
     }

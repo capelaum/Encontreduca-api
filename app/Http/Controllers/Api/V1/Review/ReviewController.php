@@ -110,6 +110,7 @@ class ReviewController extends Controller
             ]
         );
 
+        $review->complaints()->delete();
         $review->delete();
 
         return response()->json(null, 204);

@@ -98,6 +98,12 @@ class CategoryController extends Controller
             'excluir uma categoria.'
         ]);
 
+        if ($category->resources()->count() > 0) {
+            return response()->json([
+                'message' => 'Não é possível excluir uma categoria que possui recursos associados.'
+            ], 422);
+        }
+
         $category->delete();
 
         return response()->json(null, 204);

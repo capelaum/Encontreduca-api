@@ -16,13 +16,8 @@ return new class extends Migration
     {
         Schema::create('resource_changes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')
-                ->nullable()
-                ->onDelete('SET NULL')
-                ->onUpdate('CASCADE');
-            $table->foreignId('resource_id')
-                ->onDelete('CASCADE')
-                ->onUpdate('CASCADE');
+            $table->foreignId('user_id')->nullable();
+            $table->foreignId('resource_id');
             $table->string('field');
             $table->string('old_value')->nullable();
             $table->string('new_value')->nullable();

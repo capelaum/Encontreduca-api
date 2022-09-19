@@ -14,12 +14,8 @@ return new class extends Migration {
     {
         Schema::create('resource_votes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')
-                ->onUpdate('CASCADE')
-                ->onDelete('CASCADE');
-            $table->foreignId('resource_id')
-                ->onUpdate('CASCADE')
-                ->onDelete('CASCADE');
+            $table->foreignId('user_id');
+            $table->foreignId('resource_id');
             $table->boolean('vote');
             $table->text('justification');
             $table->timestamps();

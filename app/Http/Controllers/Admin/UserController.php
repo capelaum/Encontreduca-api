@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\StoreUserRequest;
 use App\Http\Requests\V1\UpdateUserRequest;
 use App\Http\Resources\Admin\ShowUserResource;
 use App\Http\Resources\Admin\UserCollection;
+use App\Models\ResourceUser;
 use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\Events\Registered;
@@ -193,7 +194,7 @@ class UserController extends Controller
 
         cloudinary()->destroy("$cloudinaryFolder/avatars/$publicId");
 
-        $user->delete();
+        User::deleteUser($user);
 
         return response()->json(null, 204);
     }

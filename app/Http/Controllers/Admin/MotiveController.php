@@ -98,7 +98,10 @@ class MotiveController extends Controller
             'deletar esse motivo.'
         ]);
 
+        $motive->resourceComplaints()->delete();
+        $motive->reviewComplaints()->delete();
         $motive->delete();
+
         return response()->json(null, 204);
     }
 }

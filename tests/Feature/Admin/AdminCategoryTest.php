@@ -119,4 +119,20 @@ class AdminCategoryTest extends TestCase
         $this->deleteJson(route('admin.categories.destroy', $category->id))
             ->assertUnauthorized();
     }
+
+    public function test_admin_cannot_delete_category_with_resources()
+    {
+        $category = $this->createCategory();
+
+        $this->createResource([
+            'category_id' => $category->id
+        ]);
+
+        $this->deleteJson(route('admin.categories.destroy', $category->id))
+            ->assertUnprocessable();
+
+        $this->assertDatabaseHas('categories', [
+            'id' => $category->id
+        ]);
+    }
 }

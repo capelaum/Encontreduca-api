@@ -132,6 +132,7 @@ class ReviewController extends Controller
             'excluir esta avaliação.'
         ]);
 
+        $review->complaints()->delete();
         $review->delete();
 
         return response()->json(null, 204);

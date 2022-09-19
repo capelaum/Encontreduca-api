@@ -69,7 +69,7 @@ class Resource extends Model
      *
      * @return array
      */
-    public static function getAllResources(): array
+    static public function getAllResources(): array
     {
         return DB::select("
         SELECT
@@ -93,5 +93,34 @@ class Resource extends Model
         JOIN categories c ON c.id = r.category_id
         ORDER BY r.id
         ");
+    }
+
+    static public function deleteResource(Resource $resource)
+    {
+        $resource->changes()->each(function ($change) {
+            if ($change->field === 'cover') {
+                $cloudinaryFolder = config('app.cloudinary_folder');
+
+                $coverUrlArray = explode('/', $change->new_value);
+                $publicId = explode('.', end($coverUrlArray))[0];
+
+                cloudinary()->destroy("$cloudinaryFolder/covers/changes/$publicId");
+            }
+
+            $change->delete();
+        });
+
+        $resource->reviews()->each(function ($review) {
+            $review->complaints()->delete();
+
+            $review->delete();
+        });
+
+        $resource->complaints()->delete();
+        $resource->votes()->delete();
+
+        ResourceUser::where('resource_id', $resource->id)->delete();
+
+        $resource->delete();
     }
 }

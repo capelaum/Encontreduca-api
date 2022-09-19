@@ -65,9 +65,19 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(ResourceComplaint::class);
     }
 
+    public function resourceChanges(): HasMany
+    {
+        return $this->hasMany(ResourceChange::class);
+    }
+
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function reviewComplaints(): HasMany
+    {
+        return $this->hasMany(ReviewComplaint::class);
     }
 
     public function votes(): HasMany
@@ -78,5 +88,46 @@ class User extends Authenticatable implements MustVerifyEmail
     public function providers(): HasMany
     {
         return $this->hasMany(Provider::class);
+    }
+
+    public function supports(): HasMany
+    {
+        return $this->hasMany(Support::class);
+    }
+
+    static public function deleteUser(User $user)
+    {
+        $user->resources()->each(function ($resource) {
+            $resource->user_id = null;
+            $resource->save();
+        });
+
+        $user->resourceChanges()->each(function ($change) {
+            $change->user_id = null;
+            $change->save();
+        });
+
+        $user->resourceComplaints()->each(function ($complaint) {
+            $complaint->user_id = null;
+            $complaint->save();
+        });
+
+        $user->reviewComplaints()->each(function ($reviewComplaint) {
+            $reviewComplaint->user_id = null;
+            $reviewComplaint->save();
+        });
+
+        $user->reviews()->each(function ($review) {
+            $review->complaints()->delete();
+            $review->delete();
+        });
+
+        $user->votes()->delete();
+        $user->providers()->delete();
+        $user->supports()->delete();
+
+        ResourceUser::where('user_id', $user->id)->delete();
+
+        $user->delete();
     }
 }

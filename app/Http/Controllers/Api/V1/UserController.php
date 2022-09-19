@@ -120,7 +120,7 @@ class UserController extends Controller
 
         cloudinary()->destroy("$cloudinaryFolder/avatars/$publicId");
 
-        $user->delete();
+        User::deleteUser($user);
 
         return response()->json(null, 204);
     }

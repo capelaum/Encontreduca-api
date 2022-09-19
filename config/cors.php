@@ -24,7 +24,8 @@ return [
         'https://www.encontreduca.com.br',
         'https://www.admin.encontreduca.com.br',
         'https://admin.encontreduca.com.br',
-        'http://localhost:3000'
+        'http://localhost:3000',
+        'http://localhost:3001',
     ],
 
     'allowed_origins_patterns' => [],

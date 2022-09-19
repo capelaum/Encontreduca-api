@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\UpdateResourceRequest;
 use App\Models\Resource;
 use App\Models\ResourceChange;
 use App\Models\ResourceComplaint;
+use App\Models\ResourceUser;
 use App\Models\ResourceVote;
 use App\Models\Review;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -156,7 +157,7 @@ class ResourceController extends Controller
 
         cloudinary()->destroy("$cloudinaryFolder/covers/$publicId");
 
-        $resource->delete();
+        Resource::deleteResource($resource);
 
         return response()->json(null, 204);
     }
