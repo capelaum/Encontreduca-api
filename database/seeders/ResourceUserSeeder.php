@@ -18,7 +18,7 @@ class ResourceUserSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 1; $i <= Resource::count(); $i++) {
+        for ($i = 1; $i <= User::count(); $i++) {
             DB::table('resource_user')->insert([
                 'user_id' =>  $i,
                 'resource_id' =>  $i,
