@@ -1520,7 +1520,49 @@
                     </tr>
                                         <tr>
                         <td>
-                            <a href="#DELETE-api/v1/users/{user}/avatar" @click="highlightSidebar(33)" v-if="!docs[33]['isHidden']">
+                            <a href="#GET-api/v1/users/{user}" @click="highlightSidebar(33)" v-if="!docs[33]['isHidden']">
+                                <span class="
+                                    font-medium
+                                    inline-flex
+                                    items-center
+                                    justify-center
+                                    px-2
+                                    py-1
+                                    text-xs
+                                    font-bold
+                                    leading-none
+                                    rounded
+                                    text-green-100 bg-green-500
+                                    text- bg--500
+                                    text--100 bg--500
+                                    text--100 bg--500
+                                    text- bg-
+                                    ">
+                                    GET
+                                </span>
+                                <span class="text-xs" v-bind:class="docs[33]['isActiveSidebar'] ? 'font-bold':''">
+                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[33]['responseOk'] === null">api/v1/users/{user}</span>
+                                    <span class="font-bold text-green-600 border rounded-full pr-1 pl-1 border-green-600" v-if="docs[33]['responseOk'] === true">
+                                        api/v1/users/{user} -
+                                        <span
+                                            class="inline-flex text-xs"
+                                            v-text="'Status:'+docs[33]['responseCode'] + ', Took:' + docs[33]['responseTime'] + 'ms'">
+                                        </span>
+                                    </span>
+                                    <span class="font-bold text-red-600 border rounded-full pr-1 pl-1 border-red-500" v-if="docs[33]['responseOk'] === false">
+                                        api/v1/users/{user} -
+                                        <span
+                                            class="inline-flex text-xs"
+                                            v-text="'Status:'+docs[33]['responseCode'] + ', Took:' + docs[33]['responseTime'] + 'ms'">
+                                        </span>
+                                    </span>
+                                </span>
+                            </a>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>
+                            <a href="#DELETE-api/v1/users/{user}/avatar" @click="highlightSidebar(34)" v-if="!docs[34]['isHidden']">
                                 <span class="
                                     font-medium
                                     inline-flex
@@ -1540,20 +1582,20 @@
                                     ">
                                     DELETE
                                 </span>
-                                <span class="text-xs" v-bind:class="docs[33]['isActiveSidebar'] ? 'font-bold':''">
-                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[33]['responseOk'] === null">api/v1/users/{user}/avatar</span>
-                                    <span class="font-bold text-green-600 border rounded-full pr-1 pl-1 border-green-600" v-if="docs[33]['responseOk'] === true">
+                                <span class="text-xs" v-bind:class="docs[34]['isActiveSidebar'] ? 'font-bold':''">
+                                    <span class="text-gray-800 pr-1 pl-1" v-if="docs[34]['responseOk'] === null">api/v1/users/{user}/avatar</span>
+                                    <span class="font-bold text-green-600 border rounded-full pr-1 pl-1 border-green-600" v-if="docs[34]['responseOk'] === true">
                                         api/v1/users/{user}/avatar -
                                         <span
                                             class="inline-flex text-xs"
-                                            v-text="'Status:'+docs[33]['responseCode'] + ', Took:' + docs[33]['responseTime'] + 'ms'">
+                                            v-text="'Status:'+docs[34]['responseCode'] + ', Took:' + docs[34]['responseTime'] + 'ms'">
                                         </span>
                                     </span>
-                                    <span class="font-bold text-red-600 border rounded-full pr-1 pl-1 border-red-500" v-if="docs[33]['responseOk'] === false">
+                                    <span class="font-bold text-red-600 border rounded-full pr-1 pl-1 border-red-500" v-if="docs[34]['responseOk'] === false">
                                         api/v1/users/{user}/avatar -
                                         <span
                                             class="inline-flex text-xs"
-                                            v-text="'Status:'+docs[33]['responseCode'] + ', Took:' + docs[33]['responseTime'] + 'ms'">
+                                            v-text="'Status:'+docs[34]['responseCode'] + ', Took:' + docs[34]['responseTime'] + 'ms'">
                                         </span>
                                     </span>
                                 </span>
@@ -10883,7 +10925,7 @@
                   </div>
             </section>
                         <section class="pt-5 pl-2 pr-2 pb-5 border mb-10 rounded bg-white shadow" v-if="!docs[33]['isHidden']">
-                <div class="font-sans" id="DELETE-api/v1/users/{user}/avatar">
+                <div class="font-sans" id="GET-api/v1/users/{user}">
                 <h1 class="text-sm break-normal text-black bg-indigo-50 break-normal font-sans pb-1 pt-1 text-black">
                     <span class="w-20
                         font-medium
@@ -10896,16 +10938,16 @@
                         font-bold
                         leading-none
                         rounded
-                        text--100 bg--500
+                        text-green-100 bg-green-500
                         text- bg--500
                         text--100 bg--500
                         text--100 bg--500
-                        text-white bg-black
+                        text- bg-
                         ">
-                        DELETE
+                        GET
                     </span>
                     <span class="">
-                        <a href="#api/v1/users/{user}/avatar">api/v1/users/{user}/avatar</a>
+                        <a href="#api/v1/users/{user}">api/v1/users/{user}</a>
                     </span>
                 </h1>
                 </div>
@@ -10915,12 +10957,12 @@
                     <tbody>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">HTTP Method</td>
-                            <td class="align-left pl-2 pr-2 font-bold break-all">DELETE</td>
+                            <td class="align-left pl-2 pr-2 font-bold break-all">GET</td>
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">URL</td>
                             <td class="align-left pl-2 pr-2 break-all">
-                                <a target="_blank" href="{{window.location.origin}}/api/v1/users/{user}/avatar">{{window.location.origin}}/api/v1/users/{user}/avatar</a>
+                                <a target="_blank" href="{{window.location.origin}}/api/v1/users/{user}">{{window.location.origin}}/api/v1/users/{user}</a>
                             </td>
                         </tr>
                         <tr>
@@ -10929,7 +10971,7 @@
                         </tr>
                         <tr>
                             <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller Method</td>
-                            <td class="align-left pl-2 pr-2 break-all">@deleteAvatar</td>
+                            <td class="align-left pl-2 pr-2 break-all">@show</td>
                         </tr>
                                                     <tr>
                                 <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Middleware 1</td>
@@ -10986,14 +11028,6 @@
                             style="padding:15px 0px 15px 0px;min-height:20px;background:#2d2d2d;color: #ccc;resize:both;"
                             v-model="docs[33]['url']" :highlight="highlighter" line-numbers></prism-editor>
                             <br>
-                                                        <h3 class="font-medium">REQUEST BODY<sup class="text-red-500"> *required</sup></h3>
-                            <p class="text-xs pb-2 font-medium text-gray-500">JSON body for the POST|PUT|DELETE request</p>
-                            <prism-editor
-                                class="my-prism-editor"
-                                style="min-height:200px;background:#2d2d2d;color: #ccc;resize:both"
-                                v-model="docs[33]['body']"
-                                :highlight="highlighter"
-                                line-numbers></prism-editor>
                                                     </div>
                     </div>
                     <hr class="border-b border-dotted mt-4 mb-2 border-gray-300">
@@ -11133,6 +11167,257 @@
                     </div>
                   </div>
             </section>
+                        <section class="pt-5 pl-2 pr-2 pb-5 border mb-10 rounded bg-white shadow" v-if="!docs[34]['isHidden']">
+                <div class="font-sans" id="DELETE-api/v1/users/{user}/avatar">
+                <h1 class="text-sm break-normal text-black bg-indigo-50 break-normal font-sans pb-1 pt-1 text-black">
+                    <span class="w-20
+                        font-medium
+                        inline-flex
+                        items-center
+                        justify-center
+                        px-2
+                        py-1
+                        text-xs
+                        font-bold
+                        leading-none
+                        rounded
+                        text--100 bg--500
+                        text- bg--500
+                        text--100 bg--500
+                        text--100 bg--500
+                        text-white bg-black
+                        ">
+                        DELETE
+                    </span>
+                    <span class="">
+                        <a href="#api/v1/users/{user}/avatar">api/v1/users/{user}/avatar</a>
+                    </span>
+                </h1>
+                </div>
+                <hr class="border-b border-grey-light">
+
+                <table class="table-fixed text-sm mt-5">
+                    <tbody>
+                        <tr>
+                            <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">HTTP Method</td>
+                            <td class="align-left pl-2 pr-2 font-bold break-all">DELETE</td>
+                        </tr>
+                        <tr>
+                            <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">URL</td>
+                            <td class="align-left pl-2 pr-2 break-all">
+                                <a target="_blank" href="{{window.location.origin}}/api/v1/users/{user}/avatar">{{window.location.origin}}/api/v1/users/{user}/avatar</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller</td>
+                            <td class="align-left pl-2 pr-2 break-all">App\Http\Controllers\Api\V1\UserController</td>
+                        </tr>
+                        <tr>
+                            <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Controller Method</td>
+                            <td class="align-left pl-2 pr-2 break-all">@deleteAvatar</td>
+                        </tr>
+                                                    <tr>
+                                <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Middleware 1</td>
+                                <td class="align-left pl-2 pr-2 break-all">api</td>
+                            </tr>
+                                                    <tr>
+                                <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Middleware 2</td>
+                                <td class="align-left pl-2 pr-2 break-all">auth:sanctum</td>
+                            </tr>
+                                                    <tr>
+                                <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Middleware 3</td>
+                                <td class="align-left pl-2 pr-2 break-all">verified</td>
+                            </tr>
+                                            </tbody>
+                </table>
+                <div v-if="docs[34]['docBlock']" class="border-2 mr-4 mt-4 p-4 rounded text-sm">
+                    <h3 class="font-bold">LRD Docs</h3>
+                    <vue-markdown></vue-markdown>
+                </div>
+                <br>
+                                <button
+                    class="hover:bg-red-500 font-semibold hover:text-white mt-2 pl-5 pr-5 border-gray-700 hover:border-transparent shadow-inner border-2 rounded-full"
+                    v-if="!docs[34]['try']"
+                    v-on:click="docs[34]['try'] = !docs[34]['try'];docs[34]['cancel'] = !docs[34]['cancel']"
+                >
+                    Try
+                </button>
+
+                <button
+                    class="hover:bg-red-500 font-semibold hover:text-white mt-2 pl-5 pr-5 border-gray-700 hover:border-transparent shadow-inner border-2 rounded-full"
+                    v-if="!docs[34]['cancel']"
+                    v-on:click="docs[34]['cancel'] = !docs[34]['cancel'];docs[34]['try'] = !docs[34]['try'];"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    v-if="docs[34]['try']"
+                    @click="request(docs[34])"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 border-blue-800 border-2 shadow-inner mb-1 pl-5 pr-5 rounded-full"
+                >
+                    <svg
+                        v-if="docs[34]['loading']"
+                        class="animate-spin h-4 w-4 rounded-full bg-transparent border-2 border-transparent border-opacity-50 inline pr-2" style="border-right-color: white; border-top-color: white;" viewBox="0 0 24 24"></svg>
+                    Run
+                </button>
+
+                <div class="grid grid-cols-1 mt-3 pr-2 overflow-auto">
+                    <div class="">
+                        <div v-if="docs[34]['try']">
+                            <h3 class="font-medium">REQUEST URL<sup class="text-red-500 font-bold"> *required</sup></h3>
+                            <p class="text-xs pb-2 font-medium text-gray-500">Enter your request URL with query params</p>
+                            <prism-editor class="my-prism-editor"
+                            style="padding:15px 0px 15px 0px;min-height:20px;background:#2d2d2d;color: #ccc;resize:both;"
+                            v-model="docs[34]['url']" :highlight="highlighter" line-numbers></prism-editor>
+                            <br>
+                                                        <h3 class="font-medium">REQUEST BODY<sup class="text-red-500"> *required</sup></h3>
+                            <p class="text-xs pb-2 font-medium text-gray-500">JSON body for the POST|PUT|DELETE request</p>
+                            <prism-editor
+                                class="my-prism-editor"
+                                style="min-height:200px;background:#2d2d2d;color: #ccc;resize:both"
+                                v-model="docs[34]['body']"
+                                :highlight="highlighter"
+                                line-numbers></prism-editor>
+                                                    </div>
+                    </div>
+                    <hr class="border-b border-dotted mt-4 mb-2 border-gray-300">
+                    <div class="grid grid-cols-2 gap-2" v-if="docs[34]['response'] && !docs[34]['cancel']">
+                        <div class="border-r-2">
+                            <h3 class="font-medium">
+                                RESPONSE
+                                <p class="text-xs pt-2 pb-2 font-medium text-gray-500">
+                                    Response status, code and time.
+                                </p>
+                            </h3>
+                            <table class="table-fixed text-sm mt-5">
+                                <tbody>
+                                    <tr>
+                                        <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Status</td>
+                                        <td class="align-left pl-2 pr-2 break-all">
+                                            <span
+                                            v-if="docs[34]['responseOk']"
+                                            class="inline-flex  text-xs font-bold leading-none text-green-700">
+                                                SUCCESS
+                                            </span>
+                                            <span
+                                                v-if="!docs[34]['responseOk']"
+                                                class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-500 rounded">
+                                                ERROR
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Status Code</td>
+                                        <td class="align-left pl-2 pr-2 break-all">
+                                            <span
+                                                v-if="docs[34]['responseOk']"
+                                                class="inline-flex text-xs font-bold text-green-900"
+                                                v-text="docs[34]['responseCode']">
+                                            </span>
+                                            <span
+                                                v-if="!docs[34]['responseOk']"
+                                                class="inline-flex text-xs font-bold text-red-900"
+                                                v-text="docs[34]['responseCode']">
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Memory Usage</td>
+                                        <td class="align-left pl-2 pr-2 break-all">
+                                            <span
+                                                v-if="docs[34]['memory']"
+                                                class="inline-flex text-xs font-bold text-red-900"
+                                                v-text="docs[34]['memory']">
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Response Time</td>
+                                        <td class="align-left pl-2 pr-2 break-all">
+                                            <span
+                                                v-if="docs[34]['responseTime']"
+                                                class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-gray-800 bg-yellow-400 rounded"
+                                                v-text="docs[34]['responseTime'] + 'ms'">
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p class="text-xs pt-2 pb-2 font-medium text-gray-500">
+                                Response headers.
+                            </p>
+                            <prism-editor
+                                v-if="docs[34]['responseHeaders']"
+                                class="my-prism-editor shadow-inner border-gray-400 border-2 rounded"
+                                style="width:75%;min-height:100px;height:200px;background:#fefefe;color: rgb(66, 63, 63);resize:both"
+                                readonly
+                                v-model="docs[34]['responseHeaders']"
+                                :highlight="highlighterAtom"
+                                line-numbers></prism-editor>
+                        </div>
+                        <div>
+                            <p class="text-xs pb-2 font-medium text-gray-800">Response from the server</p>
+                            <prism-editor
+                                v-if="docs[34]['response']"
+                                class="my-prism-editor shadow-inner border-gray-400 border-2 rounded"
+                                style="min-height:100px;height:300px;background:#2d2d2d;color: #ccc;resize:both"
+                                readonly
+                                v-model="docs[34]['response']"
+                                :highlight="highlighter"
+                                line-numbers></prism-editor>
+                        </div>
+                        <div class="border-r-2">
+                            <h3 class="font-medium mt-10">
+                                SQL
+                            </h3>
+                            <p v-if="!docs[34]['queries'].length" class="text-xs pb-2 font-medium text-gray-500">
+                                No SQL queries executed for this request.
+                            </p>
+                            <p v-if="docs[34]['queries'].length" class="text-xs pb-2 font-medium text-gray-500">
+                                SQL queries executed for this request.
+                                <table class="table-fixed text-sm mt-5">
+                                    <tbody>
+                                        <tr>
+                                            <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Total Queries</td>
+                                            <td class="align-left pl-2 pr-2 break-all">
+                                                <div v-text="docs[34]['queries'].length"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="align-left pl-2 pr-2 bg-gray-100 border-r-2">Total Query time</td>
+                                            <td class="align-left pl-2 pr-2 break-all">
+                                                <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-gray-800 bg-yellow-400 rounded">
+                                                    <span v-text="docs[34]['queries'].reduce((total, query) => total + query.time, 0).toFixed(2)"></span>ms
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </p>
+                        </div>
+                        <div class="">
+                                <p class="text-xs mt-10 font-medium text-gray-500">
+                                    SQL queries
+                                </p>
+                                <div v-for="(query, index) in docs[34]['queries']">
+                                    <p class="mt-2 text-sm font-medium">{{index+1}}.
+                                        <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-gray-800 bg-yellow-500 rounded mb-1">
+                                            {{query.time}}ms
+                                        </span>
+                                    </p>
+                                    <prism-editor
+                                        v-model="sqlFormatter.format(query['sql'])"
+                                        class="my-prism-editor"
+                                        style="padding:10px 0px 10px 0px;min-height:20px;height:350px;background:rgb(52 33 33);color: #ccc;resize:both;"
+                                        readonly
+                                        :highlight="highlighter"
+                                        line-numbers></prism-editor>
+                                </div>
+                        </div>
+                    </div>
+                  </div>
+            </section>
                      </div>
       </div>
       <script>
@@ -11192,7 +11477,7 @@
 
             return validations
         }
-        var docs = [{"uri":"api\/v1\/categories","methods":["GET","HEAD"],"middlewares":["api"],"controller":"CategoryController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\CategoryController","method":"index","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/v1\/email\/verify\/resend","methods":["POST"],"middlewares":["api","throttle:6,1","auth:sanctum"],"controller":"VerifyEmailController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Auth\\VerifyEmailController","method":"send","httpMethod":"POST","rules":[],"docBlock":""},{"uri":"api\/v1\/email\/verify\/{id}\/{hash}","methods":["GET","HEAD"],"middlewares":["api","throttle:6,1","signed"],"controller":"VerifyEmailController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Auth\\VerifyEmailController","method":"verify","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/v1\/forgot-password","methods":["POST"],"middlewares":["api"],"controller":"ResetPasswordController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Auth\\ResetPasswordController","method":"email","httpMethod":"POST","rules":[],"docBlock":""},{"uri":"api\/v1\/login","methods":["POST"],"middlewares":["api"],"controller":"AuthController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Auth\\AuthController","method":"login","httpMethod":"POST","rules":{"email":["required|string|email"],"password":["required|string|min:8|max:255"]},"docBlock":""},{"uri":"api\/v1\/login\/{provider}","methods":["POST"],"middlewares":["api"],"controller":"AuthController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Auth\\AuthController","method":"loginWithProvider","httpMethod":"POST","rules":[],"docBlock":""},{"uri":"api\/v1\/logout","methods":["POST"],"middlewares":["api","auth:sanctum","verified"],"controller":"AuthController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Auth\\AuthController","method":"logout","httpMethod":"POST","rules":[],"docBlock":""},{"uri":"api\/v1\/motives","methods":["GET","HEAD"],"middlewares":["api"],"controller":"MotiveController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\MotiveController","method":"index","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/v1\/register","methods":["POST"],"middlewares":["api"],"controller":"AuthController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Auth\\AuthController","method":"register","httpMethod":"POST","rules":{"name":["required|string|min:3|max:255"],"email":["required|string|email|max:255|unique:users"],"password":["required|string|min:8|max:255|confirmed"],"confirmPassword":["required|string|min:8|max:255"]},"docBlock":""},{"uri":"api\/v1\/reset-password","methods":["POST"],"middlewares":["api"],"controller":"ResetPasswordController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Auth\\ResetPasswordController","method":"update","httpMethod":"POST","rules":{"token":["required|string"],"email":["required|string|email|max:255"],"password":["required|string|min:8|max:255|confirmed"],"confirmPassword":["required|string|min:8|max:255"]},"docBlock":""},{"uri":"api\/v1\/reset-password\/{token}","methods":["GET","HEAD"],"middlewares":["api"],"controller":"ResetPasswordController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Auth\\ResetPasswordController","method":"reset","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/v1\/resource\/user","methods":["POST"],"middlewares":["api","auth:sanctum","verified"],"controller":"ResourceUserController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\ResourceUserController","method":"store","httpMethod":"POST","rules":[],"docBlock":""},{"uri":"api\/v1\/resource\/user\/{resource}","methods":["DELETE"],"middlewares":["api","auth:sanctum","verified"],"controller":"ResourceUserController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\ResourceUserController","method":"destroy","httpMethod":"DELETE","rules":[],"docBlock":""},{"uri":"api\/v1\/resources","methods":["POST"],"middlewares":["api","auth:sanctum","verified"],"controller":"ResourceController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\EducationalResource\\ResourceController","method":"store","httpMethod":"POST","rules":{"categoryId":["required|exists:categories,id"],"name":["required|string|min:3|max:255"],"latitude":["required|numeric|between:-90,90"],"longitude":["required|numeric|between:-180,180"],"address":["required|string|min:3|max:255"],"website":["nullable|string|min:7|max:255"],"phone":["nullable|string|min:14|max:15"],"cover":["required|file|mimes:jpg,png,svg,webp"]},"docBlock":""},{"uri":"api\/v1\/resources","methods":["GET","HEAD"],"middlewares":["api"],"controller":"ResourceController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\EducationalResource\\ResourceController","method":"index","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/v1\/resources\/changes","methods":["POST"],"middlewares":["api","auth:sanctum","verified"],"controller":"ResourceChangeController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\EducationalResource\\ResourceChangeController","method":"store","httpMethod":"POST","rules":{"resourceId":["required|exists:resources,id"],"field":["required|string|max:255|in:name,address,category_id,categoryId,website,phone,cover,position"],"oldValue":["required|string|max:255"],"newValue":["required|string|max:255"],"cover":["nullable|file|mimes:jpg,png,svg,webp"]},"docBlock":""},{"uri":"api\/v1\/resources\/complaints","methods":["POST"],"middlewares":["api","auth:sanctum","verified"],"controller":"ResourceComplaintController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\EducationalResource\\ResourceComplaintController","method":"store","httpMethod":"POST","rules":{"resourceId":["required|exists:resources,id"],"motiveId":["required|exists:motives,id"]},"docBlock":""},{"uri":"api\/v1\/resources\/votes","methods":["POST"],"middlewares":["api","auth:sanctum","verified"],"controller":"ResourceVoteController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\EducationalResource\\ResourceVoteController","method":"store","httpMethod":"POST","rules":{"resourceId":["required|integer|exists:resources,id"],"vote":["required|boolean"],"justification":["required|string|min:3"]},"docBlock":""},{"uri":"api\/v1\/resources\/votes\/{vote}","methods":["PATCH"],"middlewares":["api","auth:sanctum","verified"],"controller":"ResourceVoteController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\EducationalResource\\ResourceVoteController","method":"update","httpMethod":"PATCH","rules":{"vote":["required|boolean"],"justification":["required|string|min:3"]},"docBlock":""},{"uri":"api\/v1\/resources\/votes\/{vote}","methods":["PUT"],"middlewares":["api","auth:sanctum","verified"],"controller":"ResourceVoteController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\EducationalResource\\ResourceVoteController","method":"update","httpMethod":"PUT","rules":{"vote":["required|boolean"],"justification":["required|string|min:3"]},"docBlock":""},{"uri":"api\/v1\/resources\/{resource}","methods":["GET","HEAD"],"middlewares":["api"],"controller":"ResourceController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\EducationalResource\\ResourceController","method":"show","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/v1\/resources\/{resource}\/reviews","methods":["GET","HEAD"],"middlewares":["api"],"controller":"ResourceController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\EducationalResource\\ResourceController","method":"reviews","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/v1\/reviews","methods":["POST"],"middlewares":["api","auth:sanctum","verified"],"controller":"ReviewController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Review\\ReviewController","method":"store","httpMethod":"POST","rules":{"resourceId":["required|exists:resources,id"],"rating":["required|numeric|between:1,5"],"comment":["required|string|min:3|max:1000"]},"docBlock":""},{"uri":"api\/v1\/reviews","methods":["GET","HEAD"],"middlewares":["api"],"controller":"ReviewController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Review\\ReviewController","method":"index","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/v1\/reviews\/complaints","methods":["POST"],"middlewares":["api","auth:sanctum","verified"],"controller":"ReviewComplaintController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Review\\ReviewComplaintController","method":"store","httpMethod":"POST","rules":{"reviewId":["required|integer|exists:reviews,id"],"motiveId":["required|integer|exists:motives,id"]},"docBlock":""},{"uri":"api\/v1\/reviews\/{review}","methods":["DELETE"],"middlewares":["api","auth:sanctum","verified"],"controller":"ReviewController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Review\\ReviewController","method":"destroy","httpMethod":"DELETE","rules":[],"docBlock":""},{"uri":"api\/v1\/reviews\/{review}","methods":["GET","HEAD"],"middlewares":["api"],"controller":"ReviewController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Review\\ReviewController","method":"show","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/v1\/reviews\/{review}","methods":["PUT","PATCH"],"middlewares":["api","auth:sanctum","verified"],"controller":"ReviewController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Review\\ReviewController","method":"update","httpMethod":"PUT","rules":{"rating":["required|numeric|between:1,5"],"comment":["required|string|min:3|max:1000"]},"docBlock":""},{"uri":"api\/v1\/supports","methods":["POST"],"middlewares":["api","auth:sanctum","verified"],"controller":"SupportController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\SupportController","method":"store","httpMethod":"POST","rules":{"message":["required|string|min:3"]},"docBlock":""},{"uri":"api\/v1\/user","methods":["GET","HEAD"],"middlewares":["api","auth:sanctum","verified"],"controller":"AuthController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Auth\\AuthController","method":"getAuthUser","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/v1\/users\/{user}","methods":["DELETE"],"middlewares":["api","auth:sanctum","verified"],"controller":"UserController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\UserController","method":"destroy","httpMethod":"DELETE","rules":[],"docBlock":""},{"uri":"api\/v1\/users\/{user}","methods":["PATCH"],"middlewares":["api","auth:sanctum","verified"],"controller":"UserController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\UserController","method":"update","httpMethod":"PATCH","rules":{"name":["sometimes|required|string|min:3|max:255"],"email":[],"avatar":["nullable|file|mimes:jpg,png,svg,webp"],"password":["sometimes|nullable|string|min:8|max:255|confirmed"],"confirmPassword":["sometimes|nullable|string|min:8|max:255"]},"docBlock":""},{"uri":"api\/v1\/users\/{user}","methods":["PUT"],"middlewares":["api","auth:sanctum","verified"],"controller":"UserController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\UserController","method":"update","httpMethod":"PUT","rules":{"name":["sometimes|required|string|min:3|max:255"],"email":[],"avatar":["nullable|file|mimes:jpg,png,svg,webp"],"password":["sometimes|nullable|string|min:8|max:255|confirmed"],"confirmPassword":["sometimes|nullable|string|min:8|max:255"]},"docBlock":""},{"uri":"api\/v1\/users\/{user}\/avatar","methods":["DELETE"],"middlewares":["api","auth:sanctum","verified"],"controller":"UserController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\UserController","method":"deleteAvatar","httpMethod":"DELETE","rules":[],"docBlock":""}];
+        var docs = [{"uri":"api\/v1\/categories","methods":["GET","HEAD"],"middlewares":["api"],"controller":"CategoryController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\CategoryController","method":"index","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/v1\/email\/verify\/resend","methods":["POST"],"middlewares":["api","throttle:6,1","auth:sanctum"],"controller":"VerifyEmailController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Auth\\VerifyEmailController","method":"send","httpMethod":"POST","rules":[],"docBlock":""},{"uri":"api\/v1\/email\/verify\/{id}\/{hash}","methods":["GET","HEAD"],"middlewares":["api","throttle:6,1","signed"],"controller":"VerifyEmailController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Auth\\VerifyEmailController","method":"verify","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/v1\/forgot-password","methods":["POST"],"middlewares":["api"],"controller":"ResetPasswordController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Auth\\ResetPasswordController","method":"email","httpMethod":"POST","rules":[],"docBlock":""},{"uri":"api\/v1\/login","methods":["POST"],"middlewares":["api"],"controller":"AuthController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Auth\\AuthController","method":"login","httpMethod":"POST","rules":{"email":["required|string|email"],"password":["required|string|min:8|max:255"]},"docBlock":""},{"uri":"api\/v1\/login\/{provider}","methods":["POST"],"middlewares":["api"],"controller":"AuthController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Auth\\AuthController","method":"loginWithProvider","httpMethod":"POST","rules":[],"docBlock":""},{"uri":"api\/v1\/logout","methods":["POST"],"middlewares":["api","auth:sanctum","verified"],"controller":"AuthController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Auth\\AuthController","method":"logout","httpMethod":"POST","rules":[],"docBlock":""},{"uri":"api\/v1\/motives","methods":["GET","HEAD"],"middlewares":["api"],"controller":"MotiveController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\MotiveController","method":"index","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/v1\/register","methods":["POST"],"middlewares":["api"],"controller":"AuthController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Auth\\AuthController","method":"register","httpMethod":"POST","rules":{"name":["required|string|min:3|max:255"],"email":["required|string|email|max:255|unique:users"],"password":["required|string|min:8|max:255|confirmed"],"confirmPassword":["required|string|min:8|max:255"]},"docBlock":""},{"uri":"api\/v1\/reset-password","methods":["POST"],"middlewares":["api"],"controller":"ResetPasswordController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Auth\\ResetPasswordController","method":"update","httpMethod":"POST","rules":{"token":["required|string"],"email":["required|string|email|max:255"],"password":["required|string|min:8|max:255|confirmed"],"confirmPassword":["required|string|min:8|max:255"]},"docBlock":""},{"uri":"api\/v1\/reset-password\/{token}","methods":["GET","HEAD"],"middlewares":["api"],"controller":"ResetPasswordController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Auth\\ResetPasswordController","method":"reset","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/v1\/resource\/user","methods":["POST"],"middlewares":["api","auth:sanctum","verified"],"controller":"ResourceUserController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\ResourceUserController","method":"store","httpMethod":"POST","rules":[],"docBlock":""},{"uri":"api\/v1\/resource\/user\/{resource}","methods":["DELETE"],"middlewares":["api","auth:sanctum","verified"],"controller":"ResourceUserController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\ResourceUserController","method":"destroy","httpMethod":"DELETE","rules":[],"docBlock":""},{"uri":"api\/v1\/resources","methods":["POST"],"middlewares":["api","auth:sanctum","verified"],"controller":"ResourceController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\EducationalResource\\ResourceController","method":"store","httpMethod":"POST","rules":{"categoryId":["required|exists:categories,id"],"name":["required|string|min:3|max:255"],"latitude":["required|numeric|between:-90,90"],"longitude":["required|numeric|between:-180,180"],"address":["required|string|min:3|max:255"],"website":["nullable|string|min:7|max:255"],"phone":["nullable|string|min:14|max:15"],"cover":["required|file|mimes:jpg,png,svg,webp"]},"docBlock":""},{"uri":"api\/v1\/resources","methods":["GET","HEAD"],"middlewares":["api"],"controller":"ResourceController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\EducationalResource\\ResourceController","method":"index","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/v1\/resources\/changes","methods":["POST"],"middlewares":["api","auth:sanctum","verified"],"controller":"ResourceChangeController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\EducationalResource\\ResourceChangeController","method":"store","httpMethod":"POST","rules":{"resourceId":["required|exists:resources,id"],"field":["required|string|max:255|in:name,address,category_id,categoryId,website,phone,cover,position"],"oldValue":["required|string|max:255"],"newValue":["required|string|max:255"],"cover":["nullable|file|mimes:jpg,png,svg,webp"]},"docBlock":""},{"uri":"api\/v1\/resources\/complaints","methods":["POST"],"middlewares":["api","auth:sanctum","verified"],"controller":"ResourceComplaintController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\EducationalResource\\ResourceComplaintController","method":"store","httpMethod":"POST","rules":{"resourceId":["required|exists:resources,id"],"motiveId":["required|exists:motives,id"]},"docBlock":""},{"uri":"api\/v1\/resources\/votes","methods":["POST"],"middlewares":["api","auth:sanctum","verified"],"controller":"ResourceVoteController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\EducationalResource\\ResourceVoteController","method":"store","httpMethod":"POST","rules":{"resourceId":["required|integer|exists:resources,id"],"vote":["required|boolean"],"justification":["required|string|min:3"]},"docBlock":""},{"uri":"api\/v1\/resources\/votes\/{vote}","methods":["PATCH"],"middlewares":["api","auth:sanctum","verified"],"controller":"ResourceVoteController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\EducationalResource\\ResourceVoteController","method":"update","httpMethod":"PATCH","rules":{"vote":["required|boolean"],"justification":["required|string|min:3"]},"docBlock":""},{"uri":"api\/v1\/resources\/votes\/{vote}","methods":["PUT"],"middlewares":["api","auth:sanctum","verified"],"controller":"ResourceVoteController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\EducationalResource\\ResourceVoteController","method":"update","httpMethod":"PUT","rules":{"vote":["required|boolean"],"justification":["required|string|min:3"]},"docBlock":""},{"uri":"api\/v1\/resources\/{resource}","methods":["GET","HEAD"],"middlewares":["api"],"controller":"ResourceController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\EducationalResource\\ResourceController","method":"show","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/v1\/resources\/{resource}\/reviews","methods":["GET","HEAD"],"middlewares":["api"],"controller":"ResourceController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\EducationalResource\\ResourceController","method":"reviews","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/v1\/reviews","methods":["POST"],"middlewares":["api","auth:sanctum","verified"],"controller":"ReviewController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Review\\ReviewController","method":"store","httpMethod":"POST","rules":{"resourceId":["required|exists:resources,id"],"rating":["required|numeric|between:1,5"],"comment":["required|string|min:3|max:1000"]},"docBlock":""},{"uri":"api\/v1\/reviews","methods":["GET","HEAD"],"middlewares":["api"],"controller":"ReviewController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Review\\ReviewController","method":"index","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/v1\/reviews\/complaints","methods":["POST"],"middlewares":["api","auth:sanctum","verified"],"controller":"ReviewComplaintController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Review\\ReviewComplaintController","method":"store","httpMethod":"POST","rules":{"reviewId":["required|integer|exists:reviews,id"],"motiveId":["required|integer|exists:motives,id"]},"docBlock":""},{"uri":"api\/v1\/reviews\/{review}","methods":["DELETE"],"middlewares":["api","auth:sanctum","verified"],"controller":"ReviewController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Review\\ReviewController","method":"destroy","httpMethod":"DELETE","rules":[],"docBlock":""},{"uri":"api\/v1\/reviews\/{review}","methods":["GET","HEAD"],"middlewares":["api"],"controller":"ReviewController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Review\\ReviewController","method":"show","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/v1\/reviews\/{review}","methods":["PUT","PATCH"],"middlewares":["api","auth:sanctum","verified"],"controller":"ReviewController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Review\\ReviewController","method":"update","httpMethod":"PUT","rules":{"rating":["required|numeric|between:1,5"],"comment":["required|string|min:3|max:1000"]},"docBlock":""},{"uri":"api\/v1\/supports","methods":["POST"],"middlewares":["api","auth:sanctum","verified"],"controller":"SupportController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\SupportController","method":"store","httpMethod":"POST","rules":{"message":["required|string|min:3"]},"docBlock":""},{"uri":"api\/v1\/user","methods":["GET","HEAD"],"middlewares":["api","auth:sanctum","verified"],"controller":"AuthController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\Auth\\AuthController","method":"getAuthUser","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/v1\/users\/{user}","methods":["DELETE"],"middlewares":["api","auth:sanctum","verified"],"controller":"UserController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\UserController","method":"destroy","httpMethod":"DELETE","rules":[],"docBlock":""},{"uri":"api\/v1\/users\/{user}","methods":["PATCH"],"middlewares":["api","auth:sanctum","verified"],"controller":"UserController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\UserController","method":"update","httpMethod":"PATCH","rules":{"name":["sometimes|required|string|min:3|max:255"],"email":[],"avatar":["nullable|file|mimes:jpg,png,svg,webp"],"password":["sometimes|nullable|string|min:8|max:255|confirmed"],"confirmPassword":["sometimes|nullable|string|min:8|max:255"]},"docBlock":""},{"uri":"api\/v1\/users\/{user}","methods":["PUT"],"middlewares":["api","auth:sanctum","verified"],"controller":"UserController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\UserController","method":"update","httpMethod":"PUT","rules":{"name":["sometimes|required|string|min:3|max:255"],"email":[],"avatar":["nullable|file|mimes:jpg,png,svg,webp"],"password":["sometimes|nullable|string|min:8|max:255|confirmed"],"confirmPassword":["sometimes|nullable|string|min:8|max:255"]},"docBlock":""},{"uri":"api\/v1\/users\/{user}","methods":["GET","HEAD"],"middlewares":["api","auth:sanctum","verified"],"controller":"UserController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\UserController","method":"show","httpMethod":"GET","rules":[],"docBlock":""},{"uri":"api\/v1\/users\/{user}\/avatar","methods":["DELETE"],"middlewares":["api","auth:sanctum","verified"],"controller":"UserController","controller_full_path":"App\\Http\\Controllers\\Api\\V1\\UserController","method":"deleteAvatar","httpMethod":"DELETE","rules":[],"docBlock":""}];
         var app_url = "http:\/\/localhost:3000";
 
         //remove trailing slash if any
