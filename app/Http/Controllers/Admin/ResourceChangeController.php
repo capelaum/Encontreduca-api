@@ -71,10 +71,12 @@ class ResourceChangeController extends Controller
         ]);
 
         if ($change->field === 'cover') {
+            $cloudinaryFolder = config('app.cloudinary_folder');
+
             $coverUrlArray = explode('/', $change->new_value);
             $publicId = explode('.', end($coverUrlArray))[0];
 
-            cloudinary()->destroy("encontreduca/covers/changes/$publicId");
+            cloudinary()->destroy("$cloudinaryFolder/covers/changes/$publicId");
         }
 
         $change->delete();

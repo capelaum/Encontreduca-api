@@ -87,8 +87,10 @@ class ResourceController extends Controller
         $data['user_id'] = auth()->id();
         $data['category_id'] = $request->categoryId;
 
+        $cloudinaryFolder = config('app.cloudinary_folder');
+
         $data['cover'] = $request->file('cover')
-            ->storeOnCloudinary('encontreduca/covers')
+            ->storeOnCloudinary("$cloudinaryFolder/covers")
             ->getSecurePath();
 
         $resource = Resource::create($data);
@@ -118,11 +120,13 @@ class ResourceController extends Controller
         }
 
         if ($request->hasFile('cover')) {
+            $cloudinaryFolder = config('app.cloudinary_folder');
+
             $coverUrlArray = explode('/', $resource->cover);
             $publicId = explode('.', end($coverUrlArray))[0];
 
             $data['cover'] = $request->file('cover')
-                ->storeOnCloudinaryAs('encontreduca/covers', $publicId)
+                ->storeOnCloudinaryAs("$cloudinaryFolder/covers", $publicId)
                 ->getSecurePath();
         }
 
@@ -145,10 +149,12 @@ class ResourceController extends Controller
             'deletar este recurso.'
         ]);
 
+        $cloudinaryFolder = config('app.cloudinary_folder');
+
         $coverUrlArray = explode('/', $resource->cover);
         $publicId = explode('.', end($coverUrlArray))[0];
 
-        cloudinary()->destroy("encontreduca/covers/$publicId");
+        cloudinary()->destroy("$cloudinaryFolder/covers/$publicId");
 
         $resource->delete();
 

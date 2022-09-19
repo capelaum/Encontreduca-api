@@ -62,10 +62,12 @@ class ResourceChangeTest extends TestCase
 
         $cover = $this->createFakeImageFile('cover.jpg');
 
+        $cloudinaryFolder = config('app.cloudinary_folder');
+
         Cloudinary::shouldReceive('uploadFile')
             ->once()
             ->with($cover->getRealPath(), [
-                'folder' => 'encontreduca/covers/changes',
+                'folder' => "$cloudinaryFolder/covers/changes",
             ])
             ->andReturnSelf()
             ->shouldReceive('getSecurePath')

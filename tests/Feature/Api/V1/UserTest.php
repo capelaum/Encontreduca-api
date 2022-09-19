@@ -17,10 +17,13 @@ class UserTest extends TestCase
 
     private string $avatarUrl = "https://res.cloudinary.com/capelaum/image/upload/v1661422020/encontreduca/avatars/pslj3lojhuzklk8fb9p6.jpg";
     private string $publicId = 'pslj3lojhuzklk8fb9p6';
+    private string $cloudinaryFolder;
 
     public function setup(): void
     {
         parent::setup();
+
+        $this->cloudinaryFolder = config('app.cloudinary_folder');
 
         $this->authUser();
     }
@@ -33,6 +36,27 @@ class UserTest extends TestCase
         'resourcesIds'
     ];
 
+    public function test_show_user()
+    {
+        $this->getJson(route('users.show', Auth::id()))
+            ->assertOk()
+            ->assertJsonStructure($this->userKeys)
+            ->json();
+    }
+
+    public function test_user_cannot_show_other_user_data()
+    {
+        $user = $this->createUser();
+
+        $this->withExceptionHandling();
+
+        $this->getJson(route('users.show', $user->id))
+            ->assertStatus(401)
+            ->assertJsonStructure([
+                'message'
+            ]);
+    }
+
     public function test_update_user()
     {
         $updatedUser = User::factory()->make();
@@ -42,7 +66,7 @@ class UserTest extends TestCase
         Cloudinary::shouldReceive('uploadFile')
             ->once()
             ->with($avatar->getRealPath(), [
-                'folder' => 'encontreduca/avatars'
+                'folder' => "$this->cloudinaryFolder/avatars",
             ])
             ->andReturnSelf()
             ->shouldReceive('getSecurePath')
@@ -88,7 +112,7 @@ class UserTest extends TestCase
         Cloudinary::shouldReceive('uploadFile')
             ->once()
             ->with($avatar->getRealPath(), [
-                'folder' => 'encontreduca/avatars',
+                'folder' => "$this->cloudinaryFolder/avatars",
                 'public_id' => $this->publicId,
             ])
             ->andReturnSelf()
@@ -150,7 +174,7 @@ class UserTest extends TestCase
 
         Cloudinary::shouldReceive('destroy')
             ->once()
-            ->with("encontreduca/avatars/$publicId")
+            ->with("$this->cloudinaryFolder/avatars/$publicId")
             ->andReturnSelf();
 
         $this->deleteJson(route('users.destroy', Auth::id()))

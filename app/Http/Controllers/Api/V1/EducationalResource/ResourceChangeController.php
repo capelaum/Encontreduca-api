@@ -29,8 +29,10 @@ class ResourceChangeController extends Controller
         $data['new_value'] = $request->newValue;
 
         if ($request->hasFile('cover')) {
+            $cloudinaryFolder = config('app.cloudinary_folder');
+
             $data['new_value'] = $request->file('cover')
-                ->storeOnCloudinary('encontreduca/covers/changes')
+                ->storeOnCloudinary("$cloudinaryFolder/covers/changes")
                 ->getSecurePath();
         }
 

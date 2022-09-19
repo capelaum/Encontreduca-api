@@ -13,9 +13,12 @@ class AdminResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    private string $coverUrl = "https://res.cloudinary.com/capelaum/image/upload/v1661422020/encontreduca/avatars/pslj3lojhuzklk8fb9p6.jpg";
+    private string $coverUrl = "https://res.cloudinary.com/capelaum/image/upload/v1661422020/encontreduca/covers/pslj3lojhuzklk8fb9p6.jpg";
+
+    private string $cloudinaryFolder;
 
     private mixed $resource;
+
     private array $resourceKeys = [
         'id',
         'userId',
@@ -39,6 +42,8 @@ class AdminResourceTest extends TestCase
         parent::setup();
 
         $this->authAdmin();
+
+        $this->cloudinaryFolder = config('app.cloudinary_folder');
 
         $this->resource = $this->createResource();
     }
@@ -79,7 +84,7 @@ class AdminResourceTest extends TestCase
         Cloudinary::shouldReceive('uploadFile')
             ->once()
             ->with($cover->getRealPath(), [
-                'folder' => 'encontreduca/covers',
+                'folder' => "$this->cloudinaryFolder/covers",
             ])
             ->andReturnSelf()
             ->shouldReceive('getSecurePath')
@@ -144,7 +149,7 @@ class AdminResourceTest extends TestCase
         Cloudinary::shouldReceive('uploadFile')
             ->once()
             ->with($cover->getRealPath(), [
-                'folder' => 'encontreduca/covers',
+                'folder' => "$this->cloudinaryFolder/covers",
                 'public_id' => $publicId
             ])
             ->andReturnSelf()
@@ -234,7 +239,7 @@ class AdminResourceTest extends TestCase
 
         Cloudinary::shouldReceive('destroy')
             ->once()
-            ->with("encontreduca/covers/$publicId")
+            ->with("$this->cloudinaryFolder/covers/$publicId")
             ->andReturnSelf();
 
         $this->deleteJson(route('admin.resources.destroy', $resource->id))

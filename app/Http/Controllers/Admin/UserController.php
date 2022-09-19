@@ -77,8 +77,10 @@ class UserController extends Controller
         $data['password'] = Hash::make($data['password']);
 
         if ($request->avatar) {
+            $cloudinaryFolder = config('app.cloudinary_folder');
+
             $data['avatar_url'] = $request->file('avatar')
-                ->storeOnCloudinary('encontreduca/avatars')
+                ->storeOnCloudinary("$cloudinaryFolder/avatars")
                 ->getSecurePath();
         }
 
@@ -107,9 +109,11 @@ class UserController extends Controller
         $data = $request->validated();
 
         if ($request->avatar) {
+            $cloudinaryFolder = config('app.cloudinary_folder');
+
             if (!$user->avatar_url) {
                 $data['avatar_url'] = $request->file('avatar')
-                    ->storeOnCloudinary('encontreduca/avatars')
+                    ->storeOnCloudinary("$cloudinaryFolder/avatars")
                     ->getSecurePath();
             }
 
@@ -118,7 +122,7 @@ class UserController extends Controller
                 $publicId = explode('.', end($avatarUrlArray))[0];
 
                 $data['avatar_url'] = $request->file('avatar')
-                    ->storeOnCloudinaryAs('encontreduca/avatars', $publicId)
+                    ->storeOnCloudinaryAs("$cloudinaryFolder/avatars", $publicId)
                     ->getSecurePath();
             }
         }
@@ -156,10 +160,12 @@ class UserController extends Controller
         ]);
 
         if ($user->avatar_url) {
+            $cloudinaryFolder = config('app.cloudinary_folder');
+
             $avatarUrlArray = explode('/', $user->avatar_url);
             $publicId = explode('.', end($avatarUrlArray))[0];
 
-            cloudinary()->destroy("encontreduca/avatars/$publicId");
+            cloudinary()->destroy("$cloudinaryFolder/avatars/$publicId");
         }
 
         $user->avatar_url = null;
@@ -180,10 +186,12 @@ class UserController extends Controller
             'deletar o avatar deste usuário.'
         ]);
 
+        $cloudinaryFolder = config('app.cloudinary_folder');
+
         $avatarUrlArray = explode('/', $user->avatar_url);
         $publicId = explode('.', end($avatarUrlArray))[0];
 
-        cloudinary()->destroy("encontreduca/avatars/$publicId");
+        cloudinary()->destroy("$cloudinaryFolder/avatars/$publicId");
 
         $user->delete();
 

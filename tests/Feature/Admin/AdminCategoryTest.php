@@ -33,6 +33,19 @@ class AdminCategoryTest extends TestCase
         $this->assertCount(7, $response);
     }
 
+    public function test_admin_show_category()
+    {
+        $category = Category::factory()->create();
+
+        $this->getJson(route('admin.categories.show', $category->id))
+            ->assertOk()
+            ->assertJsonStructure([
+                'id',
+                'name',
+                'resourcesCount'
+            ]);
+    }
+
     public function test_admin_create_category()
     {
         $response = $this->postJson(route('admin.categories.store'), [

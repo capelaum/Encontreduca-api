@@ -11,7 +11,7 @@ class AdminResourceChangeTest extends TestCase
 {
     use RefreshDatabase;
 
-    private string $coverUrl = "https://res.cloudinary.com/capelaum/image/upload/v1661422020/encontreduca/avatars/pslj3lojhuzklk8fb9p6.jpg";
+    private string $coverUrl = "https://res.cloudinary.com/capelaum/image/upload/v1661422020/encontreduca/covers/pslj3lojhuzklk8fb9p6.jpg";
 
     private array $resourceChangeKeys = [
         'id',
@@ -104,12 +104,14 @@ class AdminResourceChangeTest extends TestCase
             'new_value' => $this->coverUrl,
         ]);
 
+        $cloudinaryFolder = config('app.cloudinary_folder');
+
         $coverUrlArray = explode('/', $resourceChange->new_value);
         $publicId = explode('.', end($coverUrlArray))[0];
 
         Cloudinary::shouldReceive('destroy')
             ->once()
-            ->with("encontreduca/covers/changes/$publicId")
+            ->with("$cloudinaryFolder/covers/changes/$publicId")
             ->andReturnSelf();
 
         $this->deleteJson(route('admin.resources.changes.destroy', $resourceChange->id))

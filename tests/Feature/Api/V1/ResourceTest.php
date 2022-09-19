@@ -14,7 +14,7 @@ class ResourceTest extends TestCase
 {
     use RefreshDatabase;
 
-    private string $coverUrl = "https://res.cloudinary.com/capelaum/image/upload/v1661422020/encontreduca/avatars/pslj3lojhuzklk8fb9p6.jpg";
+    private string $coverUrl = "https://res.cloudinary.com/capelaum/image/upload/v1661422020/encontreduca/covers/pslj3lojhuzklk8fb9p6.jpg";
 
     private mixed $resource;
     private array $resourceKeys = [
@@ -65,10 +65,12 @@ class ResourceTest extends TestCase
     {
         $cover = $this->createFakeImageFile('cover.jpg');
 
+        $cloudinaryFolder = config('app.cloudinary_folder');
+
         Cloudinary::shouldReceive('uploadFile')
             ->once()
             ->with($cover->getRealPath(), [
-                'folder' => 'encontreduca/covers',
+                'folder' => "$cloudinaryFolder/covers",
             ])
             ->andReturnSelf()
             ->shouldReceive('getSecurePath')

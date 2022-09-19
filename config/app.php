@@ -58,6 +58,8 @@ return [
 
     'frontend_url' => env('FRONTEND_URL', 'http://localhost:3000'),
 
+    'cloudinary_folder' => env('CLOUDINARY_FOLDER', 'encontreduca-dev'),
+
     'asset_url' => env('ASSET_URL'),
 
     /*

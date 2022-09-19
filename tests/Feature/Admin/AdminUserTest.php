@@ -16,10 +16,13 @@ class AdminUserTest extends TestCase
 
     private string $avatarUrl = "https://res.cloudinary.com/capelaum/image/upload/v1661422020/encontreduca/avatars/pslj3lojhuzklk8fb9p6.jpg";
     private string $publicId = 'pslj3lojhuzklk8fb9p6';
+    private string $cloudinaryFolder;
 
     public function setup(): void
     {
         parent::setup();
+
+        $this->cloudinaryFolder = config('app.cloudinary_folder');
 
         $this->authAdmin();
     }
@@ -102,7 +105,7 @@ class AdminUserTest extends TestCase
         Cloudinary::shouldReceive('uploadFile')
             ->once()
             ->with($avatar->getRealPath(), [
-                'folder' => 'encontreduca/avatars'
+                'folder' => "$this->cloudinaryFolder/avatars"
             ])
             ->andReturnSelf()
             ->shouldReceive('getSecurePath')
@@ -131,7 +134,7 @@ class AdminUserTest extends TestCase
         Cloudinary::shouldReceive('uploadFile')
             ->once()
             ->with($avatar->getRealPath(), [
-                'folder' => 'encontreduca/avatars'
+                'folder' => "$this->cloudinaryFolder/avatars"
             ])
             ->andReturnSelf()
             ->shouldReceive('getSecurePath')
@@ -182,7 +185,7 @@ class AdminUserTest extends TestCase
         Cloudinary::shouldReceive('uploadFile')
             ->once()
             ->with($avatar->getRealPath(), [
-                'folder' => 'encontreduca/avatars',
+                'folder' => "$this->cloudinaryFolder/avatars",
                 'public_id' => $publicId
             ])
             ->andReturnSelf()
@@ -214,7 +217,7 @@ class AdminUserTest extends TestCase
 
         Cloudinary::shouldReceive('destroy')
             ->once()
-            ->with("encontreduca/avatars/$publicId")
+            ->with("$this->cloudinaryFolder/avatars/$publicId")
             ->andReturnSelf();
 
         $this->deleteJson(route('admin.users.destroy', $user->id))
@@ -236,7 +239,7 @@ class AdminUserTest extends TestCase
 
         Cloudinary::shouldReceive('destroy')
             ->once()
-            ->with("encontreduca/avatars/$publicId")
+            ->with("$this->cloudinaryFolder/avatars/$publicId")
             ->andReturnSelf();
 
         $this->deleteJson(route('admin.users.delete.avatar', Auth::id()))

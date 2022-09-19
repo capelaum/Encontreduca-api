@@ -52,8 +52,10 @@ class ResourceController extends Controller
         $data['user_id'] = Auth::id();
         $data['category_id'] = $request->categoryId;
 
+        $cloudinaryFolder = config('app.cloudinary_folder');
+
         $data['cover'] = $request->file('cover')
-            ->storeOnCloudinary('encontreduca/covers')
+            ->storeOnCloudinary("$cloudinaryFolder/covers")
             ->getSecurePath();
 
         $resource = Resource::create($data);

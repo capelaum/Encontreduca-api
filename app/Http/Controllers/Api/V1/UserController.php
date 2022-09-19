@@ -61,9 +61,12 @@ class UserController extends Controller
         $data = $request->validated();
 
         if ($request->avatar) {
+
+            $cloudinaryFolder = config('app.cloudinary_folder');
+
             if (!$user->avatar_url) {
                 $data['avatar_url'] = $request->file('avatar')
-                    ->storeOnCloudinary('encontreduca/avatars')
+                    ->storeOnCloudinary("$cloudinaryFolder/avatars")
                     ->getSecurePath();
             }
 
@@ -72,7 +75,7 @@ class UserController extends Controller
                 $publicId = explode('.', end($avatarUrlArray))[0];
 
                 $data['avatar_url'] = $request->file('avatar')
-                    ->storeOnCloudinaryAs('encontreduca/avatars', $publicId)
+                    ->storeOnCloudinaryAs("$cloudinaryFolder/avatars", $publicId)
                     ->getSecurePath();
             }
         }
@@ -110,10 +113,12 @@ class UserController extends Controller
             ]
         );
 
+        $cloudinaryFolder = config('app.cloudinary_folder');
+
         $avatarUrlArray = explode('/', $user->avatar_url);
         $publicId = explode('.', end($avatarUrlArray))[0];
 
-        cloudinary()->destroy("encontreduca/avatars/$publicId");
+        cloudinary()->destroy("$cloudinaryFolder/avatars/$publicId");
 
         $user->delete();
 
@@ -137,11 +142,13 @@ class UserController extends Controller
             ]
         );
 
+        $cloudinaryFolder = config('app.cloudinary_folder');
+
         if ($user->avatar_url) {
             $avatarUrlArray = explode('/', $user->avatar_url);
             $publicId = explode('.', end($avatarUrlArray))[0];
 
-            cloudinary()->destroy("encontreduca/avatars/$publicId");
+            cloudinary()->destroy("$cloudinaryFolder/avatars/$publicId");
         }
 
 
