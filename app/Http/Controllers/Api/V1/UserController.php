@@ -21,6 +21,26 @@ use App\Models\{ResourceVote, Review, User, Resource, ResourceUser};
 class UserController extends Controller
 {
     /**
+     * Show single User data.
+     *
+     * @param User $user
+     * @return UserResource
+     * @throws AuthorizationException
+     */
+    public function show(User $user): UserResource
+    {
+        $this->authorize('isRequestUser',
+            [
+                User::class,
+                $user->id,
+                'visualizar este usuário.'
+            ]
+        );
+
+        return new UserResource($user);
+    }
+
+    /**
      * Update user and store on database
      *
      * @param UpdateUserRequest $request

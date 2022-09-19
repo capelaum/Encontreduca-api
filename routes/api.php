@@ -38,6 +38,9 @@ Route::group([
         Route::delete('{user}/avatar', 'deleteAvatar')
             ->name('delete.avatar');
 
+        Route::get('/{user}', 'show')
+            ->name('show');
+
         Route::put('/{user}', 'update')
             ->name('update');
 
