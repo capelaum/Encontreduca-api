@@ -1,4 +1,4 @@
-# Encontredduca API
+# Encontreduca API
 
 API feita em Laravel 9 para a plataforma [Encontreduca][encontreduca-repo] 📖
 
